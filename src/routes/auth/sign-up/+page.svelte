@@ -16,7 +16,7 @@
 			<InputGroup id="name" charLimit={50} error={form?.name} />
 			<InputGroup id="display-name" label="Display Name" charLimit={16} error={form?.displayName} />
 			<InputGroup id="email" charLimit={254} error={form?.email} let:input let:bind>
-				<input type="email" value={form?.email} {...input} use:bind />
+				<input type="email" {...input} use:bind />
 			</InputGroup>
 			<InputGroup id="password" charLimit={60} error={form?.password} let:input let:bind>
 				<input type="password" {...input} use:bind />

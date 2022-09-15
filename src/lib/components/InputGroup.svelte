@@ -40,7 +40,7 @@
 			{className}
 			maxlength={charLimit}
 			{bind}
-			input={{ class: className, id, name: id, maxlength: charLimit, placeholder }}
+			input={{ class: className, id, name: id, maxlength: charLimit, placeholder, value }}
 		>
 			<input
 				class={className}
