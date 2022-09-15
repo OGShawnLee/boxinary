@@ -1,9 +1,27 @@
-import type { Actions } from "@sveltejs/kit";
+import type { Actions, Cookies, ServerLoad } from "@sveltejs/kit";
 import db from "$lib/db";
+import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { isEmpty } from "malachite-ui/predicate";
 import { genSalt, hash } from "bcrypt";
 import { useAwait, useAwaitError } from "$lib/hooks";
+import { verify } from "jsonwebtoken";
+import { isJWTPayloadState } from "$lib/utils";
+
+function deleteAuthCookie(cookies: Cookies) {
+	cookies.set(AUTH_COOKIE, "", { expires: new Date(Date.now() - 3600), httpOnly: true, path: "/" });
+}
+
+export const load: ServerLoad = async ({ cookies }) => {
+	const authStateCookie = cookies.get(AUTH_COOKIE);
+	if (authStateCookie === undefined || isEmpty(authStateCookie)) return;
+	const [authState, err] = await useAwait(() => verify(authStateCookie, ACCESS_TOKEN));
+	if (err) {
+		deleteAuthCookie(cookies);
+		return error(400, { message: "Invalid Auth Token" });
+	}
+	if (isJWTPayloadState(authState)) throw redirect(303, "/home");
+};
 
 export const actions: Actions = {
 	default: async ({ request }) => {
