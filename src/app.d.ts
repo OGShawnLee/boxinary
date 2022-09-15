@@ -8,6 +8,12 @@ declare namespace App {
 	// interface Platform {}
 }
 
+interface JWTPayloadState {
+	id: number;
+	email: string;
+	name: string;
+}
+
 type Optional<T> = { [V in keyof T]?: T[V] };
 
 type ValidationUnit<T = string> =

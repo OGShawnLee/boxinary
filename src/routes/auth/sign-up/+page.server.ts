@@ -1,4 +1,4 @@
-import type { Actions, Cookies, ServerLoad } from "@sveltejs/kit";
+import type { Actions, ServerLoad } from "@sveltejs/kit";
 import db from "$lib/db";
 import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import { error, invalid, redirect } from "@sveltejs/kit";
@@ -6,11 +6,8 @@ import { isEmpty } from "malachite-ui/predicate";
 import { genSalt, hash } from "bcrypt";
 import { useAwait, useAwaitError } from "$lib/hooks";
 import { verify } from "jsonwebtoken";
-import { isJWTPayloadState } from "$lib/utils";
-
-function deleteAuthCookie(cookies: Cookies) {
-	cookies.set(AUTH_COOKIE, "", { expires: new Date(Date.now() - 3600), httpOnly: true, path: "/" });
-}
+import { deleteAuthCookie } from "@root/server/utils";
+import { isJWTPayloadState } from "@root/server/validation";
 
 export const load: ServerLoad = async ({ cookies }) => {
 	const authStateCookie = cookies.get(AUTH_COOKIE);
