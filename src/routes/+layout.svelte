@@ -27,13 +27,13 @@
 		<div class="hidden | lg:(flex gap-3)">
 			<a
 				class="min-h-10 px-6 | grid place-content-center | border-2 border-aqua-50 rounded-xl font-bold text-white"
-				href="/auth/sign_up"
+				href="/auth/sign-up"
 			>
 				Sign Up
 			</a>
 			<a
 				class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
-				href="/auth/sign_in"
+				href="/auth/sign-in"
 			>
 				Sign In
 			</a>
