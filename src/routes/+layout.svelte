@@ -1,10 +1,9 @@
 <script lang="ts">
 	import "virtual:windi.css";
-	import type { ClientUser } from "@root/app";
-	import type { Nullable } from "malachite-ui/types";
+	import type { LayoutData } from "./$types";
 	import { ListItemLink } from "$lib/components";
 
-	export let data: { user: Nullable<ClientUser> };
+	export let data: LayoutData;
 </script>
 
 <svelte:head>
