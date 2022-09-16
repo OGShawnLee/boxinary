@@ -10,7 +10,7 @@ import { getUser, getUserJWTTokenPayload } from "@root/server/services";
 
 export const load: ServerLoad = async ({ cookies, locals }) => {
 	const authStateCookie = cookies.get(AUTH_COOKIE);
-	if (authStateCookie === undefined || isEmpty(authStateCookie)) return;
+	if (authStateCookie === undefined || isEmpty(authStateCookie)) return { user: null };
 	const [authState] = await useAwait(() => getUserJWTTokenPayload(authStateCookie));
 
 	if (isJWTPayloadState(authState)) {
