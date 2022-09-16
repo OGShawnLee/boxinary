@@ -1,7 +1,6 @@
 import { ACCESS_TOKEN } from "$env/static/private";
 import { verify } from "jsonwebtoken";
-import { isEmpty } from "malachite-ui/predicate";
-import { isInterface, isNumber, isString } from "malachite-ui/predicate";
+import { isEmpty, isNumber, isInterface, isString } from "malachite-ui/predicate";
 import { compare } from "bcrypt";
 import { useAwait } from "$lib/hooks";
 
