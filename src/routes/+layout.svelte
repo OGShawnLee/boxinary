@@ -1,6 +1,10 @@
-<script>
+<script lang="ts">
 	import "virtual:windi.css";
+	import type { ClientUser } from "@root/app";
+	import type { Nullable } from "malachite-ui/types";
 	import { ListItemLink } from "$lib/components";
+
+	export let data: { user: Nullable<ClientUser> };
 </script>
 
 <svelte:head>
@@ -25,18 +29,38 @@
 			</nav>
 		</div>
 		<div class="hidden | lg:(flex gap-3)">
-			<a
-				class="min-h-10 px-6 | grid place-content-center | border-2 border-aqua-50 rounded-xl font-bold text-white"
-				href="/auth/sign-up"
-			>
-				Sign Up
-			</a>
-			<a
-				class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
-				href="/auth/sign-in"
-			>
-				Sign In
-			</a>
+			{#if data.user}
+				<div class="flex items-center gap-6">
+					<div class="grid">
+						<span class="text-sm text-white font-bold">
+							{data.user.name}
+						</span>
+						<span class="text-xs font-medium">
+							@{data.user.displayName}
+						</span>
+					</div>
+					<form method="post" action="/auth/sign-out">
+						<button
+							class="min-h-10 px-6 | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
+						>
+							Sign Out
+						</button>
+					</form>
+				</div>
+			{:else}
+				<a
+					class="min-h-10 px-6 | grid place-content-center | border-2 border-aqua-50 rounded-xl font-bold text-white"
+					href="/auth/sign-up"
+				>
+					Sign Up
+				</a>
+				<a
+					class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
+					href="/auth/sign-in"
+				>
+					Sign In
+				</a>
+			{/if}
 		</div>
 	</div>
 </header>
