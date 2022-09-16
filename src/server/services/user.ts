@@ -11,7 +11,7 @@ export function getUser(id: number) {
 }
 
 export function getUserByDisplayName(displayName: string) {
-	return useAwait(() => db.user.findFirstOrThrow({ where: { displayName } }));
+	return useAwait(() => db.user.findFirst({ where: { displayName } }));
 }
 
 export async function getUserJWTTokenPayload(authStateCookie: string) {
