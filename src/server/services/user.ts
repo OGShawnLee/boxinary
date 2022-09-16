@@ -10,6 +10,10 @@ export function getUser(id: number) {
 	return useAwait(() => db.user.findFirstOrThrow({ where: { id } }));
 }
 
+export function getUserByDisplayName(displayName: string) {
+	return useAwait(() => db.user.findFirstOrThrow({ where: { displayName } }));
+}
+
 export async function getUserJWTTokenPayload(authStateCookie: string) {
 	const authState = verify(authStateCookie, ACCESS_TOKEN);
 	if (isJWTPayloadState(authState)) return authState;
