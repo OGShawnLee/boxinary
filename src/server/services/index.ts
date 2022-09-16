@@ -1,1 +1,1 @@
-export { getUser, getUserJWTTokenPayload } from "./user";
+export { getUser, getUserJWTTokenPayload, handleClientUser } from "./user";

@@ -15,3 +15,10 @@ export async function getUserJWTTokenPayload(authStateCookie: string) {
 	if (isJWTPayloadState(authState)) return authState;
 	throw new Error("Invalid Auth Token");
 }
+
+export async function handleClientUser(id: number) {
+	const [currentUser, err] = await useAwait(() => db.user.findUnique({ where: { id } }));
+	if (err) throw error(500, { message: "Unable to Find User" });
+	if (currentUser) return exclude(currentUser, "email", "password");
+	throw error(404, { message: "User Not Found" });
+}
