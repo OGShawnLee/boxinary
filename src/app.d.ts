@@ -8,7 +8,7 @@ import type { Nullable } from "malachite-ui/types";
 declare global {
 	declare namespace App {
 		interface Locals {
-			uid: Nullable<number>;
+			currentUser: Nullable<{ id: number, name: string, displayName: string }>
 		}
 		// interface PageData {}
 		// interface PageError {}

@@ -16,7 +16,7 @@ export const load: ServerLoad = async ({ cookies, locals }) => {
 	if (isJWTPayloadState(authState)) {
 		const [user, err] = await getUser(authState.id);
 		if (!user || err) throw error(500, { message: "Unable to Get User Data" });
-		locals.uid = user.id;
+		locals.currentUser = { id: user.id, name: user.name, displayName: user.displayName };
 		return { user: exclude(user, "email", "password") };
 	}
 
