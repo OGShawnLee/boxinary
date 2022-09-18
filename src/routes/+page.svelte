@@ -1,3 +1,7 @@
+<svelte:head>
+	<title>Boxinary</title>
+</svelte:head>
+
 <section class="grid grid-cols-12">
 	<div class="col-span-12 | grid gap-8 | lg:col-span-8">
 		<div class="grid gap-10">
