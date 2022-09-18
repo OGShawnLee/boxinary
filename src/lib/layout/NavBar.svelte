@@ -27,7 +27,9 @@
 			{#if currentUser}
 				<div class="flex items-center gap-6">
 					<div class="grid">
-						<span class="text-sm text-white font-bold"> {currentUser.name} </span>
+						<a href="/{currentUser.displayName}">
+							<span class="text-sm text-white font-bold"> {currentUser.name} </span>
+						</a>
 						<span class="text-xs font-medium"> @{currentUser.displayName} </span>
 					</div>
 					<form method="post" action="/auth/sign-out">

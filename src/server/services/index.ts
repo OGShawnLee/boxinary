@@ -1,1 +1,8 @@
-export { getUser, getUserByDisplayName, getUserJWTTokenPayload, handleClientUser } from "./user";
+export {
+	getUser,
+	getUserByDisplayName,
+	getUserJWTTokenPayload,
+	handleAuthState,
+	handleClientUser,
+	updateUser
+} from "./user";
