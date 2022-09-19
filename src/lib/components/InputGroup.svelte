@@ -1,3 +1,9 @@
+<script lang="ts" context="module">
+	function handleDashes(str: string) {
+		return str.split("-").join(" ");
+	}
+</script>
+
 <script lang="ts">
 	import type { Nullable } from "malachite-ui/types";
 	import { useListener } from "malachite-ui/hooks";
@@ -16,7 +22,7 @@
 
 	$: charCount = value.length;
 
-	function bind(element: HTMLInputElement) {
+	function bind(element: HTMLInputElement | HTMLTextAreaElement) {
 		element.value = value;
 		return {
 			destroy: useListener(element, "input", () => {
@@ -28,7 +34,7 @@
 
 <div class="grid gap-3">
 	<div class="flex items-center justify-between">
-		<label class="text-white font-bold capitalize" for={id}> {label} </label>
+		<label class="text-white font-bold capitalize" for={id}> {handleDashes(label)} </label>
 		{#if charLimit}
 			<span>{charCount} / {charLimit}</span>
 		{/if}
