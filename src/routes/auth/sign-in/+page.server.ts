@@ -39,7 +39,12 @@ export const actions: Actions = {
 		if (isWrongPassword) return invalid(400, { email, password: { incorrect: true } });
 		if (passwordErr) return error(500, { message: "Unable to Check Password" });
 
-		const token = createUserJWT({ id: foundUser.id, name: foundUser.name, email: foundUser.email });
+		const token = createUserJWT({
+			id: foundUser.id,
+			name: foundUser.name,
+			email: foundUser.email,
+			displayName: foundUser.displayName
+		});
 		cookies.set(AUTH_COOKIE, token, { maxAge: 60 * 60 * 24 * 7, httpOnly: true, path: "/" });
 		return redirect(303, "/home");
 	}

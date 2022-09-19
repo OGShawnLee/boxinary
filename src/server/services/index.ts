@@ -1,4 +1,6 @@
 export {
+	createDefinition,
+	getDefinitionByTitle,
 	getUser,
 	getUserByDisplayName,
 	getUserJWTTokenPayload,

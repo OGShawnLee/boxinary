@@ -2,14 +2,9 @@ import type { Cookies } from "@sveltejs/kit";
 import { AUTH_COOKIE, ACCESS_TOKEN } from "$env/static/private";
 import { sign } from "jsonwebtoken";
 
-export function createUserJWT(configuration: {
-	id: number;
-	name: string;
-	email: string;
-	expiresIn?: string | number;
-}) {
-	const { id, name, email, expiresIn = "7d" } = configuration;
-	return sign({ id, name, email }, ACCESS_TOKEN, { expiresIn });
+export function createUserJWT(configuration: JWTPayloadState & { expiresIn?: string | number }) {
+	const { id, name, email, displayName, expiresIn = "7d" } = configuration;
+	return sign({ id, name, email, displayName }, ACCESS_TOKEN, { expiresIn });
 }
 
 export function deleteAuthCookie(cookies: Cookies) {

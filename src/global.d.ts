@@ -2,6 +2,7 @@ interface JWTPayloadState {
 	id: number;
 	email: string;
 	name: string;
+	displayName: string;
 }
 
 type Optional<T> = { [V in keyof T]?: T[V] };

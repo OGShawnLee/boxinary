@@ -10,11 +10,24 @@ datasource db {
 }
 
 model User {
+  id          Int          @id @default(autoincrement())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  name        String       @db.VarChar(50)
+  displayName String       @unique @db.VarChar(16)
+  email       String       @unique @db.VarChar(254)
+  password    String       @db.VarChar(60)
+  Definition  Definition[]
+}
+
+model Definition {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  name        String   @db.VarChar(50)
-  displayName String   @unique @db.VarChar(16)
-  email       String   @unique @db.VarChar(254)
-  password    String   @db.VarChar(60)
+  title       String   @db.VarChar(50)
+  atomic      String   @db.VarChar(80)
+  description String   @db.VarChar(300)
+  definition  String   @db.VarChar(560)
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
 }

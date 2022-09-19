@@ -1,5 +1,5 @@
 import type { Cookies } from "@sveltejs/kit";
-import type { User } from "@prisma/client";
+import type { Definition, User } from "@prisma/client";
 import type { ClientUser } from "@root/app";
 import db from "$lib/db";
 import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
@@ -10,6 +10,20 @@ import { isJWTPayloadState } from "@root/server/validation";
 import { deleteAuthCookie } from "@root/server/utils";
 import { error, redirect } from "@sveltejs/kit";
 import { isEmpty, isString } from "malachite-ui/predicate";
+
+export function createDefinition(
+	authorId: number,
+	data: Pick<Definition, "title" | "atomic" | "definition" | "description">
+) {
+	const { title, atomic, definition, description } = data;
+	return useAwait(() =>
+		db.definition.create({ data: { authorId, title, atomic, definition, description } })
+	);
+}
+
+export function getDefinitionByTitle(title: string) {
+	return useAwait(() => db.definition.findFirst({ where: { title } }));
+}
 
 export function getUser(id: number) {
 	return useAwait(() => db.user.findFirstOrThrow({ where: { id } }));

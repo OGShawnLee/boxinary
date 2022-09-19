@@ -17,5 +17,10 @@ export async function isLoggedIn(authStateCookie: string | void) {
 }
 
 export function isJWTPayloadState(val: unknown): val is JWTPayloadState {
-	return isInterface<JWTPayloadState>(val, { id: isNumber, email: isString, name: isString });
+	return isInterface<JWTPayloadState>(val, {
+		id: isNumber,
+		email: isString,
+		name: isString,
+		displayName: isString
+	});
 }
