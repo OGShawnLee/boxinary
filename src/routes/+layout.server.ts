@@ -1,6 +1,6 @@
 import type { ServerLoad } from "@sveltejs/kit";
 import { AUTH_COOKIE } from "$env/static/private";
-import { error } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 import { useAwait } from "$lib/hooks";
 import { isJWTPayloadState } from "@root/server/validation";
 import { isEmpty } from "malachite-ui/predicate";
@@ -21,5 +21,5 @@ export const load: ServerLoad = async ({ cookies, locals }) => {
 	}
 
 	deleteAuthCookie(cookies);
-	throw error(400, { message: "Invalid Auth Token" });
+	throw redirect(303, "/auth/sign-in");
 };
