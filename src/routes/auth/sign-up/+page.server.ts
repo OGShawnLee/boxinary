@@ -50,14 +50,13 @@ export const actions: Actions = {
 
 		const [isEmailTaken, err] = await useAwait(() => db.user.findFirst({ where: { email } }));
 		if (isEmailTaken) return invalid(400, { name, displayName, email: { duplicate: true } });
-		if (err) return error(500, { message: "Unable to Verify Credentials" });
+		if (err) throw error(500, { message: "Unable to Verify Credentials" });
 
 		const createError = await useAwaitError(async () => {
 			const passwordHash = await hash(password, await genSalt(10));
 			await db.user.create({ data: { name, displayName, email, password: passwordHash } });
 		});
-		return createError
-			? error(500, { message: "Unable to Sign Up" })
-			: redirect(300, "/auth/sign-in");
+		if (createError) throw error(500, { message: "Unable to Sign Up" });
+		throw redirect(300, "/auth/sign-in");
 	}
 };
