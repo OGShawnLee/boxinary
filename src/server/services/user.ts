@@ -33,6 +33,16 @@ export function getUserByDisplayName(displayName: string) {
 	return useAwait(() => db.user.findFirst({ where: { displayName } }));
 }
 
+export function getUserDefinitions(displayName: string) {
+	return useAwait(() =>
+		db.definition.findMany({
+			where: { author: { displayName } },
+			select: { id: true, title: true, atomic: true, author: { select: { displayName: true } } },
+			orderBy: { createdAt: "desc" }
+		})
+	);
+}
+
 export async function getUserJWTTokenPayload(authStateCookie: string) {
 	const authState = verify(authStateCookie, ACCESS_TOKEN);
 	if (isJWTPayloadState(authState)) return authState;

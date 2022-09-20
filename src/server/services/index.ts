@@ -3,6 +3,7 @@ export {
 	getDefinitionByTitle,
 	getUser,
 	getUserByDisplayName,
+	getUserDefinitions,
 	getUserJWTTokenPayload,
 	handleAuthState,
 	handleClientUser,

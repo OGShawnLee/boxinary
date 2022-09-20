@@ -1,3 +1,10 @@
+interface AtomicDefinition {
+	id: number;
+	title: string;
+	atomic: string;
+	author: { displayName: string };
+}
+
 interface JWTPayloadState {
 	id: number;
 	email: string;
