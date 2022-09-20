@@ -6,7 +6,7 @@ import { isEmpty } from "malachite-ui/predicate";
 export const actions: Actions = {
 	default: async ({ cookies, request, params }) => {
 		const { id, displayName } = await handleAuthState(cookies);
-		if (displayName !== params.displayName) throw error(401, { message: "No Authorization" });
+		if (displayName !== params.displayName) throw error(403, { message: "Action Forbidden" });
 
 		const data = await request.formData();
 		const title = data.get("title");
