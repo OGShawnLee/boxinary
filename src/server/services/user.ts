@@ -43,6 +43,16 @@ export function getUserDefinitions(displayName: string) {
 	);
 }
 
+export function getUserDefinitionsById(id: number) {
+	return useAwait(() =>
+		db.definition.findMany({
+			where: { authorId: id },
+			select: { id: true, title: true, atomic: true, author: { select: { displayName: true } } },
+			orderBy: { createdAt: "desc" }
+		})
+	);
+}
+
 export async function getUserJWTTokenPayload(authStateCookie: string) {
 	const authState = verify(authStateCookie, ACCESS_TOKEN);
 	if (isJWTPayloadState(authState)) return authState;

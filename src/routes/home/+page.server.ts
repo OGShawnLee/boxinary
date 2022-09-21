@@ -1,10 +1,10 @@
-import type { ServerLoad } from "@sveltejs/kit";
-import { redirect } from "@sveltejs/kit";
-import { handleClientUser } from "@root/server/services";
+import type { PageServerLoad } from "./$types";
+import { error } from "@sveltejs/kit";
+import { getUserDefinitionsById, handleAuthState } from "@root/server/services";
 
-export const load: ServerLoad = async ({ locals, parent }) => {
-	await parent();
-	const { id } = locals.currentUser || {};
-	if (id) return await handleClientUser(id);
-	throw redirect(303, "/auth/sign-up");
+export const load: PageServerLoad = async ({ cookies }) => {
+	const { id } = await handleAuthState(cookies);
+	const [definitions] = await getUserDefinitionsById(id);
+	if (definitions) return { definitions };
+	throw error(500, { message: "Unable to Get User Definitions" });
 };
