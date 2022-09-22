@@ -1,5 +1,6 @@
 export {
 	createDefinition,
+	deleteUserDefinition,
 	getDefinitionByTitle,
 	getUser,
 	getUserByDisplayName,

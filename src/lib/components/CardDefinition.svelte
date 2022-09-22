@@ -22,7 +22,7 @@
 		<span> {definition.atomic} </span>
 	</div>
 	{#if isOwner}
-		<div>
+		<div class="flex items-center gap-6">
 			<a
 				class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
 				href="/{definition.author.displayName}/dictionary/{definition.title}/edit"
@@ -30,6 +30,16 @@
 			>
 				Edit
 			</a>
+			<form
+				method="post"
+				action="/{definition.author.displayName}/dictionary/{definition.title}/delete"
+			>
+				<button
+					class="min-h-10 px-6 | border-2 border-rose-600/50 rounded-xl text-rich-90 font-medium"
+				>
+					Delete
+				</button>
+			</form>
 		</div>
 	{/if}
 </article>

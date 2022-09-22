@@ -18,13 +18,22 @@
 			<span class="text-aqua-50"> {def.atomic} </span>
 		</div>
 		{#if isOwner}
-			<a
-				class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
-				href="/{def.author.displayName}/dictionary/{def.title}/edit"
-				data-sveltekit-prefetch
-			>
-				Update Definition
-			</a>
+			<div class="flex items-center gap-6">
+				<a
+					class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
+					href="/{def.author.displayName}/dictionary/{def.title}/edit"
+					data-sveltekit-prefetch
+				>
+					Update Definition
+				</a>
+				<form method="post" action="/{def.author.displayName}/dictionary/{def.title}/delete">
+					<button
+						class="min-h-10 px-6 | border-2 border-rose-600/50 rounded-xl text-rich-90 font-medium"
+					>
+						Delete Definition
+					</button>
+				</form>
+			</div>
 		{/if}
 	</header>
 	<div class="grid gap-3">

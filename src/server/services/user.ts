@@ -21,6 +21,10 @@ export function createDefinition(
 	);
 }
 
+export function deleteUserDefinition(definitionId: number) {
+	return useAwait(() => db.definition.delete({ where: { id: definitionId } }));
+}
+
 export function getDefinitionByTitle(displayName: string, title: string) {
 	return useAwait(async () => {
 		const def = await db.definition.findFirst({
