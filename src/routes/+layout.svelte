@@ -2,8 +2,11 @@
 	import "virtual:windi.css";
 	import type { LayoutData } from "./$types";
 	import { NavBar } from "$lib/layout";
+	import { currentUser } from "@root/state";
 
 	export let data: LayoutData;
+
+	currentUser.set(data.user);
 </script>
 
 <NavBar currentUser={data.user} />

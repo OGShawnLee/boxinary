@@ -47,6 +47,7 @@
 			maxlength={charLimit}
 			{bind}
 			input={{ class: className, id, name: id, maxlength: charLimit, placeholder, value }}
+			textarea={{ class: className, id, name: id, maxlength: charLimit, placeholder }}
 		>
 			<input
 				class={className}

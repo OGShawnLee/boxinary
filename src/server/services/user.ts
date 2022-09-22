@@ -22,7 +22,10 @@ export function createDefinition(
 }
 
 export function getDefinitionByTitle(title: string) {
-	return useAwait(() => db.definition.findFirst({ where: { title } }));
+	return useAwait(async () => {
+		const def = await db.definition.findFirst({ where: { title }, include: { author: true } });
+		return def ? { ...def, author: { displayName: def.author.displayName } } : null;
+	});
 }
 
 export function getUser(id: number) {
