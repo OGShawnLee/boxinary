@@ -32,13 +32,21 @@
 						</a>
 						<span class="text-xs font-medium"> @{currentUser.displayName} </span>
 					</div>
-					<form method="post" action="/auth/sign-out">
-						<button
-							class="min-h-10 px-6 | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
+					<div class="flex items-center gap-3">
+						<a
+							class="min-h-10 px-6 | grid place-content-center | border-2 border-aqua-50 rounded-xl font-bold text-white"
+							href="/{currentUser.displayName}/dictionary/i/add"
 						>
-							Sign Out
-						</button>
-					</form>
+							New
+						</a>
+						<form method="post" action="/auth/sign-out">
+							<button
+								class="min-h-10 px-6 | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
+							>
+								Sign Out
+							</button>
+						</form>
+					</div>
 				</div>
 			{:else}
 				<a
