@@ -21,9 +21,12 @@ export function createDefinition(
 	);
 }
 
-export function getDefinitionByTitle(title: string) {
+export function getDefinitionByTitle(displayName: string, title: string) {
 	return useAwait(async () => {
-		const def = await db.definition.findFirst({ where: { title }, include: { author: true } });
+		const def = await db.definition.findFirst({
+			where: { author: { displayName }, title },
+			include: { author: true }
+		});
 		return def ? { ...def, author: { displayName: def.author.displayName } } : null;
 	});
 }
