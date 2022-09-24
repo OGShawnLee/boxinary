@@ -39,38 +39,42 @@
 			<span>{charCount} / {charLimit}</span>
 		{/if}
 	</div>
-	<div class="border-2 border-transparent focus-within:border-white">
-		<!-- svelte-ignore invalid-html-attribute -->
-		<slot
-			{id}
-			{className}
-			maxlength={charLimit}
-			{bind}
-			input={{ class: className, id, name: id, maxlength: charLimit, placeholder, value }}
-			textarea={{ class: className, id, name: id, maxlength: charLimit, placeholder }}
-		>
-			<input
-				class={className}
-				type="text"
-				name={id}
-				{placeholder}
+	<div>
+		<div class="border-2 border-transparent focus-within:border-white">
+			<!-- svelte-ignore invalid-html-attribute -->
+			<slot
 				{id}
+				{className}
 				maxlength={charLimit}
-				bind:value
-			/>
-		</slot>
-		{#if isObject(error)}
-			{#if error.duplicate}
-				<span>{label} has been already taken.</span>
-			{:else if error.incorrect}
-				<span>Incorrect {label}.</span>
-			{:else if error.invalid}
-				<span>{label} is invalid.</span>
-			{:else if error.missing}
-				<span>{label} is required.</span>
-			{:else if error["not-found"]}
-				<span>{label} not found.</span>
+				{bind}
+				input={{ class: className, id, name: id, maxlength: charLimit, placeholder, value }}
+				textarea={{ class: className, id, name: id, maxlength: charLimit, placeholder }}
+			>
+				<input
+					class={className}
+					type="text"
+					name={id}
+					{placeholder}
+					{id}
+					maxlength={charLimit}
+					bind:value
+				/>
+			</slot>
+		</div>
+		<div class="mt-1.5">
+			{#if isObject(error)}
+				{#if error.duplicate}
+					<span>{label} has been already taken.</span>
+				{:else if error.incorrect}
+					<span>Incorrect {label}.</span>
+				{:else if error.invalid}
+					<span>{label} is invalid.</span>
+				{:else if error.missing}
+					<span>{label} is required.</span>
+				{:else if error["not-found"]}
+					<span>{label} not found.</span>
+				{/if}
 			{/if}
-		{/if}
+		</div>
 	</div>
 </div>
