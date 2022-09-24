@@ -11,7 +11,9 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			"@root": "src",
-			"@root/*": "src/*"
+			"@root/*": "src/*",
+			"@server": "src/server",
+			"@server/*": "src/server/*"
 		}
 	}
 };
