@@ -1,4 +1,15 @@
 <script lang="ts" context="module">
+	import { capitalise } from "$lib/utils";
+
+	function getErrorText(label: string, error: OnlyObject<ValidationUnit>) {
+		label = capitalise(handleDashes(label));
+		if (error.duplicate) return `${label} has been already taken.`;
+		if (error.incorrect) return `Incorrect ${label}.`;
+		if (error.invalid) return `${label} is invalid.`;
+		if (error.missing) return `${label} is required.`;
+		return `${label} not found.`;
+	}
+
 	function handleDashes(str: string) {
 		return str.split("-").join(" ");
 	}
@@ -61,20 +72,10 @@
 				/>
 			</slot>
 		</div>
-		<div class="mt-1.5">
-			{#if isObject(error)}
-				{#if error.duplicate}
-					<span>{label} has been already taken.</span>
-				{:else if error.incorrect}
-					<span>Incorrect {label}.</span>
-				{:else if error.invalid}
-					<span>{label} is invalid.</span>
-				{:else if error.missing}
-					<span>{label} is required.</span>
-				{:else if error["not-found"]}
-					<span>{label} not found.</span>
-				{/if}
-			{/if}
-		</div>
+		{#if isObject(error)}
+			<div class="mt-1.5">
+				<span>{getErrorText(label, error)}</span>
+			</div>
+		{/if}
 	</div>
 </div>
