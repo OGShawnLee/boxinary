@@ -37,8 +37,8 @@ export function deleteUserDefinition(definitionId: number) {
 }
 
 export function getDefinitionByTitle(displayName: string, title: string) {
-	return useAwait(async () => {
-		return db.definition.findFirst({
+	return useAwait(() =>
+		db.definition.findFirst({
 			where: { author: { displayName }, title },
 			select: {
 				id: true,
@@ -50,8 +50,8 @@ export function getDefinitionByTitle(displayName: string, title: string) {
 				author: { select: { displayName: true } },
 				examples: { select: { text: true, source: true }, orderBy: { createdAt: "desc" } }
 			}
-		});
-	});
+		})
+	);
 }
 
 export function getDefinitionId(displayName: string, title: string) {
