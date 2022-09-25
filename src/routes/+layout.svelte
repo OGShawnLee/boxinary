@@ -11,6 +11,6 @@
 
 <NavBar currentUser={data.user} />
 
-<div class="w-full max-w-6xl mx-auto mt-6 mb-12 | <lg:(px-4 mt-24)">
+<div class="w-full max-w-6xl mx-auto mt-24 mb-12 px-4 lg:(mt-6 px-0)">
 	<slot />
 </div>
