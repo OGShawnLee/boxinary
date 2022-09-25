@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
+	import { CardExample } from "$lib/components";
 	import { page } from "$app/stores";
 	import { isEmpty } from "malachite-ui/predicate";
 
@@ -62,13 +63,8 @@
 			<header class="flex flex-col gap-4.5">
 				<h2 class="text-xl text-white font-medium">Examples</h2>
 				<div class="grid gap-3">
-					{#each definition.examples as example}
-						<article class="space-y-1.5">
-							<h3 class="text-sm">{example.text}</h3>
-							<span class="text-xs italic | text-rich-50">
-								{example.source ? example.source : definition.author.displayName}
-							</span>
-						</article>
+					{#each definition.examples as { text, source }}
+						<CardExample {text} {source} displayName={definition.author.displayName} />
 					{/each}
 				</div>
 				{#if isOwner}
