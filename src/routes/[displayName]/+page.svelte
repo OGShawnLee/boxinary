@@ -14,11 +14,6 @@
 		<span class="font-medium"> @{data.foundUser.displayName} </span>
 	</div>
 	{#if data.isCurrentUser}
-		<a
-			class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
-			href="/settings/profile"
-		>
-			Edit Profile
-		</a>
+		<a class="button button--raisin grid-center" href="/settings/profile"> Edit Profile </a>
 	{/if}
 </header>

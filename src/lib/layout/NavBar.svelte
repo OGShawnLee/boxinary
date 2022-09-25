@@ -34,33 +34,19 @@
 					</div>
 					<div class="flex items-center gap-3">
 						<a
-							class="min-h-10 px-6 | grid place-content-center | border-2 border-aqua-50 rounded-xl font-bold text-white"
+							class="button button--aqua grid-center"
 							href="/{currentUser.displayName}/dictionary/i/add"
 						>
 							New
 						</a>
 						<form method="post" action="/auth/sign-out">
-							<button
-								class="min-h-10 px-6 | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
-							>
-								Sign Out
-							</button>
+							<button class="button button--raisin"> Sign Out </button>
 						</form>
 					</div>
 				</div>
 			{:else}
-				<a
-					class="min-h-10 px-6 | grid place-content-center | border-2 border-aqua-50 rounded-xl font-bold text-white"
-					href="/auth/sign-up"
-				>
-					Sign Up
-				</a>
-				<a
-					class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
-					href="/auth/sign-in"
-				>
-					Sign In
-				</a>
+				<a class="button button--aqua grid-center" href="/auth/sign-up"> Sign Up </a>
+				<a class="button button--raisin grid-center" href="/auth/sign-in"> Sign In </a>
 			{/if}
 		</div>
 	</div>

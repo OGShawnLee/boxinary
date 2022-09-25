@@ -20,11 +20,6 @@
 				<input type="password" {...input} use:bind />
 			</InputGroup>
 		</div>
-		<button
-			class="min-h-10 px-6 | grid place-content-center | border-2 border-aqua-50 rounded-xl font-bold text-white"
-			type="submit"
-		>
-			Sign In
-		</button>
+		<button class="button button--aqua" type="submit"> Sign In </button>
 	</form>
 </main>

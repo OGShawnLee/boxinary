@@ -24,11 +24,6 @@
 				value={data.user.displayName}
 			/>
 		</div>
-		<button
-			class="min-h-10 px-6 | grid place-content-center | border-2 border-aqua-50 rounded-xl font-bold text-white"
-			type="submit"
-		>
-			Update Profile
-		</button>
+		<button class="button button--aqua" type="submit"> Update Profile </button>
 	</form>
 </main>

@@ -22,16 +22,8 @@
 			</div>
 		</div>
 		<div class="flex flex-col gap-6 | lg:(flex-row items-center)">
-			<button
-				class="min-h-12 px-8 | border-2 border-aqua-50 rounded-xl text-white text-xl font-bold"
-			>
-				Get Started
-			</button>
-			<button
-				class="min-h-12 px-8 | border-2 border-raisin-20 rounded-xl text-rich-90 text-xl font-medium"
-			>
-				Documentation
-			</button>
+			<button class="button button--lg button--aqua"> Get Started </button>
+			<button class="button button--lg button--raisin text-rich-90"> Documentation </button>
 		</div>
 	</div>
 </section>

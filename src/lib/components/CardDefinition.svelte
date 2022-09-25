@@ -24,7 +24,7 @@
 	{#if isOwner}
 		<div class="flex items-center gap-6">
 			<a
-				class="min-h-10 px-6 | grid place-content-center | border-2 border-raisin-20 rounded-xl text-rich-90 font-medium"
+				class="button button--raisin grid-center"
 				href="/{definition.author.displayName}/dictionary/{definition.title}/edit"
 				data-sveltekit-prefetch
 			>
@@ -34,11 +34,7 @@
 				method="post"
 				action="/{definition.author.displayName}/dictionary/{definition.title}/delete"
 			>
-				<button
-					class="min-h-10 px-6 | border-2 border-rose-600/50 rounded-xl text-rich-90 font-medium"
-				>
-					Delete
-				</button>
+				<button class="button button--rose" type="submit"> Delete </button>
 			</form>
 		</div>
 	{/if}
