@@ -18,16 +18,30 @@ model User {
   email       String       @unique @db.VarChar(254)
   password    String       @db.VarChar(60)
   Definition  Definition[]
+  examples    Example[]
 }
 
 model Definition {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String   @db.VarChar(50)
-  atomic      String   @db.VarChar(80)
-  description String   @db.VarChar(300)
-  definition  String   @db.VarChar(560)
-  author      User     @relation(fields: [authorId], references: [id])
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  title       String    @db.VarChar(50)
+  atomic      String    @db.VarChar(80)
+  description String    @db.VarChar(300)
+  definition  String    @db.VarChar(560)
+  author      User      @relation(fields: [authorId], references: [id])
   authorId    Int
+  examples    Example[]
+}
+
+model Example {
+  id           BigInt     @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  definition   Definition @relation(fields: [definitionId], references: [id])
+  definitionId Int
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
+  text         String     @db.VarChar(240)
+  source       String?    @db.VarChar(60)
 }

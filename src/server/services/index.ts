@@ -1,7 +1,9 @@
 export {
+	addDefinitionExample,
 	createDefinition,
 	deleteUserDefinition,
 	getDefinitionByTitle,
+	getDefinitionId,
 	getUser,
 	getUserByDisplayName,
 	getUserDefinitions,

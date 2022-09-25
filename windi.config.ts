@@ -1,6 +1,13 @@
 import { defineConfig } from "vite-plugin-windicss";
 
 export default defineConfig({
+	shortcuts: {
+		button: "min-h-10 px-6 | border-2 rounded-xl",
+		"button--aqua": "border-aqua-50 rounded-xl font-bold text-white",
+		"button--raisin": "border-raisin-20 text-rich-90 font-medium",
+		"grid-center": "grid place-content-center",
+		"max-w-fit": "max-w-[fit-content]"
+	},
 	theme: {
 		extend: {
 			colors: {

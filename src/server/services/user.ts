@@ -1,6 +1,7 @@
 import type { Cookies } from "@sveltejs/kit";
 import type { Definition, User } from "@prisma/client";
 import type { ClientUser } from "@root/app";
+import type { Nullable } from "malachite-ui/types";
 import db from "$lib/db";
 import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import { useAwait } from "$lib/hooks";
@@ -10,6 +11,16 @@ import { isJWTPayloadState } from "@root/server/validation";
 import { deleteAuthCookie } from "@root/server/utils";
 import { error, redirect } from "@sveltejs/kit";
 import { isEmpty, isString } from "malachite-ui/predicate";
+
+export function addDefinitionExample(
+	id: number,
+	data: { uid: number; text: string; source: Nullable<string> }
+) {
+	const { uid, text, source } = data;
+	return useAwait(() =>
+		db.example.create({ data: { userId: uid, text, definitionId: id, source } })
+	);
+}
 
 export function createDefinition(
 	authorId: number,
@@ -27,11 +38,28 @@ export function deleteUserDefinition(definitionId: number) {
 
 export function getDefinitionByTitle(displayName: string, title: string) {
 	return useAwait(async () => {
+		return db.definition.findFirst({
+			where: { author: { displayName }, title },
+			select: {
+				title: true,
+				atomic: true,
+				definition: true,
+				description: true,
+				createdAt: true,
+				author: { select: { displayName: true } },
+				examples: { select: { text: true, source: true }, orderBy: { createdAt: "desc" } }
+			}
+		});
+	});
+}
+
+export function getDefinitionId(displayName: string, title: string) {
+	return useAwait(async () => {
 		const def = await db.definition.findFirst({
 			where: { author: { displayName }, title },
-			include: { author: true }
+			select: { id: true }
 		});
-		return def ? { ...def, author: { displayName: def.author.displayName } } : null;
+		return def?.id;
 	});
 }
 
