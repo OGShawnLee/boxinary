@@ -4,7 +4,7 @@ export default defineConfig({
 	shortcuts: {
 		button: "min-h-10 px-6 | border-2 rounded-xl",
 		"button--lg": "min-h-12 px-8 | text-xl",
-		"button--aqua": "border-aqua-50 rounded-xl font-bold text-white",
+		"button--aqua": "border-aqua-50 font-bold text-white",
 		"button--raisin": "border-raisin-20 text-rich-90 font-medium",
 		"button--rose": "border-rose-600/50 text-rich-90 font-medium",
 		"grid-center": "grid place-content-center",
