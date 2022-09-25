@@ -11,7 +11,7 @@ declare global {
 			currentUser: Nullable<{ id: number; name: string; displayName: string }>;
 		}
 		// interface PageData {}
-		// interface PageError {}
+		// interface Error {}
 		// interface Platform {}
 	}
 }
