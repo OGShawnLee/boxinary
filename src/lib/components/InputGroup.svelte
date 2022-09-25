@@ -1,5 +1,13 @@
 <script lang="ts" context="module">
 	import { capitalise } from "$lib/utils";
+	import { isAround } from "malachite-ui/predicate";
+
+	function getCharCountColour(amount: number, total: number) {
+		const percentage = getPercentage(amount, total);
+		if (isAround(percentage, { min: 0, max: 50 })) return "text-lime-400";
+		if (isAround(percentage, { min: 50, max: 80 })) return "text-orange-400";
+		return "text-rose-400";
+	}
 
 	function getErrorText(label: string, error: OnlyObject<ValidationUnit>) {
 		label = capitalise(handleDashes(label));
@@ -8,6 +16,10 @@
 		if (error.invalid) return `${label} is invalid.`;
 		if (error.missing) return `${label} is required.`;
 		return `${label} not found.`;
+	}
+
+	function getPercentage(amount: number, total: number) {
+		return (amount / total) * 100;
 	}
 
 	function handleDashes(str: string) {
@@ -47,7 +59,13 @@
 	<div class="flex items-center justify-between">
 		<label class="text-white font-bold capitalize" for={id}> {handleDashes(label)} </label>
 		{#if charLimit}
-			<span>{charCount} / {charLimit}</span>
+			<div class="font-victor">
+				<span class="font-medium {getCharCountColour(charCount, charLimit)}">
+					{charCount}
+				</span>
+				<span> / </span>
+				<span class="font-bold"> {charLimit} </span>
+			</div>
 		{/if}
 	</div>
 	<div>

@@ -31,7 +31,8 @@ export default defineConfig({
 				}
 			},
 			fontFamily: {
-				arimo: ["Arimo", "sans-serif"]
+				arimo: ["Arimo", "sans-serif"],
+				victor: ["Victor Mono", "monospace"]
 			}
 		}
 	}
