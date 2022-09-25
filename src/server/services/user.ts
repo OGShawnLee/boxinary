@@ -41,6 +41,7 @@ export function getDefinitionByTitle(displayName: string, title: string) {
 		return db.definition.findFirst({
 			where: { author: { displayName }, title },
 			select: {
+				id: true,
 				title: true,
 				atomic: true,
 				definition: true,
