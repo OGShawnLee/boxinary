@@ -2,6 +2,10 @@ import type { Example } from "@prisma/client";
 import db from "$lib/db";
 import { useAwait } from "$lib/hooks";
 
+export function deleteExample(id: bigint | number) {
+	return useAwait(() => db.example.delete({ where: { id } }));
+}
+
 export function getExample(id: number, definitionTitle: string) {
 	return useAwait(() =>
 		db.example.findFirst({

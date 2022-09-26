@@ -1,4 +1,4 @@
-export { getExample, updateExample } from "./example";
+export { deleteExample, getExample, updateExample } from "./example";
 export {
 	addDefinitionExample,
 	createDefinition,

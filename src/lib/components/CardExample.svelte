@@ -19,16 +19,27 @@
 	const isOwner = $currentUser?.displayName === displayName;
 </script>
 
-{#if isDedicated && createdAt}
+{#if isDedicated && createdAt && !isNullish(id)}
 	<article class="relative p-6 | flex flex-col gap-3 | bg-raisin-12 rounded-md rounded-tl-none">
 		<div class="absolute bottom-full inset-x-0 | flex items-center justify-between">
 			<span class="px-6 py-2 | bg-raisin-12 rounded-t-md text-xs">
 				{getFormatedDate(createdAt)}
 			</span>
 			{#if isOwner}
-				<a class="px-2 text-sm hover:text-aqua-50" href="{path}/{id}/edit" data-sveltekit-prefetch>
-					Edit
-				</a>
+				<div class="flex items-center gap-3">
+					<a
+						class="px-2 text-sm hover:text-aqua-50"
+						href="{path}/{id}/edit"
+						data-sveltekit-prefetch
+					>
+						Edit
+					</a>
+					<form action="{path}/{id}/delete" method="post">
+						<button class="px-2 text-sm text-rose-600/80 hover:text-rose-500" type="submit">
+							Delete
+						</button>
+					</form>
+				</div>
 			{/if}
 		</div>
 		<h3 class="text-rich-90">{text}</h3>
