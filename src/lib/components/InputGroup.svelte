@@ -37,16 +37,15 @@
 	export let id: string;
 	export let label = id;
 	export let error: Nullable<ValidationUnit> = undefined;
-	export let value = isString(error) ? error : "";
-	export let placeholder: Nullable<string> = undefined;
+	export let value: Nullable<string> = isString(error) ? error : "";
+	export let placeholder: Nullable<string> = value;
 	export let charLimit: Nullable<number> = undefined;
-	export let charCount = value.length;
+	export let charCount = value?.length ?? 0;
 	export { className as class };
 
-	$: charCount = value.length;
+	$: charCount = value?.length ?? 0;
 
 	function bind(element: HTMLInputElement | HTMLTextAreaElement) {
-		element.value = value;
 		return {
 			destroy: useListener(element, "input", () => {
 				value = element.value;
