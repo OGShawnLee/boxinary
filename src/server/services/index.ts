@@ -1,3 +1,4 @@
+export { getExample, updateExample } from "./example";
 export {
 	addDefinitionExample,
 	createDefinition,

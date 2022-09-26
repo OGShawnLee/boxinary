@@ -1,0 +1,41 @@
+import type { Actions, PageServerLoad } from "./$types";
+import { error, invalid, redirect } from "@sveltejs/kit";
+import { getExample, handleAuthState, updateExample } from "@server/services";
+import { isEmpty } from "malachite-ui/predicate";
+
+export const load: PageServerLoad = async ({ cookies, params: { displayName, id, title } }) => {
+	const currentUser = await handleAuthState(cookies);
+	if (currentUser.displayName !== displayName) throw error(403, { message: "Access Denied" });
+	const [example, err] = await getExample(Number(id), title);
+	if (err) throw error(500, { message: "Unable to Get Example" });
+	if (example) return { example };
+	throw error(404, { message: "Example not Found" });
+};
+
+export const actions: Actions = {
+	default: async ({ cookies, params: { displayName, id, title }, request }) => {
+		const currentUser = await handleAuthState(cookies);
+		if (currentUser.displayName !== displayName) throw error(403, { message: "Action Forbidden" });
+
+		const data = await request.formData();
+		const text = data.get("example");
+		const source = data.get("source");
+
+		if (typeof text !== "string") return invalid(400, { text: { invalid: true }, source });
+		if (isEmpty(text)) return invalid(400, { text: { missing: true }, source });
+
+		if (source) {
+			if (typeof source !== "string") return invalid(400, { source: { invalid: true }, text });
+			if (isEmpty(text)) return invalid(400, { source: { missing: true }, text });
+		}
+
+		const [initialExample, err] = await getExample(Number(id), title);
+		if (err) throw error(500, { message: "Unable to Update Example" });
+		if (!initialExample)
+			throw error(403, { message: "Example does not belong to this Definition" });
+
+		const [example] = await updateExample(initialExample.id, { text, source });
+		if (example) throw redirect(303, `/${displayName}/dictionary/${title}/examples`);
+		throw error(500, { message: "Unable to Update Example" });
+	}
+};

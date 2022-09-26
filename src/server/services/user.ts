@@ -62,7 +62,7 @@ export function getDefinitionExamples(definitionId: number) {
 	return useAwait(() =>
 		db.example.findMany({
 			where: { definitionId },
-			select: { text: true, source: true, createdAt: true },
+			select: { id: true, text: true, source: true, createdAt: true },
 			orderBy: { createdAt: "desc" }
 		})
 	);
