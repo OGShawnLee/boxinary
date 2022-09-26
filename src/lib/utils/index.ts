@@ -1,3 +1,3 @@
 export { exclude } from "./object";
-export { formatUserJoinDate } from "./time";
+export { formatUserJoinDate, getFormatedDate, getStringMonth } from "./time";
 export { capitalise } from "./string";

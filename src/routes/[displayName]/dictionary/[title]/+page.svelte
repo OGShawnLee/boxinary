@@ -57,7 +57,9 @@
 	{#if hasExamples}
 		<aside class="col-span-3">
 			<header class="flex flex-col gap-4.5">
-				<h2 class="text-xl text-white font-medium">Examples</h2>
+				<h2 class="text-xl text-white font-medium" title="View {definition.title} Examples">
+					<a class="hover:text-aqua-50" href="{path}/examples"> Examples </a>
+				</h2>
 				<div class="grid gap-3">
 					{#each definition.examples as { text, source }}
 						<CardExample {text} {source} displayName={definition.author.displayName} />

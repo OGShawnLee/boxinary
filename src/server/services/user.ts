@@ -48,7 +48,7 @@ export function getDefinitionByTitle(displayName: string, title: string) {
 				description: true,
 				createdAt: true,
 				author: { select: { displayName: true } },
-				examples: { select: { text: true, source: true }, orderBy: { createdAt: "desc" } }
+				examples: { select: { createdAt: true, text: true, source: true }, orderBy: { createdAt: "desc" } }
 			}
 		})
 	);

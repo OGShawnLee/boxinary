@@ -19,3 +19,11 @@ export function formatUserJoinDate(createdAt: Date) {
 	const date = createdAt.getDate();
 	return `Joined ${stringMonth} ${date}, ${createdAt.getFullYear()}`;
 }
+
+export function getFormatedDate(date: Date) {
+	return `${date.getDate()} ${getStringMonth(date.getMonth())} ${date.getFullYear()}`;
+}
+
+export function getStringMonth(month: number) {
+	return STRING_MONTHS[month as keyof typeof STRING_MONTHS];
+}
