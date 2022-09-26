@@ -6,7 +6,7 @@
 
 	export let data: PageData;
 
-	const { definition } = data;
+	const { definition, examples } = data;
 	const displayName = definition.author.displayName;
 	const isOwner = $currentUser?.displayName === displayName;
 	const path = $page.url.pathname;
@@ -31,7 +31,7 @@
 		{/if}
 	</header>
 	<main class="grid grid-cols-3 gap-x-6 gap-y-15">
-		{#each definition.examples as { text, source, createdAt }}
+		{#each examples as { text, source, createdAt }}
 			<CardExample isDedicated {text} {source} {createdAt} {displayName} />
 		{/each}
 	</main>

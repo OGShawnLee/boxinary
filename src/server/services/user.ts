@@ -49,10 +49,21 @@ export function getDefinitionByTitle(displayName: string, title: string) {
 				createdAt: true,
 				author: { select: { displayName: true } },
 				examples: {
-					select: { createdAt: true, text: true, source: true },
-					orderBy: { createdAt: "desc" }
+					select: { text: true, source: true },
+					orderBy: { createdAt: "desc" },
+					take: 3
 				}
 			}
+		})
+	);
+}
+
+export function getDefinitionExamples(definitionId: number) {
+	return useAwait(() =>
+		db.example.findMany({
+			where: { definitionId },
+			select: { text: true, source: true, createdAt: true },
+			orderBy: { createdAt: "desc" }
 		})
 	);
 }

@@ -3,6 +3,7 @@ export {
 	createDefinition,
 	deleteUserDefinition,
 	getDefinitionByTitle,
+	getDefinitionExamples,
 	getDefinitionId,
 	getUser,
 	getUserByDisplayName,
