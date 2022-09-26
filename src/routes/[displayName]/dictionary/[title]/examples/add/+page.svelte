@@ -24,9 +24,7 @@
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-6">
 				<InputGroup id="example" charLimit={240} error={form?.text} let:textarea let:bind>
-					<textarea {...textarea} use:bind>
-						{isString(form?.text) ? form?.text : ""}
-					</textarea>
+					<textarea {...textarea} use:bind>{isString(form?.text) ? form?.text : ""}</textarea>
 				</InputGroup>
 				<InputGroup id="source" charLimit={60} error={form?.source} />
 			</div>
