@@ -30,7 +30,7 @@
 			</a>
 		{/if}
 	</header>
-	<main class="grid grid-cols-3 gap-x-6 gap-y-18">
+	<main class="grid grid-cols-3 gap-x-6 gap-y-15">
 		{#each definition.examples as { text, source, createdAt }}
 			<CardExample isDedicated {text} {source} {createdAt} {displayName} />
 		{/each}

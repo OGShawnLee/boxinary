@@ -14,8 +14,8 @@
 </script>
 
 {#if isDedicated && createdAt}
-	<article class="relative p-6 | grid gap-3 | bg-raisin-12 rounded-md">
-		<span class="absolute bottom-full left-0 px-6 py-2 | bg-raisin-12 rounded-t-md">
+	<article class="relative p-6 | flex flex-col gap-3 | bg-raisin-12 rounded-md rounded-tl-none">
+		<span class="absolute bottom-full left-0 px-6 py-2 | bg-raisin-12 rounded-t-md text-xs">
 			{getFormatedDate(createdAt)}
 		</span>
 		<h3 class="text-rich-90">{text}</h3>
