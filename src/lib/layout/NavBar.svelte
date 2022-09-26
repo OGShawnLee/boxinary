@@ -7,7 +7,7 @@
 </script>
 
 <header
-	class="fixed top-0 inset-x-0 h-24 | flex items-center | bg-raisin-10/85 backdrop-filter backdrop-blur-sm | lg:static"
+	class="fixed top-0 inset-x-0 z-90 h-24 | flex items-center | bg-raisin-10/85 backdrop-filter backdrop-blur-sm | lg:static"
 >
 	<div class="w-full max-w-6xl mx-auto px-4 | flex items-center justify-between | lg:px-0">
 		<div class="flex items-center gap-24">
