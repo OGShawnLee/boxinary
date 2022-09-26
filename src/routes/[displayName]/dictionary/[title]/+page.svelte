@@ -16,7 +16,7 @@
 	<title>{definition.title} / Boxinary</title>
 </svelte:head>
 
-<div class="grid gap-12" class:grid-cols-12={hasExamples}>
+<div class="grid items-start gap-12" class:grid-cols-12={hasExamples}>
 	<main class="col-span-9 | grid gap-5">
 		<header class="flex items-end">
 			<div>
