@@ -62,6 +62,7 @@
 						class="hover:text-aqua-50"
 						href="{path}/examples"
 						title="View {definition.title} Examples"
+						data-sveltekit-prefetch
 					>
 						Examples
 					</a>
