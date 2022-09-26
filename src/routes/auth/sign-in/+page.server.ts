@@ -5,8 +5,8 @@ import { verify } from "jsonwebtoken";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { isEmpty } from "malachite-ui/predicate";
 import { useAwait } from "$lib/hooks";
-import { createUserJWT, deleteAuthCookie } from "@root/server/utils";
-import { isJWTPayloadState, isIncorrectPassword } from "@root/server/validation";
+import { createUserJWT, deleteAuthCookie } from "@server/utils";
+import { isJWTPayloadState, isIncorrectPassword } from "@server/validation";
 
 export const load: ServerLoad = async ({ cookies }) => {
 	const authStateCookie = cookies.get(AUTH_COOKIE);

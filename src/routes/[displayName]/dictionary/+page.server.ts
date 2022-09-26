@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { error } from "@sveltejs/kit";
-import { getUserByDisplayName, getUserDefinitions } from "@root/server/services";
+import { getUserByDisplayName, getUserDefinitions } from "@server/services";
 import { exclude } from "$lib/utils";
 
 export const load: PageServerLoad = async ({ params: { displayName } }) => {

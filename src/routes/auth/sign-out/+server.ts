@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { deleteAuthCookie } from "@root/server/utils";
+import { deleteAuthCookie } from "@server/utils";
 
 export const POST: RequestHandler = ({ cookies }) => {
 	deleteAuthCookie(cookies);

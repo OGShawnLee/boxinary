@@ -1,7 +1,7 @@
 import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { handleAuthState, updateUser } from "@root/server/services";
+import { handleAuthState, updateUser } from "@server/services";
 import { isEmpty } from "malachite-ui/predicate";
 
 export const load: PageServerLoad = async ({ parent }) => {

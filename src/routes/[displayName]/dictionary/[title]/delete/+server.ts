@@ -1,5 +1,5 @@
 import type { RequestHandler } from "./$types";
-import { deleteUserDefinition, getDefinitionByTitle, handleAuthState } from "@root/server/services";
+import { deleteUserDefinition, getDefinitionByTitle, handleAuthState } from "@server/services";
 
 function defineMessage(message: string) {
 	return JSON.stringify({ message });

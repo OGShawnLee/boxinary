@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { error } from "@sveltejs/kit";
-import { getUserDefinitionsById, handleAuthState } from "@root/server/services";
+import { getUserDefinitionsById, handleAuthState } from "@server/services";
 
 export const load: PageServerLoad = async ({ cookies }) => {
 	const { id } = await handleAuthState(cookies);

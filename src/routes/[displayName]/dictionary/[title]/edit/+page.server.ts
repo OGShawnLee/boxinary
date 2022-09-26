@@ -1,7 +1,7 @@
 import type { Actions } from "./$types";
 import db from "$lib/db";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { handleAuthState } from "@root/server/services";
+import { handleAuthState } from "@server/services";
 import { useAwait, useAwaitError } from "$lib/hooks";
 import { isEmpty } from "malachite-ui/predicate";
 

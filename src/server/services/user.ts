@@ -7,8 +7,8 @@ import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import { useAwait } from "$lib/hooks";
 import { exclude } from "$lib/utils";
 import { verify } from "jsonwebtoken";
-import { isJWTPayloadState } from "@root/server/validation";
-import { deleteAuthCookie } from "@root/server/utils";
+import { isJWTPayloadState } from "@server/validation";
+import { deleteAuthCookie } from "@server/utils";
 import { error, redirect } from "@sveltejs/kit";
 import { isEmpty, isString } from "malachite-ui/predicate";
 
@@ -48,7 +48,10 @@ export function getDefinitionByTitle(displayName: string, title: string) {
 				description: true,
 				createdAt: true,
 				author: { select: { displayName: true } },
-				examples: { select: { createdAt: true, text: true, source: true }, orderBy: { createdAt: "desc" } }
+				examples: {
+					select: { createdAt: true, text: true, source: true },
+					orderBy: { createdAt: "desc" }
+				}
 			}
 		})
 	);

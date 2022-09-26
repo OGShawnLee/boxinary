@@ -6,8 +6,8 @@ import { isEmpty } from "malachite-ui/predicate";
 import { genSalt, hash } from "bcrypt";
 import { useAwait, useAwaitError } from "$lib/hooks";
 import { verify } from "jsonwebtoken";
-import { deleteAuthCookie } from "@root/server/utils";
-import { isJWTPayloadState } from "@root/server/validation";
+import { deleteAuthCookie } from "@server/utils";
+import { isJWTPayloadState } from "@server/validation";
 
 export const load: ServerLoad = async ({ cookies }) => {
 	const authStateCookie = cookies.get(AUTH_COOKIE);

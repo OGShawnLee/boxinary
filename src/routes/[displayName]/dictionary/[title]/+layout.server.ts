@@ -1,6 +1,6 @@
 import type { LayoutServerLoad } from "./$types";
 import { error } from "@sveltejs/kit";
-import { getDefinitionByTitle } from "@root/server/services";
+import { getDefinitionByTitle } from "@server/services";
 
 export const load: LayoutServerLoad = async ({ params: { displayName, title } }) => {
 	const [definition, err] = await getDefinitionByTitle(displayName, title);

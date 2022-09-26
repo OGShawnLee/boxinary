@@ -1,5 +1,5 @@
 import type { Actions } from "./$types";
-import { createDefinition, handleAuthState } from "@root/server/services";
+import { createDefinition, handleAuthState } from "@server/services";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { isEmpty } from "malachite-ui/predicate";
 

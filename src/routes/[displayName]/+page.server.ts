@@ -1,5 +1,5 @@
 import type { PageServerLoad } from "./$types";
-import { getUserByDisplayName } from "@root/server/services";
+import { getUserByDisplayName } from "@server/services";
 import { error } from "@sveltejs/kit";
 import { exclude } from "$lib/utils";
 
