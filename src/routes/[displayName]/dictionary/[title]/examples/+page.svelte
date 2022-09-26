@@ -17,20 +17,23 @@
 </svelte:head>
 
 <div class="grid gap-18">
-	<header class="flex items-end justify-between">
+	<header class="flex flex-wrap items-end justify-between gap-3">
 		<div class="grid">
-			<h1 class="text-xl text-rich-90">
+			<h1 class="text-xl text-rich-90 | lg:text-2xl">
 				<strong class="text-white"> {definition.title} </strong> Examples
 			</h1>
 			<span class="text-sm text-aqua-50"> {definition.atomic} </span>
 		</div>
 		{#if isOwner}
-			<a class="button button--raisin grid-center | max-w-fit mt-1.5" href="{path}/add">
+			<a
+				class="button button--raisin grid-center | w-full mt-1.5 | sm:max-w-[fit-content]"
+				href="{path}/add"
+			>
 				Add Example
 			</a>
 		{/if}
 	</header>
-	<main class="grid grid-cols-3 gap-x-6 gap-y-15">
+	<main class="grid gap-x-6 gap-y-15 | sm:grid-cols-2 lg:grid-cols-3">
 		{#each examples as example}
 			<CardExample isDedicated {...example} {displayName} />
 		{/each}

@@ -32,7 +32,7 @@
 			{/if}
 		</div>
 		<h3 class="text-rich-90">{text}</h3>
-		<span class="italic"> {source ? source : displayName} </span>
+		<span class="text-xs italic | md:text-sm"> {source ? source : displayName} </span>
 	</article>
 {:else}
 	<article class="space-y-1.5">
