@@ -62,7 +62,13 @@ export function getDefinitionExamples(definitionId: number) {
 	return useAwait(() =>
 		db.example.findMany({
 			where: { definitionId },
-			select: { id: true, text: true, source: true, createdAt: true },
+			select: {
+				id: true,
+				text: true,
+				source: true,
+				createdAt: true,
+				definition: { select: { title: true } }
+			},
 			orderBy: { createdAt: "desc" }
 		})
 	);
@@ -84,6 +90,36 @@ export function getUser(id: number) {
 
 export function getUserByDisplayName(displayName: string) {
 	return useAwait(() => db.user.findFirst({ where: { displayName } }));
+}
+
+export function getUserDashboard(id: number) {
+	return useAwait(() =>
+		db.user.findFirst({
+			where: { id },
+			select: {
+				Definition: {
+					select: {
+						id: true,
+						title: true,
+						atomic: true,
+						author: { select: { displayName: true } }
+					},
+					orderBy: { createdAt: "desc" }
+				},
+				examples: {
+					select: {
+						id: true,
+						text: true,
+						source: true,
+						createdAt: true,
+						definition: { select: { title: true } }
+					},
+					take: 4,
+					orderBy: { createdAt: "desc" }
+				}
+			}
+		})
+	);
 }
 
 export function getUserDefinitions(displayName: string) {

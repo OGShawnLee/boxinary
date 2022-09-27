@@ -8,6 +8,7 @@ export {
 	getDefinitionId,
 	getUser,
 	getUserByDisplayName,
+	getUserDashboard,
 	getUserDefinitions,
 	getUserDefinitionsById,
 	getUserJWTTokenPayload,

@@ -35,7 +35,7 @@
 	</header>
 	<main class="grid gap-6 | sm:grid-cols-2 lg:grid-cols-3">
 		{#each examples as example}
-			<CardExample isDedicated {...example} {displayName} />
+			<CardExample isDedicated {...example} {displayName} redirectTo={path} />
 		{/each}
 	</main>
 </div>

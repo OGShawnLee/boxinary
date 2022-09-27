@@ -2,24 +2,24 @@
 	import type { Nullable } from "malachite-ui/types";
 	import { isNullish } from "malachite-ui/predicate";
 	import { getFormatedDate } from "$lib/utils";
-	import { page } from "$app/stores";
 	import { currentUser } from "@root/state";
 
-	export let text: string;
-	export let source: Nullable<string>;
-	export let displayName: string;
-	export let id: Nullable<bigint> = undefined;
 	export let isDedicated = false;
+	export let id: Nullable<bigint> = undefined;
+	export let displayName: string;
 	export let createdAt: Nullable<Date> = undefined;
+	export let text: string;
+	export let definition: Nullable<{ title: string }> = undefined;
+	export let source: Nullable<string> = displayName;
+	export let redirectTo = "/home";
 
-	if (isDedicated && (isNullish(createdAt) || isNullish(id)))
-		throw Error("createdAt and id must be given if Example is dedicated!");
-
-	const path = $page.url.pathname;
-	const isOwner = $currentUser?.displayName === displayName;
+	if (isDedicated && (isNullish(id) || isNullish(createdAt) || isNullish(definition)))
+		throw Error("id, createdAt and definition must be defined if Example is dedicated!");
 </script>
 
-{#if isDedicated && createdAt && !isNullish(id)}
+{#if isDedicated && typeof id === "bigint" && definition && createdAt}
+	{@const isOwner = $currentUser?.displayName === displayName}
+	{@const path = `/${displayName}/dictionary/${definition.title}/examples/${id}`}
 	<article class="relative flex flex-col">
 		<div class="min-h-10" aria-hidden />
 		<div class="h-full p-6 | flex flex-col gap-3 | bg-raisin-12 rounded-md rounded-tl-none">
@@ -32,14 +32,10 @@
 			</span>
 			{#if isOwner}
 				<div class="flex items-center gap-3">
-					<a
-						class="px-2 text-sm hover:text-aqua-50"
-						href="{path}/{id}/edit"
-						data-sveltekit-prefetch
-					>
+					<a class="px-2 text-sm hover:text-aqua-50" href="{path}/edit" data-sveltekit-prefetch>
 						Edit
 					</a>
-					<form action="{path}/{id}/delete" method="post">
+					<form action="{path}/delete/?redirect-to={redirectTo}" method="post">
 						<button class="px-2 text-sm text-rose-600/80 hover:text-rose-500" type="submit">
 							Delete
 						</button>
@@ -51,8 +47,6 @@
 {:else}
 	<article class="space-y-1.5">
 		<h3 class="text-sm">{text}</h3>
-		<span class="text-xs italic | text-rich-50">
-			{source ? source : displayName}
-		</span>
+		<span class="text-xs italic | text-rich-50"> {source} </span>
 	</article>
 {/if}
