@@ -16,7 +16,7 @@
 	<title>{definition.title} Examples / Boxinary</title>
 </svelte:head>
 
-<div class="grid gap-18">
+<div class="grid gap-9">
 	<header class="flex flex-wrap items-end justify-between gap-3">
 		<div class="grid">
 			<h1 class="text-xl text-rich-90 | lg:text-2xl">
@@ -33,7 +33,7 @@
 			</a>
 		{/if}
 	</header>
-	<main class="grid gap-x-6 gap-y-15 | sm:grid-cols-2 lg:grid-cols-3">
+	<main class="grid gap-6 | sm:grid-cols-2 lg:grid-cols-3">
 		{#each examples as example}
 			<CardExample isDedicated {...example} {displayName} />
 		{/each}

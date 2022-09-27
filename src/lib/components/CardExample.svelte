@@ -20,9 +20,14 @@
 </script>
 
 {#if isDedicated && createdAt && !isNullish(id)}
-	<article class="relative p-6 | flex flex-col gap-3 | bg-raisin-12 rounded-md rounded-tl-none">
-		<div class="absolute bottom-full inset-x-0 | flex items-center justify-between">
-			<span class="px-6 py-2 | bg-raisin-12 rounded-t-md text-xs">
+	<article class="relative flex flex-col">
+		<div class="min-h-10" aria-hidden />
+		<div class="h-full p-6 | flex flex-col gap-3 | bg-raisin-12 rounded-md rounded-tl-none">
+			<h3 class="text-rich-90">{text}</h3>
+			<span class="text-xs italic | md:text-sm"> {source} </span>
+		</div>
+		<div class="absolute inset-x-0 top-0 h-10 | flex items-center justify-between">
+			<span class="h-full px-6 | grid-center | bg-raisin-12 rounded-t-md text-xs">
 				{getFormatedDate(createdAt)}
 			</span>
 			{#if isOwner}
@@ -42,8 +47,6 @@
 				</div>
 			{/if}
 		</div>
-		<h3 class="text-rich-90">{text}</h3>
-		<span class="text-xs italic | md:text-sm"> {source ? source : displayName} </span>
 	</article>
 {:else}
 	<article class="space-y-1.5">
