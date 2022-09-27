@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>Boxinary / Home</title>
+	<title>Home / Boxinary</title>
 </svelte:head>
 
 <h1 class="sr-only">Home</h1>

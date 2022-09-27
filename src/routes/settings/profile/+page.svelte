@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Boxinary / Edit Profile</title>
+	<title>Edit Profile / Boxinary</title>
 </svelte:head>
 
 <h1 class="sr-only">Edit Profile</h1>

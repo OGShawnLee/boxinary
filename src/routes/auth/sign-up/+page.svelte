@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Boxinary / Sign Up</title>
+	<title>Sign Up / Boxinary</title>
 </svelte:head>
 
 <h1 class="sr-only">Sign Up</h1>
