@@ -6,7 +6,9 @@
 	$: isOwner = $currentUser?.displayName === definition.author.displayName;
 </script>
 
-<article class="px-6 py-3 | flex items-end justify-between gap-3 | bg-raisin-12 rounded-md">
+<article
+	class="px-6 py-3 | flex flex-wrap items-end justify-between gap-3 gap-x-6 | bg-raisin-12 rounded-md"
+>
 	<div>
 		<header>
 			<h2 class="text-xl text-white font-medium">

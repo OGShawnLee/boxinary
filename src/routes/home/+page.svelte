@@ -13,8 +13,8 @@
 
 <h1 class="sr-only">Home</h1>
 
-<main class="grid items-start grid-cols-12 gap-9">
-	<section class="col-span-8 | grid gap-9">
+<main class="grid items-start gap-9 lg:grid-cols-12">
+	<section class="grid gap-9 lg:col-span-8">
 		<h2 class="text-2xl text-white font-semibold">Definitions</h2>
 		<div class="grid gap-6">
 			{#each definitions as definition (definition.id)}
@@ -22,9 +22,9 @@
 			{/each}
 		</div>
 	</section>
-	<section class="col-span-4 | grid gap-9">
+	<section class="grid gap-9 lg:col-span-4">
 		<h2 class="text-2xl text-white font-semibold">Examples</h2>
-		<div class="grid gap-6">
+		<div class="grid gap-6 @md:grid-cols-2">
 			{#each examples as example}
 				<CardExample isDedicated {...example} displayName={currentUser.displayName} />
 			{/each}
