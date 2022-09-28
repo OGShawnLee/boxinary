@@ -4,15 +4,15 @@
 
 	export let data: PageData;
 
-	const { author, definitions } = data;
+	const { definitions, foundUser } = data;
 </script>
 
 <svelte:head>
-	<title>{data.author.name} (@{author.displayName}) Dictionary / Boxinary</title>
+	<title>{foundUser.name} (@{foundUser.displayName}) Dictionary / Boxinary</title>
 </svelte:head>
 
 <div class="grid gap-9">
-	<h1 class="text-2xl text-white font-bold">{author.displayName} Dictionary</h1>
+	<h1 class="text-2xl text-white font-bold">{foundUser.displayName} Dictionary</h1>
 	<main class="grid gap-6">
 		{#each definitions as definition (definition.id)}
 			<CardDefinition {definition} />

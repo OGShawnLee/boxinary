@@ -148,6 +148,41 @@ export async function getUserJWTTokenPayload(authStateCookie: string) {
 	throw new Error("Invalid Auth Token");
 }
 
+export function getUserProfileData(displayName: string) {
+	return useAwait(async () => {
+		const foundUser = await db.user.findFirstOrThrow({
+			where: { displayName },
+			select: {
+				name: true,
+				displayName: true,
+				createdAt: true,
+				Definition: {
+					select: { id: true, title: true, atomic: true },
+					orderBy: { createdAt: "desc" }
+				},
+				examples: {
+					select: {
+						id: true,
+						text: true,
+						source: true,
+						createdAt: true,
+						definition: { select: { title: true } }
+					},
+					take: 4,
+					orderBy: { createdAt: "desc" }
+				}
+			}
+		});
+		return {
+			foundUser: { name: foundUser.name, displayName, createdAt: foundUser.createdAt },
+			definitions: foundUser.Definition.map((definition) => {
+				return { ...definition, author: { displayName } };
+			}),
+			examples: foundUser.examples
+		};
+	});
+}
+
 export async function handleAuthState(cookies: Cookies) {
 	const authStateCookie = cookies.get(AUTH_COOKIE);
 	if (!isString(authStateCookie) || isEmpty(authStateCookie)) throw redirect(303, "/auth/sign-in");

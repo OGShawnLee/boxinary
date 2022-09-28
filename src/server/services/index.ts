@@ -12,6 +12,7 @@ export {
 	getUserDefinitions,
 	getUserDefinitionsById,
 	getUserJWTTokenPayload,
+	getUserProfileData,
 	handleAuthState,
 	handleClientUser,
 	updateUser
