@@ -12,7 +12,7 @@
 	<title>Editing {def.title} / Boxinary</title>
 </svelte:head>
 
-<h1 class="sr-only">Creating a new Definition</h1>
+<h1 class="sr-only">Editing {def.title}</h1>
 
 <main>
 	<form class="grid gap-9" method="post">
