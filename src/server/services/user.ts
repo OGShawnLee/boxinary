@@ -150,7 +150,7 @@ export async function getUserJWTTokenPayload(authStateCookie: string) {
 
 export function getUserProfileData(displayName: string) {
 	return useAwait(async () => {
-		const foundUser = await db.user.findFirstOrThrow({
+		const foundUser = await db.user.findFirst({
 			where: { displayName },
 			select: {
 				name: true,
@@ -173,6 +173,9 @@ export function getUserProfileData(displayName: string) {
 				}
 			}
 		});
+
+		if (!foundUser) return null;
+
 		return {
 			foundUser: { name: foundUser.name, displayName, createdAt: foundUser.createdAt },
 			definitions: foundUser.Definition.map((definition) => {
