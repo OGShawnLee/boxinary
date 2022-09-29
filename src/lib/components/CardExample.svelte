@@ -5,6 +5,7 @@
 	import { currentUser } from "@root/state";
 
 	export let isDedicated = false;
+	export let hasBackground = true;
 	export let id: Nullable<bigint> = undefined;
 	export let displayName: string;
 	export let createdAt: Nullable<Date> = undefined;
@@ -20,14 +21,22 @@
 {#if isDedicated && typeof id === "bigint" && definition && createdAt}
 	{@const isOwner = $currentUser?.displayName === displayName}
 	{@const path = `/${displayName}/dictionary/${definition.title}/examples/${id}`}
-	<article class="relative flex flex-col">
+	<article class="relative w-full | flex flex-col">
 		<div class="min-h-10" aria-hidden />
-		<div class="h-full p-6 | flex flex-col gap-3 | bg-raisin-12 rounded-md rounded-tl-none">
+		<div
+			class="h-full | flex flex-col gap-3 | rounded-md rounded-tl-none"
+			class:bg-raisin-12={hasBackground}
+			class:p-6={hasBackground}
+		>
 			<h3 class="text-rich-90">{text}</h3>
 			<span class="text-xs italic | md:text-sm"> {source} </span>
 		</div>
 		<div class="absolute inset-x-0 top-0 h-10 | flex items-center justify-between">
-			<span class="h-full px-6 | grid-center | bg-raisin-12 rounded-t-md text-xs">
+			<span
+				class="h-full | grid-center | rounded-t-md text-xs"
+				class:bg-raisin-12={hasBackground}
+				class:px-6={hasBackground}
+			>
 				{getFormatedDate(createdAt)}
 			</span>
 			{#if isOwner}

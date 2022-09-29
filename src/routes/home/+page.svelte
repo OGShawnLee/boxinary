@@ -23,7 +23,16 @@
 		</div>
 	</section>
 	<section class="grid gap-9 lg:col-span-4">
-		<h2 class="text-2xl text-white font-semibold">Examples</h2>
+		<h2 class="text-2xl text-white font-semibold">
+			<a
+				class="hover:(text-aqua-50 underline)"
+				href="{currentUser.displayName}/dictionary/examples"
+				title="View your Examples"
+				data-sveltekit-prefetch
+			>
+				Examples
+			</a>
+		</h2>
 		<div class="grid gap-6 @md:grid-cols-2">
 			{#each examples as example}
 				<CardExample isDedicated {...example} displayName={currentUser.displayName} />

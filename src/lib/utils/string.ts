@@ -8,3 +8,7 @@ export function capitalise(str: string) {
 export function defineMessage(message: string) {
 	return JSON.stringify({ message });
 }
+
+export function possessive(name: string) {
+	return name.toLowerCase().endsWith("s") ? name + "'" : name + "'s";
+}

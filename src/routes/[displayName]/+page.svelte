@@ -2,7 +2,7 @@
 	import type { PageData } from "./$types";
 	import { CardDefinition, CardExample } from "$lib/components";
 	import { currentUser } from "@root/state";
-	import { getFormatedDate } from "@root/lib/utils";
+	import { getFormatedDate, possessive } from "@root/lib/utils";
 
 	export let data: PageData;
 
@@ -31,7 +31,16 @@
 			</span>
 		</header>
 		<section class="grid gap-9">
-			<h2 class="text-2xl text-white font-semibold">Examples</h2>
+			<h2 class="text-2xl text-white font-semibold">
+				<a
+					class="hover:(text-aqua-50 underline)"
+					href="{foundUser.displayName}/dictionary/examples"
+					title="View {isOwner ? 'your' : possessive(foundUser.displayName)} Examples"
+					data-sveltekit-prefetch
+				>
+					Examples
+				</a>
+			</h2>
 			<div class="grid gap-6">
 				{#each examples as example}
 					<CardExample isDedicated {...example} displayName={foundUser.displayName} />

@@ -11,6 +11,7 @@ export {
 	getUserDashboard,
 	getUserDefinitions,
 	getUserDefinitionsById,
+	getUserExamples,
 	getUserJWTTokenPayload,
 	getUserProfileData,
 	handleAuthState,

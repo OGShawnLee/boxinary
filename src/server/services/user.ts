@@ -142,6 +142,22 @@ export function getUserDefinitionsById(id: number) {
 	);
 }
 
+export function getUserExamples(uid: number) {
+	return useAwait(() =>
+		db.example.findMany({
+			where: { userId: uid },
+			select: {
+				id: true,
+				text: true,
+				source: true,
+				createdAt: true,
+				definition: { select: { atomic: true, title: true } }
+			},
+			orderBy: { createdAt: "desc" }
+		})
+	);
+}
+
 export async function getUserJWTTokenPayload(authStateCookie: string) {
 	const authState = verify(authStateCookie, ACCESS_TOKEN);
 	if (isJWTPayloadState(authState)) return authState;
@@ -153,6 +169,7 @@ export function getUserProfileData(displayName: string) {
 		const foundUser = await db.user.findFirst({
 			where: { displayName },
 			select: {
+				id: true,
 				name: true,
 				displayName: true,
 				createdAt: true,
@@ -177,7 +194,12 @@ export function getUserProfileData(displayName: string) {
 		if (!foundUser) return null;
 
 		return {
-			foundUser: { name: foundUser.name, displayName, createdAt: foundUser.createdAt },
+			foundUser: {
+				id: foundUser.id,
+				name: foundUser.name,
+				displayName,
+				createdAt: foundUser.createdAt
+			},
 			definitions: foundUser.Definition.map((definition) => {
 				return { ...definition, author: { displayName } };
 			}),
