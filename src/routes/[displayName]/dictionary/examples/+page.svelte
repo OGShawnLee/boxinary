@@ -3,7 +3,7 @@
 	import { CardExample, Header } from "$lib/components";
 	import { page } from "$app/stores";
 	import { currentUser } from "@root/state";
-	import { possessive } from "@root/lib/utils";
+	import { possessive } from "$lib/utils";
 
 	export let data: PageData;
 

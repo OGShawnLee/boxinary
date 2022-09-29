@@ -2,7 +2,7 @@
 	import type { PageData } from "./$types";
 	import { CardDefinition, CardExample } from "$lib/components";
 	import { currentUser } from "@root/state";
-	import { getFormatedDate, possessive } from "@root/lib/utils";
+	import { getFormatedDate, possessive } from "$lib/utils";
 
 	export let data: PageData;
 
