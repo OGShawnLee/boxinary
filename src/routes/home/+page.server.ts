@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	const [dashboard] = await getUserDashboard(id);
 	if (dashboard)
 		return {
-			definitions: dashboard.Definition,
+			definitions: dashboard.definitions,
 			examples: dashboard.examples,
 			currentUser: { displayName }
 		};

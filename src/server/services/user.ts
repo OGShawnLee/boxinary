@@ -97,7 +97,7 @@ export function getUserDashboard(id: number) {
 		db.user.findFirst({
 			where: { id },
 			select: {
-				Definition: {
+				definitions: {
 					select: {
 						id: true,
 						title: true,
@@ -173,7 +173,7 @@ export function getUserProfileData(displayName: string) {
 				name: true,
 				displayName: true,
 				createdAt: true,
-				Definition: {
+				definitions: {
 					select: { id: true, title: true, atomic: true },
 					orderBy: { createdAt: "desc" }
 				},
@@ -200,7 +200,7 @@ export function getUserProfileData(displayName: string) {
 				displayName,
 				createdAt: foundUser.createdAt
 			},
-			definitions: foundUser.Definition.map((definition) => {
+			definitions: foundUser.definitions.map((definition) => {
 				return { ...definition, author: { displayName } };
 			}),
 			examples: foundUser.examples

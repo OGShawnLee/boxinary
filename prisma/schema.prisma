@@ -17,7 +17,7 @@ model User {
   displayName String       @unique @db.VarChar(16)
   email       String       @unique @db.VarChar(254)
   password    String       @db.VarChar(60)
-  Definition  Definition[]
+  definitions Definition[]
   examples    Example[]
 }
 
