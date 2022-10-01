@@ -191,20 +191,22 @@ export function getUserProfileData(displayName: string) {
 			}
 		});
 
-		if (!foundUser) return null;
+		if (foundUser) {
+			return {
+				foundUser: {
+					id: foundUser.id,
+					name: foundUser.name,
+					displayName,
+					createdAt: foundUser.createdAt
+				},
+				definitions: foundUser.definitions.map((definition) => {
+					return { ...definition, user: { displayName } };
+				}),
+				examples: foundUser.examples
+			};
+		}
 
-		return {
-			foundUser: {
-				id: foundUser.id,
-				name: foundUser.name,
-				displayName,
-				createdAt: foundUser.createdAt
-			},
-			definitions: foundUser.definitions.map((definition) => {
-				return { ...definition, user: { displayName } };
-			}),
-			examples: foundUser.examples
-		};
+		return null;
 	});
 }
 
