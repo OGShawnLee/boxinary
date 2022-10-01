@@ -7,7 +7,7 @@
 	export let data: PageData;
 	const { definition, user: currentUser } = data;
 
-	const isOwner = currentUser?.displayName === definition.author.displayName;
+	const isOwner = currentUser?.displayName === definition.user.displayName;
 	const path = $page.url.pathname;
 	const hasExamples = !isEmpty(definition.examples);
 </script>
@@ -27,7 +27,7 @@
 				<div class="flex-grow flex items-center justify-end gap-6">
 					<a
 						class="button button--raisin grid-center"
-						href="/{definition.author.displayName}/dictionary/{definition.title}/edit"
+						href="/{definition.user.displayName}/dictionary/{definition.title}/edit"
 						data-sveltekit-prefetch
 					>
 						Update Definition
@@ -42,7 +42,7 @@
 					{/if}
 					<form
 						method="post"
-						action="/{definition.author.displayName}/dictionary/{definition.title}/delete"
+						action="/{definition.user.displayName}/dictionary/{definition.title}/delete"
 					>
 						<button class="button button--rose" type="submit"> Delete Definition </button>
 					</form>
@@ -69,7 +69,7 @@
 				</h2>
 				<div class="grid gap-3">
 					{#each definition.examples as { text, source }}
-						<CardExample {text} {source} displayName={definition.author.displayName} />
+						<CardExample {text} {source} displayName={definition.user.displayName} />
 					{/each}
 				</div>
 				{#if isOwner}

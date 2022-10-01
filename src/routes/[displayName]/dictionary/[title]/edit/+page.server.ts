@@ -38,7 +38,7 @@ export const actions: Actions = {
 
 		const [initialDefinition] = await useAwait(() =>
 			db.definition.findFirst({
-				where: { title: params.title, authorId: id },
+				where: { title: params.title, userId: id },
 				select: { id: true }
 			})
 		);

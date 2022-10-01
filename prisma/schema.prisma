@@ -29,8 +29,8 @@ model Definition {
   atomic      String    @db.VarChar(80)
   description String    @db.VarChar(300)
   definition  String    @db.VarChar(560)
-  author      User      @relation(fields: [authorId], references: [id])
-  authorId    Int
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
   examples    Example[]
 }
 

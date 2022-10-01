@@ -2,7 +2,7 @@ interface AtomicDefinition {
 	id: number;
 	title: string;
 	atomic: string;
-	author: { displayName: string };
+	user: { displayName: string };
 }
 
 interface JWTPayloadState {

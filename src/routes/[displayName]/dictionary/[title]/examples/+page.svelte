@@ -7,7 +7,7 @@
 	export let data: PageData;
 
 	const { definition, examples } = data;
-	const displayName = definition.author.displayName;
+	const displayName = definition.user.displayName;
 	const isOwner = $currentUser?.displayName === displayName;
 	const path = $page.url.pathname;
 </script>

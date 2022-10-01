@@ -23,12 +23,12 @@ export function addDefinitionExample(
 }
 
 export function createDefinition(
-	authorId: number,
+	userId: number,
 	data: Pick<Definition, "title" | "atomic" | "definition" | "description">
 ) {
 	const { title, atomic, definition, description } = data;
 	return useAwait(() =>
-		db.definition.create({ data: { authorId, title, atomic, definition, description } })
+		db.definition.create({ data: { userId, title, atomic, definition, description } })
 	);
 }
 
@@ -39,7 +39,7 @@ export function deleteUserDefinition(definitionId: number) {
 export function getDefinitionByTitle(displayName: string, title: string) {
 	return useAwait(() =>
 		db.definition.findFirst({
-			where: { author: { displayName }, title },
+			where: { user: { displayName }, title },
 			select: {
 				id: true,
 				title: true,
@@ -47,7 +47,7 @@ export function getDefinitionByTitle(displayName: string, title: string) {
 				definition: true,
 				description: true,
 				createdAt: true,
-				author: { select: { displayName: true } },
+				user: { select: { displayName: true } },
 				examples: {
 					select: { text: true, source: true },
 					orderBy: { createdAt: "desc" },
@@ -77,7 +77,7 @@ export function getDefinitionExamples(definitionId: number) {
 export function getDefinitionId(displayName: string, title: string) {
 	return useAwait(async () => {
 		const def = await db.definition.findFirst({
-			where: { author: { displayName }, title },
+			where: { user: { displayName }, title },
 			select: { id: true }
 		});
 		return def?.id;
@@ -102,7 +102,7 @@ export function getUserDashboard(id: number) {
 						id: true,
 						title: true,
 						atomic: true,
-						author: { select: { displayName: true } }
+						user: { select: { displayName: true } }
 					},
 					orderBy: { createdAt: "desc" }
 				},
@@ -125,8 +125,8 @@ export function getUserDashboard(id: number) {
 export function getUserDefinitions(displayName: string) {
 	return useAwait(() =>
 		db.definition.findMany({
-			where: { author: { displayName } },
-			select: { id: true, title: true, atomic: true, author: { select: { displayName: true } } },
+			where: { user: { displayName } },
+			select: { id: true, title: true, atomic: true, user: { select: { displayName: true } } },
 			orderBy: { createdAt: "desc" }
 		})
 	);
@@ -135,8 +135,8 @@ export function getUserDefinitions(displayName: string) {
 export function getUserDefinitionsById(id: number) {
 	return useAwait(() =>
 		db.definition.findMany({
-			where: { authorId: id },
-			select: { id: true, title: true, atomic: true, author: { select: { displayName: true } } },
+			where: { userId: id },
+			select: { id: true, title: true, atomic: true, user: { select: { displayName: true } } },
 			orderBy: { createdAt: "desc" }
 		})
 	);
@@ -201,7 +201,7 @@ export function getUserProfileData(displayName: string) {
 				createdAt: foundUser.createdAt
 			},
 			definitions: foundUser.definitions.map((definition) => {
-				return { ...definition, author: { displayName } };
+				return { ...definition, user: { displayName } };
 			}),
 			examples: foundUser.examples
 		};

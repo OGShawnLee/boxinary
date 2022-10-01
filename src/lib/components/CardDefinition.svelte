@@ -3,7 +3,7 @@
 
 	export let definition: AtomicDefinition;
 
-	$: isOwner = $currentUser?.displayName === definition.author.displayName;
+	$: isOwner = $currentUser?.displayName === definition.user.displayName;
 </script>
 
 <article
@@ -14,7 +14,7 @@
 			<h2 class="text-xl text-white font-medium">
 				<a
 					class="hover:text-aqua-50"
-					href="/{definition.author.displayName}/dictionary/{definition.title}"
+					href="/{definition.user.displayName}/dictionary/{definition.title}"
 					data-sveltekit-prefetch
 				>
 					{definition.title}
@@ -27,14 +27,14 @@
 		<div class="flex items-center gap-6">
 			<a
 				class="button button--raisin grid-center"
-				href="/{definition.author.displayName}/dictionary/{definition.title}/edit"
+				href="/{definition.user.displayName}/dictionary/{definition.title}/edit"
 				data-sveltekit-prefetch
 			>
 				Edit
 			</a>
 			<form
 				method="post"
-				action="/{definition.author.displayName}/dictionary/{definition.title}/delete"
+				action="/{definition.user.displayName}/dictionary/{definition.title}/delete"
 			>
 				<button class="button button--rose" type="submit"> Delete </button>
 			</form>
