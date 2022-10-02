@@ -32,7 +32,8 @@
 	import { useListener } from "malachite-ui/hooks";
 	import { isObject, isString } from "malachite-ui/predicate";
 
-	let className = "w-full py-2.5 px-3 | bg-raisin-12 outline-none text-white font-medium";
+	let className =
+		"w-full py-2.5 px-3 | bg-raisin-12 outline-none text-white font-medium placeholder-rich-50";
 
 	export let id: string;
 	export let label = id;
