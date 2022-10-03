@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { InputGroup } from "$lib/components";
+
+	export let form: ValidationForm<"name" | "displayName" | "email" | "password">;
 </script>
 
 <svelte:head>
@@ -23,18 +25,39 @@
 		</div>
 		<form class="grid gap-6" method="post">
 			<div class="grid gap-4.5">
-				<InputGroup id="name" icon="bx-user-circle" charLimit={50} placeholder="John Doe" />
+				<InputGroup
+					id="name"
+					icon="bx-user-circle"
+					charLimit={50}
+					placeholder="John Doe"
+					error={form?.name}
+				/>
 				<InputGroup
 					id="display-name"
 					label="username"
 					icon="bx-at"
 					charLimit={16}
+					error={form?.displayName}
 					placeholder="OGJohnDoe"
 				/>
-				<InputGroup id="email" icon="bx-envelope" charLimit={254} let:input let:bind>
+				<InputGroup
+					id="email"
+					icon="bx-envelope"
+					charLimit={254}
+					error={form?.email}
+					let:input
+					let:bind
+				>
 					<input type="email" {...input} placeholder="OGJohnDoe@example" use:bind />
 				</InputGroup>
-				<InputGroup id="password" icon="bx-lock" charLimit={80} let:input let:bind>
+				<InputGroup
+					id="password"
+					icon="bx-lock"
+					charLimit={80}
+					error={form?.password}
+					let:input
+					let:bind
+				>
 					<input type="password" {...input} use:bind />
 				</InputGroup>
 			</div>
