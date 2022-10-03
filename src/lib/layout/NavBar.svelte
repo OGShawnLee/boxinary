@@ -12,7 +12,7 @@
 	<div class="w-full max-w-6xl mx-auto px-4 | flex items-center justify-between | lg:px-0">
 		<div class="flex items-center gap-24">
 			<a href="/">
-				<span class="font-bold text-2xl text-white md:text-4xl"> Boxinary </span>
+				<span class="text-2xl text-white font-medium font-poppins md:text-4xl"> Boxinary </span>
 			</a>
 			<nav class="hidden | lg:block">
 				<ul class="flex items-center gap-12 | font-medium">
