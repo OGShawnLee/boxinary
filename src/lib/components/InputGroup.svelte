@@ -42,6 +42,7 @@
 	export let placeholder: Nullable<string> = value;
 	export let charLimit: Nullable<number> = undefined;
 	export let charCount = value?.length ?? 0;
+	export let icon: Nullable<string> = undefined;
 	export { className as class };
 
 	$: charCount = value?.length ?? 0;
@@ -55,9 +56,11 @@
 	}
 </script>
 
-<div class="grid gap-3">
+<div class="group grid gap-1.5">
 	<div class="flex items-center justify-between">
-		<label class="text-white font-bold capitalize" for={id}> {handleDashes(label)} </label>
+		<label class="font-medium capitalize group-focus-within:text-white" for={id}>
+			{handleDashes(label)}
+		</label>
 		{#if charLimit}
 			<div class="font-victor">
 				<span class="font-medium {getCharCountColour(charCount, charLimit)}">
@@ -69,7 +72,14 @@
 		{/if}
 	</div>
 	<div>
-		<div class="border-2 border-transparent focus-within:border-white">
+		<div
+			class="min-h-10 | flex | border-2 border-transparent rounded-xl overflow-hidden focus-within:border-white"
+		>
+			{#if icon}
+				<div class="w-12 min-w-12 h-12 | grid-center | bg-raisin-15">
+					<i class="bx {icon} text-2xl group-focus-within:text-white" />
+				</div>
+			{/if}
 			<!-- svelte-ignore invalid-html-attribute -->
 			<slot
 				{id}
