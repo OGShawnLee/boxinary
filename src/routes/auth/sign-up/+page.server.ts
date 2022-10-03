@@ -29,19 +29,16 @@ export const actions: Actions = {
 		const password = data.get("password");
 
 		if (typeof name !== "string")
-			return invalid(400, { name: { invalid: true }, displayName, email, password });
-		if (isEmpty(name))
-			return invalid(400, { name: { missing: true }, displayName, email, password });
+			return invalid(400, { name: { invalid: true }, displayName, email });
+		if (isEmpty(name)) return invalid(400, { name: { missing: true }, displayName, email });
 
 		if (typeof displayName !== "string")
-			return invalid(400, { name, displayName: { invalid: true }, email, password });
-		if (isEmpty(displayName))
-			return invalid(400, { name, displayName: { missing: true }, email, password });
+			return invalid(400, { name, displayName: { invalid: true }, email });
+		if (isEmpty(displayName)) return invalid(400, { name, displayName: { missing: true }, email });
 
 		if (typeof email !== "string")
-			return invalid(400, { name, displayName, password, email: { invalid: true } });
-		if (isEmpty(email))
-			return invalid(400, { name, displayName, password, email: { missing: true } });
+			return invalid(400, { name, displayName, email: { invalid: true } });
+		if (isEmpty(email)) return invalid(400, { name, displayName, email: { missing: true } });
 
 		if (typeof password !== "string")
 			return invalid(400, { name, displayName, email, password: { invalid: true } });
