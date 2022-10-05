@@ -23,12 +23,19 @@
 			<span>{collection.shortDescription}</span>
 		{/if}
 	</div>
-	<div class="absolute inset-x-0 top-0 h-10 | flex items-center">
+	<div class="absolute inset-x-0 top-0 h-10 | flex items-center justify-between">
 		<time
 			class="h-full px-6 | grid-center | bg-raisin-12 rounded-t-md text-xs"
 			datetime={collection.createdAt.toISOString()}
 		>
 			{getFormatedDate(collection.createdAt)}
 		</time>
+		<a
+			class="px-2 text-sm hover:text-aqua-50"
+			href="/{displayName}/collections/{collection.id}/edit"
+			data-sveltekit-prefetch
+		>
+			Edit
+		</a>
 	</div>
 </article>
