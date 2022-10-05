@@ -12,3 +12,10 @@ export function createCollection(
 export function findCollection(id: number, displayName: string) {
 	return useAwait(() => db.collection.findFirst({ where: { id, user: { displayName } } }));
 }
+
+export function updateCollection(
+	id: number,
+	data: Pick<Collection, "name" | "shortDescription" | "longDescription">
+) {
+	return useAwait(() => db.collection.update({ where: { id }, data }));
+}

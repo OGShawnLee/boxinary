@@ -1,4 +1,4 @@
-export { createCollection, findCollection } from "./collection";
+export { createCollection, findCollection, updateCollection } from "./collection";
 export { deleteExample, getExample, updateExample } from "./example";
 export {
 	addDefinitionExample,
