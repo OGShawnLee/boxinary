@@ -104,11 +104,7 @@ export function getUserDashboard(id: number) {
 			where: { id },
 			select: {
 				collections: {
-					select: {
-						id: true,
-						name: true,
-						shortDescription: true
-					},
+					select: { id: true, name: true, shortDescription: true, createdAt: true },
 					orderBy: { createdAt: "desc" }
 				},
 				definitions: {
