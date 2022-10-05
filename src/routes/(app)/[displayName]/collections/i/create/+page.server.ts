@@ -43,7 +43,7 @@ export const actions: Actions = {
 		}
 
 		const [collection] = await createCollection(id, { name, shortDescription, longDescription });
-		if (collection) throw redirect(303, `${displayName}/collections/${collection.id}`);
+		if (collection) throw redirect(303, `/${displayName}/collections/${collection.id}`);
 		throw error(500, { message: "Unable to Create Collection" });
 	}
 };
