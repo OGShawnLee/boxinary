@@ -183,6 +183,10 @@ export function getUserProfileData(displayName: string) {
 				name: true,
 				displayName: true,
 				createdAt: true,
+				collections: {
+					select: { id: true, name: true, createdAt: true, shortDescription: true },
+					orderBy: { createdAt: "desc" }
+				},
 				definitions: {
 					select: { id: true, title: true, atomic: true },
 					orderBy: { createdAt: "desc" }
@@ -212,7 +216,8 @@ export function getUserProfileData(displayName: string) {
 				definitions: foundUser.definitions.map((definition) => {
 					return { ...definition, user: { displayName } };
 				}),
-				examples: foundUser.examples
+				examples: foundUser.examples,
+				collections: foundUser.collections
 			};
 		}
 

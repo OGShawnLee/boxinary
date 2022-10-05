@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			collections: dashboard.collections,
 			definitions: dashboard.definitions,
 			examples: dashboard.examples,
-			currentUser: { displayName }
+			currentUser: { id, displayName }
 		};
 	throw error(500, { message: "Unable to Get User Definitions" });
 };

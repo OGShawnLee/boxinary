@@ -15,7 +15,7 @@
 
 <main class="grid items-start gap-9 lg:grid-cols-12">
 	<div class="grid gap-9 lg:col-span-8">
-		<section class="grid gap-9 ">
+		<section class="grid gap-9">
 			<header class="flex flex-wrap items-center justify-between gap-3">
 				<h2 class="text-2xl text-white font-semibold">Collections</h2>
 				<a
@@ -25,7 +25,7 @@
 			</header>
 			<div class="grid gap-6">
 				{#each collections as collection (collection.id)}
-					<CardCollection displayName={currentUser.displayName} {collection} />
+					<CardCollection user={currentUser} {collection} />
 				{/each}
 			</div>
 		</section>

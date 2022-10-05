@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardDefinition, CardExample } from "$lib/components";
+	import { CardCollection, CardDefinition, CardExample } from "$lib/components";
 	import { currentUser } from "@root/state";
 	import { getFormatedDate, possessive } from "$lib/utils";
 
 	export let data: PageData;
 
-	const { definitions, examples, foundUser } = data;
+	const { collections, definitions, examples, foundUser } = data;
 	const isOwner = $currentUser?.displayName === foundUser.displayName;
 </script>
 
@@ -48,12 +48,30 @@
 			</div>
 		</section>
 	</div>
-	<section class="col-span-8 | grid gap-9">
-		<h2 class="text-2xl text-white font-semibold">Definitions</h2>
-		<div class="grid gap-6">
-			{#each definitions as definition (definition.id)}
-				<CardDefinition {definition} />
-			{/each}
-		</div>
-	</section>
+	<div class="grid gap-9 col-span-8">
+		<section class="grid gap-9">
+			<header class="flex items-center justify-between">
+				<h2 class="text-2xl text-white font-semibold">Collections</h2>
+				{#if isOwner}
+					<a
+						class="button button--raisin grid-center"
+						href="/{foundUser.displayName}/collections/i/create">Create Collection</a
+					>
+				{/if}
+			</header>
+			<div class="grid gap-6">
+				{#each collections as collection (collection.id)}
+					<CardCollection user={foundUser} {collection} />
+				{/each}
+			</div>
+		</section>
+		<section class="grid gap-9">
+			<h2 class="text-2xl text-white font-semibold">Definitions</h2>
+			<div class="grid gap-6">
+				{#each definitions as definition (definition.id)}
+					<CardDefinition {definition} />
+				{/each}
+			</div>
+		</section>
+	</div>
 </main>

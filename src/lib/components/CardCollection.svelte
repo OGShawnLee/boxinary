@@ -1,10 +1,13 @@
 <script lang="ts">
 	import type { Collection } from "@prisma/client";
 	import { getFormatedDate } from "$lib/utils";
+	import { currentUser } from "@root/state";
 
-	export let displayName: string;
+	export let user: { id: number; displayName: string };
 	export let collection: Pick<Collection, "id" | "name" | "createdAt" | "shortDescription">;
 	export let redirectTo = "/home";
+
+	const isOwner = $currentUser?.id === user.id;
 </script>
 
 <article class="relative w-full | grid">
@@ -13,7 +16,7 @@
 		<h3 class="text-xl text-rich-90 font-medium">
 			<a
 				class="hover:(text-aqua-50 underline)"
-				href="/{displayName}/collections/{collection.id}"
+				href="/{user.displayName}/collections/{collection.id}"
 				aria-label="View Collection Details"
 				data-sveltekit-prefetch
 			>
@@ -31,22 +34,24 @@
 		>
 			{getFormatedDate(collection.createdAt)}
 		</time>
-		<div class="flex items-center gap-3">
-			<a
-				class="px-2 text-sm hover:text-aqua-50"
-				href="/{displayName}/collections/{collection.id}/edit"
-				data-sveltekit-prefetch
-			>
-				Edit
-			</a>
-			<form
-				action="/{displayName}/collections/{collection.id}/delete/?redirect-to={redirectTo}"
-				method="post"
-			>
-				<button class="px-2 text-sm text-rose-600/80 hover:text-rose-500" type="submit">
-					Delete
-				</button>
-			</form>
-		</div>
+		{#if isOwner}
+			<div class="flex items-center gap-3">
+				<a
+					class="px-2 text-sm hover:text-aqua-50"
+					href="/{user.displayName}/collections/{collection.id}/edit"
+					data-sveltekit-prefetch
+				>
+					Edit
+				</a>
+				<form
+					action="/{user.displayName}/collections/{collection.id}/delete/?redirect-to={redirectTo}"
+					method="post"
+				>
+					<button class="px-2 text-sm text-rose-600/80 hover:text-rose-500" type="submit">
+						Delete
+					</button>
+				</form>
+			</div>
+		{/if}
 	</div>
 </article>
