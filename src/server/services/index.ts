@@ -1,8 +1,10 @@
+export { createCollection } from "./collection";
 export { deleteExample, getExample, updateExample } from "./example";
 export {
 	addDefinitionExample,
 	createDefinition,
 	deleteUserDefinition,
+	findUserCoreData,
 	getDefinitionByTitle,
 	getDefinitionExamples,
 	getDefinitionId,

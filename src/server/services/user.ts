@@ -58,6 +58,12 @@ export function getDefinitionByTitle(displayName: string, title: string) {
 	);
 }
 
+export function findUserCoreData(displayName: string) {
+	return useAwait(() =>
+		db.user.findFirst({ where: { displayName }, select: { id: true, displayName: true } })
+	);
+}
+
 export function getDefinitionExamples(definitionId: number) {
 	return useAwait(() =>
 		db.example.findMany({
@@ -97,6 +103,13 @@ export function getUserDashboard(id: number) {
 		db.user.findFirst({
 			where: { id },
 			select: {
+				collections: {
+					select: {
+						id: true,
+						name: true,
+						shortDescription: true
+					}
+				},
 				definitions: {
 					select: {
 						id: true,
