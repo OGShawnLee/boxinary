@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardDefinition, CardExample } from "$lib/components";
+	import { CardCollection, CardDefinition, CardExample } from "$lib/components";
 
 	export let data: PageData;
 
-	const { currentUser, definitions, examples } = data;
+	const { currentUser, collections, definitions, examples } = data;
 </script>
 
 <svelte:head>
@@ -14,14 +14,30 @@
 <h1 class="sr-only">Home</h1>
 
 <main class="grid items-start gap-9 lg:grid-cols-12">
-	<section class="grid gap-9 lg:col-span-8">
-		<h2 class="text-2xl text-white font-semibold">Definitions</h2>
-		<div class="grid gap-6">
-			{#each definitions as definition (definition.id)}
-				<CardDefinition {definition} />
-			{/each}
-		</div>
-	</section>
+	<div class="grid gap-9 lg:col-span-8">
+		<section class="grid gap-9 ">
+			<header class="flex flex-wrap items-center justify-between gap-3">
+				<h2 class="text-2xl text-white font-semibold">Collections</h2>
+				<a
+					class="button button--raisin grid-center"
+					href="/{currentUser.displayName}/collections/i/create">Create Collection</a
+				>
+			</header>
+			<div class="grid gap-6">
+				{#each collections as collection (collection.id)}
+					<CardCollection displayName={currentUser.displayName} {collection} />
+				{/each}
+			</div>
+		</section>
+		<section class="grid gap-9">
+			<h2 class="text-2xl text-white font-semibold">Definitions</h2>
+			<div class="grid gap-6">
+				{#each definitions as definition (definition.id)}
+					<CardDefinition {definition} />
+				{/each}
+			</div>
+		</section>
+	</div>
 	<section class="grid gap-9 lg:col-span-4">
 		<h2 class="text-2xl text-white font-semibold">
 			<a
