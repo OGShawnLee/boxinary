@@ -108,7 +108,8 @@ export function getUserDashboard(id: number) {
 						id: true,
 						name: true,
 						shortDescription: true
-					}
+					},
+					orderBy: { createdAt: "desc" }
 				},
 				definitions: {
 					select: {
