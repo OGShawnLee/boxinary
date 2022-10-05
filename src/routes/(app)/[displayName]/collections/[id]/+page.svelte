@@ -39,7 +39,11 @@
 				>
 					Edit
 				</a>
-				<button class="button button--rose" aria-label="Delete Collection"> Delete </button>
+				<form action="{path}/delete/?redirect-to=/home" method="post">
+					<button class="button button--rose" aria-label="Delete Collection" type="submit">
+						Delete
+					</button>
+				</form>
 			</div>
 		{/if}
 	</header>

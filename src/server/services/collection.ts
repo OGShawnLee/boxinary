@@ -9,6 +9,10 @@ export function createCollection(
 	return useAwait(() => db.collection.create({ data: { userId: uid, ...data } }));
 }
 
+export function deleteCollection(id: number) {
+	return useAwait(() => db.collection.delete({ where: { id } }));
+}
+
 export function findCollection(id: number, displayName: string) {
 	return useAwait(() => db.collection.findFirst({ where: { id, user: { displayName } } }));
 }

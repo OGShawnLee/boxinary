@@ -4,6 +4,7 @@
 
 	export let displayName: string;
 	export let collection: Pick<Collection, "id" | "name" | "createdAt" | "shortDescription">;
+	export let redirectTo = "/home";
 </script>
 
 <article class="relative w-full | grid">
@@ -30,12 +31,22 @@
 		>
 			{getFormatedDate(collection.createdAt)}
 		</time>
-		<a
-			class="px-2 text-sm hover:text-aqua-50"
-			href="/{displayName}/collections/{collection.id}/edit"
-			data-sveltekit-prefetch
-		>
-			Edit
-		</a>
+		<div class="flex items-center gap-3">
+			<a
+				class="px-2 text-sm hover:text-aqua-50"
+				href="/{displayName}/collections/{collection.id}/edit"
+				data-sveltekit-prefetch
+			>
+				Edit
+			</a>
+			<form
+				action="/{displayName}/collections/{collection.id}/delete/?redirect-to={redirectTo}"
+				method="post"
+			>
+				<button class="px-2 text-sm text-rose-600/80 hover:text-rose-500" type="submit">
+					Delete
+				</button>
+			</form>
+		</div>
 	</div>
 </article>
