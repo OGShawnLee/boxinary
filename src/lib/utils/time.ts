@@ -21,7 +21,7 @@ export function formatUserJoinDate(createdAt: Date) {
 }
 
 export function getFormatedDate(date: Date) {
-	return `${date.getDate()} ${getStringMonth(date.getMonth())} ${date.getFullYear()}`;
+	return `${getStringMonth(date.getMonth())} ${date.getDate()} ${date.getFullYear()}`;
 }
 
 export function getStringMonth(month: number) {
