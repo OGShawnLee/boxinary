@@ -32,8 +32,8 @@
 		<section class="grid gap-9">
 			<h2 class="text-2xl text-white font-semibold">Definitions</h2>
 			<div class="grid gap-6">
-				{#each definitions as definition (definition.id)}
-					<CardDefinition {definition} />
+				{#each definitions as { id, name, definition } (id)}
+					<CardDefinition displayName={currentUser.displayName} {definition} {name} />
 				{/each}
 			</div>
 		</section>

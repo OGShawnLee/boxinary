@@ -20,12 +20,12 @@ export const actions: Actions = {
 			if (isEmpty(source)) return invalid(400, { text, source: { missing: true } });
 		}
 
-		const [definitionId, err] = await getDefinitionId(displayName, params.title);
+		const [definitionId, err] = await getDefinitionId(displayName, params.name);
 		if (isNullish(definitionId)) throw error(404, { message: "Definition not Found" });
 		if (err) throw error(500, { message: "Unable to Add Example" });
 
 		const [example] = await addDefinitionExample(definitionId, { uid: id, text, source });
-		if (example) throw redirect(303, `/${displayName}/dictionary/${params.title}`);
+		if (example) throw redirect(303, `/${displayName}/dictionary/${params.name}`);
 		throw error(500, { message: "Unable to Add Example" });
 	}
 };

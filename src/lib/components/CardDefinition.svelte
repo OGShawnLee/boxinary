@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { currentUser } from "@root/state";
 
-	export let definition: AtomicDefinition;
+	export let name: string;
+	export let definition: string;
+	export let displayName: string;
 
-	$: isOwner = $currentUser?.displayName === definition.user.displayName;
+	$: isOwner = $currentUser?.displayName === displayName;
 </script>
 
 <article
@@ -14,28 +16,25 @@
 			<h2 class="text-xl text-white font-medium">
 				<a
 					class="hover:text-aqua-50"
-					href="/{definition.user.displayName}/dictionary/{definition.title}"
+					href="/{displayName}/dictionary/{name}"
 					data-sveltekit-prefetch
 				>
-					{definition.title}
+					{name}
 				</a>
 			</h2>
 		</header>
-		<span> {definition.atomic} </span>
+		<span> {definition} </span>
 	</div>
 	{#if isOwner}
 		<div class="flex items-center gap-6">
 			<a
 				class="button button--raisin grid-center"
-				href="/{definition.user.displayName}/dictionary/{definition.title}/edit"
+				href="/{displayName}/dictionary/{name}/edit"
 				data-sveltekit-prefetch
 			>
 				Edit
 			</a>
-			<form
-				method="post"
-				action="/{definition.user.displayName}/dictionary/{definition.title}/delete"
-			>
+			<form method="post" action="/{displayName}/dictionary/{name}/delete">
 				<button class="button button--rose" type="submit"> Delete </button>
 			</form>
 		</div>

@@ -3,30 +3,30 @@
 	import { InputGroup } from "$lib/components";
 
 	export let data: PageData;
-	export let form: ValidationForm<"title" | "atomic" | "description" | "definition">;
+	export let form: ValidationForm<"name" | "definition" | "description" | "summary">;
 
 	const { definition: def } = data;
 </script>
 
 <svelte:head>
-	<title>Editing {def.title} / Boxinary</title>
+	<title>Editing {def.name} / Boxinary</title>
 </svelte:head>
 
-<h1 class="sr-only">Editing {def.title}</h1>
+<h1 class="sr-only">Editing {def.name}</h1>
 
 <main>
 	<form class="grid gap-9" method="post">
 		<div class="grid gap-6">
-			<InputGroup id="title" charLimit={50} value={def.title} error={form?.title} />
+			<InputGroup id="name" charLimit={50} value={def.name} error={form?.name} />
 			<InputGroup
-				id="atomic-definition"
+				id="definition"
 				charLimit={80}
-				value={def.atomic}
-				error={form?.atomic}
+				value={def.definition}
+				error={form?.definition}
 				let:textarea
 				let:bind
 			>
-				<textarea {...textarea} use:bind>{def.atomic}</textarea>
+				<textarea {...textarea} use:bind>{def.definition}</textarea>
 			</InputGroup>
 			<InputGroup
 				id="description"
@@ -39,14 +39,14 @@
 				<textarea {...textarea} use:bind>{def.description}</textarea>
 			</InputGroup>
 			<InputGroup
-				id="definition"
+				id="summary"
 				charLimit={560}
-				value={def.definition}
-				error={form?.definition}
+				value={def.summary}
+				error={form?.summary}
 				let:textarea
 				let:bind
 			>
-				<textarea {...textarea} use:bind>{def.definition}</textarea>
+				<textarea {...textarea} use:bind>{def.summary}</textarea>
 			</InputGroup>
 		</div>
 		<button class="button button--aqua" type="submit"> Submit </button>

@@ -14,8 +14,8 @@
 <div class="grid gap-9">
 	<h1 class="text-2xl text-white font-bold">{foundUser.displayName} Dictionary</h1>
 	<main class="grid gap-6">
-		{#each definitions as definition (definition.id)}
-			<CardDefinition {definition} />
+		{#each definitions as { id, name, definition } (id)}
+			<CardDefinition displayName={foundUser.displayName} {name} {definition} />
 		{/each}
 	</main>
 </div>

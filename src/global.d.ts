@@ -1,10 +1,3 @@
-interface AtomicDefinition {
-	id: number;
-	title: string;
-	atomic: string;
-	user: { displayName: string };
-}
-
 interface JWTPayloadState {
 	id: number;
 	email: string;

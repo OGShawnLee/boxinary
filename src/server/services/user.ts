@@ -24,11 +24,11 @@ export function addDefinitionExample(
 
 export function createDefinition(
 	userId: number,
-	data: Pick<Definition, "title" | "atomic" | "definition" | "description">
+	data: Pick<Definition, "name" | "definition" | "description" | "summary">
 ) {
-	const { title, atomic, definition, description } = data;
+	const { name, definition, description, summary } = data;
 	return useAwait(() =>
-		db.definition.create({ data: { userId, title, atomic, definition, description } })
+		db.definition.create({ data: { userId, name, definition, description, summary } })
 	);
 }
 
@@ -36,16 +36,16 @@ export function deleteUserDefinition(definitionId: number) {
 	return useAwait(() => db.definition.delete({ where: { id: definitionId } }));
 }
 
-export function getDefinitionByTitle(displayName: string, title: string) {
+export function getDefinitionByName(displayName: string, name: string) {
 	return useAwait(() =>
 		db.definition.findFirst({
-			where: { user: { displayName }, title },
+			where: { user: { displayName }, name },
 			select: {
 				id: true,
-				title: true,
-				atomic: true,
+				name: true,
 				definition: true,
 				description: true,
+				summary: true,
 				createdAt: true,
 				user: { select: { displayName: true } },
 				examples: {
@@ -73,17 +73,17 @@ export function getDefinitionExamples(definitionId: number) {
 				text: true,
 				source: true,
 				createdAt: true,
-				definition: { select: { title: true } }
+				definition: { select: { name: true } }
 			},
 			orderBy: { createdAt: "desc" }
 		})
 	);
 }
 
-export function getDefinitionId(displayName: string, title: string) {
+export function getDefinitionId(displayName: string, name: string) {
 	return useAwait(async () => {
 		const def = await db.definition.findFirst({
-			where: { user: { displayName }, title },
+			where: { user: { displayName }, name },
 			select: { id: true }
 		});
 		return def?.id;
@@ -110,8 +110,8 @@ export function getUserDashboard(id: number) {
 				definitions: {
 					select: {
 						id: true,
-						title: true,
-						atomic: true,
+						name: true,
+						definition: true,
 						user: { select: { displayName: true } }
 					},
 					orderBy: { createdAt: "desc" }
@@ -122,7 +122,7 @@ export function getUserDashboard(id: number) {
 						text: true,
 						source: true,
 						createdAt: true,
-						definition: { select: { title: true } }
+						definition: { select: { name: true } }
 					},
 					take: 4,
 					orderBy: { createdAt: "desc" }
@@ -136,7 +136,7 @@ export function getUserDefinitions(displayName: string) {
 	return useAwait(() =>
 		db.definition.findMany({
 			where: { user: { displayName } },
-			select: { id: true, title: true, atomic: true, user: { select: { displayName: true } } },
+			select: { id: true, name: true, definition: true, user: { select: { displayName: true } } },
 			orderBy: { createdAt: "desc" }
 		})
 	);
@@ -146,7 +146,7 @@ export function getUserDefinitionsById(id: number) {
 	return useAwait(() =>
 		db.definition.findMany({
 			where: { userId: id },
-			select: { id: true, title: true, atomic: true, user: { select: { displayName: true } } },
+			select: { id: true, name: true, definition: true, user: { select: { displayName: true } } },
 			orderBy: { createdAt: "desc" }
 		})
 	);
@@ -161,7 +161,7 @@ export function getUserExamples(uid: number) {
 				text: true,
 				source: true,
 				createdAt: true,
-				definition: { select: { atomic: true, title: true } }
+				definition: { select: { definition: true, name: true } }
 			},
 			orderBy: { createdAt: "desc" }
 		})
@@ -188,7 +188,7 @@ export function getUserProfileData(displayName: string) {
 					orderBy: { createdAt: "desc" }
 				},
 				definitions: {
-					select: { id: true, title: true, atomic: true },
+					select: { id: true, name: true, definition: true },
 					orderBy: { createdAt: "desc" }
 				},
 				examples: {
@@ -197,7 +197,7 @@ export function getUserProfileData(displayName: string) {
 						text: true,
 						source: true,
 						createdAt: true,
-						definition: { select: { title: true } }
+						definition: { select: { name: true } }
 					},
 					take: 4,
 					orderBy: { createdAt: "desc" }

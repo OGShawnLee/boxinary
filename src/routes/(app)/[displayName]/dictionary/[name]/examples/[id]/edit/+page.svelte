@@ -10,16 +10,16 @@
 </script>
 
 <svelte:head>
-	<title>Editing {definition.title} Example / Boxinary</title>
+	<title>Editing {definition.name} Example / Boxinary</title>
 </svelte:head>
 
 <div class="grid gap-9">
 	<header>
 		<div class="grid">
 			<h1 class="text-2xl text-rich-90">
-				Editing <strong class="text-white"> {definition.title} </strong> Example
+				Editing <strong class="text-white"> {definition.name} </strong> Example
 			</h1>
-			<span class="text-sm text-aqua-50"> {definition.atomic} </span>
+			<span class="text-sm text-aqua-50"> {definition.definition} </span>
 		</div>
 	</header>
 	<main>

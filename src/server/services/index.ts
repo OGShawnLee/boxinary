@@ -5,7 +5,7 @@ export {
 	createDefinition,
 	deleteUserDefinition,
 	findUserCoreData,
-	getDefinitionByTitle,
+	getDefinitionByName,
 	getDefinitionExamples,
 	getDefinitionId,
 	getUser,

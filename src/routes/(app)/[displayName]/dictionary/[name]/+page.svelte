@@ -13,21 +13,21 @@
 </script>
 
 <svelte:head>
-	<title>{definition.title} / Boxinary</title>
+	<title>{definition.name} / Boxinary</title>
 </svelte:head>
 
 <div class="grid items-start gap-12" class:grid-cols-12={hasExamples}>
 	<main class="col-span-9 | grid gap-5">
 		<header class="flex items-end">
 			<div>
-				<h1 class="text-4xl text-white font-bold">{definition.title}</h1>
-				<span class="text-aqua-50"> {definition.atomic} </span>
+				<h1 class="text-4xl text-white font-bold">{definition.name}</h1>
+				<span class="text-aqua-50"> {definition.definition} </span>
 			</div>
 			{#if isOwner}
 				<div class="flex-grow flex items-center justify-end gap-6">
 					<a
 						class="button button--raisin grid-center"
-						href="/{definition.user.displayName}/dictionary/{definition.title}/edit"
+						href="/{definition.user.displayName}/dictionary/{definition.name}/edit"
 						data-sveltekit-prefetch
 					>
 						Update Definition
@@ -42,7 +42,7 @@
 					{/if}
 					<form
 						method="post"
-						action="/{definition.user.displayName}/dictionary/{definition.title}/delete"
+						action="/{definition.user.displayName}/dictionary/{definition.name}/delete"
 					>
 						<button class="button button--rose" type="submit"> Delete Definition </button>
 					</form>
@@ -51,7 +51,7 @@
 		</header>
 		<div class="grid gap-3">
 			<p class="text-lg text-rich-90 leading-relaxed">{definition.description}</p>
-			<p class="text leading-relaxed">{definition.definition}</p>
+			<p class="text leading-relaxed">{definition.summary}</p>
 		</div>
 	</main>
 	{#if hasExamples}
@@ -61,7 +61,7 @@
 					<a
 						class="hover:text-aqua-50"
 						href="{path}/examples"
-						title="View {definition.title} Examples"
+						title="View {definition.name} Examples"
 						data-sveltekit-prefetch
 					>
 						Examples

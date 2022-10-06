@@ -7,13 +7,13 @@ export const load: PageServerLoad = async ({ parent }) => {
 	const [examples] = await getUserExamples(foundUser.id);
 	if (examples) {
 		const definitions = examples.reduce((definitions, { definition }) => {
-			if (definitions.some(({ title }) => title === definition.title)) return definitions;
+			if (definitions.some(({ name }) => name === definition.name)) return definitions;
 			return definitions.push(definition), definitions;
-		}, [] as { atomic: string; title: string }[]);
+		}, [] as { definition: string; name: string }[]);
 		return {
-			definitions: definitions.map(({ atomic, title }) => {
-				const matches = examples.filter((example) => example.definition.title === title);
-				return { atomic, title, examples: matches };
+			definitions: definitions.map(({ definition, name }) => {
+				const matches = examples.filter((example) => example.definition.name === name);
+				return { definition, name, examples: matches };
 			})
 		};
 	} else throw error(500, { message: "Unable to Get User Examples" });

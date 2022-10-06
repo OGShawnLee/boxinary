@@ -13,16 +13,16 @@
 </script>
 
 <svelte:head>
-	<title>{definition.title} Examples / Boxinary</title>
+	<title>{definition.name} Examples / Boxinary</title>
 </svelte:head>
 
 <div class="grid gap-9">
 	<header class="flex flex-wrap items-end justify-between gap-3">
 		<div class="grid">
 			<h1 class="text-xl text-rich-90 | lg:text-2xl">
-				<strong class="text-white"> {definition.title} </strong> Examples
+				<strong class="text-white"> {definition.name} </strong> Examples
 			</h1>
-			<span class="text-sm text-aqua-50"> {definition.atomic} </span>
+			<span class="text-sm text-aqua-50"> {definition.definition} </span>
 		</div>
 		{#if isOwner}
 			<a

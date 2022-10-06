@@ -10,15 +10,15 @@
 </script>
 
 <svelte:head>
-	<title>New {definition.title} Example / Boxinary</title>
+	<title>New {definition.name} Example / Boxinary</title>
 </svelte:head>
 
 <div class="grid gap-9">
 	<header class="grid">
 		<h1 class="text-lg text-rich-90">
-			Creating <strong class="text-white"> {definition.title} </strong> Example
+			Creating <strong class="text-white"> {definition.name} </strong> Example
 		</h1>
-		<span class="text-xs text-aqua-50"> {definition.atomic} </span>
+		<span class="text-xs text-aqua-50"> {definition.definition} </span>
 	</header>
 	<main>
 		<form class="grid gap-9" method="post">

@@ -10,7 +10,7 @@
 	export let displayName: string;
 	export let createdAt: Nullable<Date> = undefined;
 	export let text: string;
-	export let definition: Nullable<{ title: string }> = undefined;
+	export let definition: Nullable<{ name: string }> = undefined;
 	export let source: Nullable<string> = displayName;
 	export let redirectTo = "/home";
 
@@ -20,7 +20,7 @@
 
 {#if isDedicated && typeof id === "bigint" && definition && createdAt}
 	{@const isOwner = $currentUser?.displayName === displayName}
-	{@const path = `/${displayName}/dictionary/${definition.title}/examples/${id}`}
+	{@const path = `/${displayName}/dictionary/${definition.name}/examples/${id}`}
 	<article class="relative w-full | flex flex-col">
 		<div class="min-h-10" aria-hidden />
 		<div

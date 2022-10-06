@@ -26,10 +26,10 @@ model Definition {
   id          Int                      @id @default(autoincrement())
   createdAt   DateTime                 @default(now())
   updatedAt   DateTime                 @updatedAt
-  title       String                   @db.VarChar(50)
-  atomic      String                   @db.VarChar(80)
+  name        String                   @db.VarChar(50)
+  summary     String                   @db.VarChar(560)
   description String                   @db.VarChar(300)
-  definition  String                   @db.VarChar(560)
+  definition  String                   @db.VarChar(80)
   user        User                     @relation(fields: [userId], references: [id])
   userId      Int
   examples    Example[]
