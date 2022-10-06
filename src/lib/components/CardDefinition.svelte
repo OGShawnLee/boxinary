@@ -13,9 +13,9 @@
 >
 	<div>
 		<header>
-			<h2 class="text-xl text-white font-medium">
+			<h2 class="text-xl text-rich-90 font-medium">
 				<a
-					class="hover:text-aqua-50"
+					class="hover:(text-aqua-50 underline)"
 					href="/{displayName}/dictionary/{name}"
 					data-sveltekit-prefetch
 				>
@@ -26,7 +26,7 @@
 		<span> {definition} </span>
 	</div>
 	{#if isOwner}
-		<div class="flex items-center gap-6">
+		<div class="flex items-center gap-3">
 			<a
 				class="button button--raisin grid-center"
 				href="/{displayName}/dictionary/{name}/edit"
