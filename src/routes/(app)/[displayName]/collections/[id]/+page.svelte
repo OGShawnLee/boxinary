@@ -44,6 +44,14 @@
 			{#if isOwner}
 				<div class="flex items-center gap-9">
 					<a
+						class="px-2 text-sm text-white font-medium hover:(text-aqua-50 underline)"
+						href="{path}/add"
+						aria-label="Add Definitions to your Collection"
+						data-sveltekit-prefetch
+					>
+						Add
+					</a>
+					<a
 						class="text-sm hover:text-aqua-50"
 						href="{path}/edit"
 						aria-label="Edit Collection"

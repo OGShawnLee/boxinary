@@ -1,3 +1,4 @@
+export { default as Card } from "./Card.svelte";
 export { default as CardCollection } from "./CardCollection.svelte";
 export { default as CardDefinition } from "./CardDefinition.svelte";
 export { default as CardExample } from "./CardExample.svelte";

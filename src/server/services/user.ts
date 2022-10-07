@@ -10,7 +10,7 @@ import { verify } from "jsonwebtoken";
 import { isJWTPayloadState } from "@server/validation";
 import { deleteAuthCookie } from "@server/utils";
 import { error, redirect } from "@sveltejs/kit";
-import { isEmpty, isString } from "malachite-ui/predicate";
+import { isEmpty, isNullish, isNumber, isString } from "malachite-ui/predicate";
 
 export function addDefinitionExample(
 	id: number,
@@ -223,6 +223,22 @@ export function getUserProfileData(displayName: string) {
 
 		return null;
 	});
+}
+
+export async function handleAuth(cookies: Cookies, uid: string | number, isAction = false) {
+	const { id, displayName } = await handleAuthState(cookies);
+	const message = isAction ? "Action Denied" : "Access Denied";
+
+	if (isNumber(uid)) {
+		if (id !== uid) throw error(403, { message });
+		return { id, displayName };
+	}
+
+	const [targetUser, err] = await findUserCoreData(uid);
+	if (err) throw error(500, { message: "Unable to Verify Authorisation" });
+	if (isNullish(targetUser)) throw error(404, { message: "User not Found" });
+	if (id !== targetUser.id) throw error(403, { message });
+	return targetUser;
 }
 
 export async function handleAuthState(cookies: Cookies) {

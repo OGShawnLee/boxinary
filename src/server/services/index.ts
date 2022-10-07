@@ -16,6 +16,7 @@ export {
 	getUserExamples,
 	getUserJWTTokenPayload,
 	getUserProfileData,
+	handleAuth,
 	handleAuthState,
 	handleClientUser,
 	updateUser
