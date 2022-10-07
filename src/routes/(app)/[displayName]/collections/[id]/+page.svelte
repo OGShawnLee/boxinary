@@ -16,9 +16,9 @@
 </svelte:head>
 
 <main>
-	<div class="relative">
+	<div class="relative | grid gap-3">
 		<div class="min-h-10" aria-hidden />
-		<div class="h-full | grid gap-3">
+		<div class="h-full | grid gap-6">
 			<header class="grid">
 				<h1 class="text-xl text-white md:text-2xl">{collection.name}</h1>
 				<span class="text-xs">
@@ -32,7 +32,7 @@
 				</span>
 			</header>
 			<div class="h-0.75 w-full | bg-raisin-20 rounded-xl" aria-hidden />
-			<div class="grid gap-0.75 | leading-relaxed">
+			<div class="mt-1.75 | grid gap-0.75 | leading-relaxed">
 				<p class="text-rich-90 md:text-lg">{collection.shortDescription}</p>
 				<p class="text-sm md:text-base">{collection.longDescription}</p>
 			</div>
