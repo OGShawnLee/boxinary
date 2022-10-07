@@ -1,6 +1,6 @@
 export async function useAwait<T, E = unknown>(
 	callback: () => T | Promise<T>
-): Promise<[T, null] | [null, E]> {
+): Promise<[T | null, null | E]> {
 	try {
 		const result = await callback();
 		return [result, null];
@@ -10,7 +10,7 @@ export async function useAwait<T, E = unknown>(
 }
 
 export async function useAwaitError<E = unknown>(
-	callback: () => void | Promise<void>
+	callback: () => any | Promise<any>
 ): Promise<E | null> {
 	try {
 		await callback();
