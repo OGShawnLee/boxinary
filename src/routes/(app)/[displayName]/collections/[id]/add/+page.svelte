@@ -14,7 +14,7 @@
 </svelte:head>
 
 <div class="grid gap-12">
-	<Header subtitle={collection.shortDescription}>
+	<Header subtitle={collection.description}>
 		Adding Definitions to <strong class="text-white">{collection.name}</strong>
 	</Header>
 	<section class="grid gap-6">

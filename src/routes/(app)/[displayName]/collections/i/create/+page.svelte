@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Header, InputGroup } from "$lib/components";
 
-	export let form: ValidationForm<"name" | "shortDescription" | "longDescription">;
+	export let form: ValidationForm<"name" | "description" | "details">;
 </script>
 
 <svelte:head>
@@ -17,21 +17,15 @@
 			<div class="grid gap-4.5">
 				<InputGroup id="name" charLimit={80} error={form?.name} />
 				<InputGroup
-					id="short-description"
+					id="description"
 					charLimit={120}
-					error={form?.shortDescription}
+					error={form?.description}
 					let:textarea
 					let:bind
 				>
 					<textarea {...textarea} use:bind />
 				</InputGroup>
-				<InputGroup
-					id="long-description"
-					charLimit={460}
-					error={form?.longDescription}
-					let:textarea
-					let:bind
-				>
+				<InputGroup id="details" charLimit={460} error={form?.details} let:textarea let:bind>
 					<textarea {...textarea} use:bind />
 				</InputGroup>
 			</div>

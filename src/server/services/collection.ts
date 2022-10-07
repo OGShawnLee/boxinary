@@ -4,7 +4,7 @@ import { useAwait } from "$lib/hooks";
 
 export function createCollection(
 	uid: number,
-	data: Pick<Collection, "name" | "shortDescription" | "longDescription">
+	data: Pick<Collection, "name" | "description" | "details">
 ) {
 	return useAwait(() => db.collection.create({ data: { userId: uid, ...data } }));
 }
@@ -19,7 +19,7 @@ export function findCollection(id: number, displayName: string) {
 
 export function updateCollection(
 	id: number,
-	data: Pick<Collection, "name" | "shortDescription" | "longDescription">
+	data: Pick<Collection, "name" | "description" | "details">
 ) {
 	return useAwait(() => db.collection.update({ where: { id }, data }));
 }

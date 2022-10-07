@@ -23,29 +23,27 @@ export const actions: Actions = {
 
 		const data = await request.formData();
 		const name = data.get("name");
-		const shortDescription = data.get("short-description");
-		const longDescription = data.get("long-description");
+		const description = data.get("description");
+		const details = data.get("details");
 
 		if (typeof name !== "string")
-			return invalid(400, { name: { invalid: true }, shortDescription, longDescription });
-		if (isEmpty(name))
-			return invalid(400, { name: { missing: true }, shortDescription, longDescription });
+			return invalid(400, { name: { invalid: true }, description, details });
+		if (isEmpty(name)) return invalid(400, { name: { missing: true }, description, details });
 
-		if (shortDescription) {
-			if (typeof shortDescription !== "string")
-				return invalid(400, { shortDescription: { invalid: true }, name, longDescription });
-			if (isEmpty(shortDescription))
-				return invalid(400, { shortDescription: { missing: true }, name, longDescription });
+		if (description) {
+			if (typeof description !== "string")
+				return invalid(400, { description: { invalid: true }, name, details });
+			if (isEmpty(description))
+				return invalid(400, { description: { missing: true }, name, details });
 		}
 
-		if (longDescription) {
-			if (typeof longDescription !== "string")
-				return invalid(400, { longDescription: { invalid: true }, name, shortDescription });
-			if (isEmpty(longDescription))
-				return invalid(400, { longDescription: { missing: true }, name, shortDescription });
+		if (details) {
+			if (typeof details !== "string")
+				return invalid(400, { details: { invalid: true }, name, description });
+			if (isEmpty(details)) return invalid(400, { details: { missing: true }, name, description });
 		}
 
-		const [collection] = await updateCollection(id, { name, shortDescription, longDescription });
+		const [collection] = await updateCollection(id, { name, description, details });
 		if (collection) throw redirect(303, `/${currentUser.displayName}/collections/${collection.id}`);
 		throw error(500, { message: "Unable to Update Collection" });
 	}

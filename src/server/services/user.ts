@@ -104,7 +104,7 @@ export function getUserDashboard(id: number) {
 			where: { id },
 			select: {
 				collections: {
-					select: { id: true, name: true, shortDescription: true, createdAt: true },
+					select: { id: true, name: true, description: true, createdAt: true },
 					orderBy: { createdAt: "desc" }
 				},
 				definitions: {
@@ -184,7 +184,7 @@ export function getUserProfileData(displayName: string) {
 				displayName: true,
 				createdAt: true,
 				collections: {
-					select: { id: true, name: true, createdAt: true, shortDescription: true },
+					select: { id: true, name: true, createdAt: true, description: true },
 					orderBy: { createdAt: "desc" }
 				},
 				definitions: {

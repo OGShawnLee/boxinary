@@ -4,7 +4,7 @@
 	import { currentUser } from "@root/state";
 
 	export let user: { id: number; displayName: string };
-	export let collection: Pick<Collection, "id" | "name" | "createdAt" | "shortDescription">;
+	export let collection: Pick<Collection, "id" | "name" | "createdAt" | "description">;
 	export let redirectTo = "/home";
 
 	const isOwner = $currentUser?.id === user.id;
@@ -23,8 +23,8 @@
 				{collection.name}
 			</a>
 		</h3>
-		{#if collection.shortDescription}
-			<span>{collection.shortDescription}</span>
+		{#if collection.description}
+			<span>{collection.description}</span>
 		{/if}
 	</div>
 	<div class="absolute inset-x-0 top-0 h-10 | flex items-center justify-between">

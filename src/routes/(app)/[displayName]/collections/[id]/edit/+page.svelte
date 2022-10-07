@@ -4,7 +4,7 @@
 	import { isString } from "malachite-ui/predicate";
 
 	export let data: PageData;
-	export let form: ValidationForm<"name" | "shortDescription" | "longDescription">;
+	export let form: ValidationForm<"name" | "description" | "details">;
 
 	const { collection } = data;
 </script>
@@ -14,7 +14,7 @@
 </svelte:head>
 
 <div class="grid gap-12">
-	<Header subtitle={collection.shortDescription}>
+	<Header subtitle={collection.description}>
 		Editing <b class="text-white">{collection.name}</b>
 	</Header>
 	<main>
@@ -22,27 +22,27 @@
 			<div class="grid gap-4.5">
 				<InputGroup id="name" value={collection.name} charLimit={80} error={form?.name} />
 				<InputGroup
-					id="short-description"
-					value={collection.shortDescription}
+					id="description"
+					value={collection.description}
 					charLimit={120}
-					error={form?.shortDescription}
+					error={form?.description}
 					let:textarea
 					let:bind
 				>
 					<textarea {...textarea} use:bind
-						>{isString(collection.shortDescription) ? collection.shortDescription : ""}</textarea
+						>{isString(collection.description) ? collection.description : ""}</textarea
 					>
 				</InputGroup>
 				<InputGroup
-					id="long-description"
-					value={collection.longDescription}
+					id="details"
+					value={collection.details}
 					charLimit={460}
-					error={form?.longDescription}
+					error={form?.details}
 					let:textarea
 					let:bind
 				>
 					<textarea {...textarea} use:bind
-						>{isString(collection.longDescription) ? collection.longDescription : ""}</textarea
+						>{isString(collection.details) ? collection.details : ""}</textarea
 					>
 				</InputGroup>
 			</div>

@@ -33,8 +33,8 @@
 			</header>
 			<div class="h-0.75 w-full | bg-raisin-20 rounded-xl" aria-hidden />
 			<div class="mt-1.75 | grid gap-0.75 | leading-relaxed">
-				<p class="text-rich-90 md:text-lg">{collection.shortDescription}</p>
-				<p class="text-sm md:text-base">{collection.longDescription}</p>
+				<p class="text-rich-90 md:text-lg">{collection.description}</p>
+				<p class="text-sm md:text-base">{collection.details}</p>
 			</div>
 		</div>
 		<div class="absolute top-0 inset-x-0 h-10 | flex items-center justify-between">
