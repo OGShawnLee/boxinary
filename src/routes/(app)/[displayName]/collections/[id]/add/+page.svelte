@@ -26,12 +26,7 @@
 						action="/{foundUser.displayName}/collections/{collection.id}/add?definition-id={id}"
 						method="post"
 					>
-						<button
-							class="px-2 text-sm text-white font-medium hover:(text-aqua-50 underline)"
-							type="submit"
-						>
-							Add
-						</button>
+						<button class="button-option button-option--emphasis" type="submit"> Add </button>
 					</form>
 					<a
 						class={className.anchor}

@@ -33,13 +33,13 @@
 				{getFormatedDate(createdAt)}
 			</time>
 			{#if isOwner}
-				{@const padding = compact ? "px-0.5 md:px-2" : "px-2"}
+				{@const padding = compact ? "button-option-compact" : "button-option"}
 				<div class="flex items-center gap-3">
 					<!-- svelte-ignore invalid-html-attribute -->
 					<slot
 						className={{
-							anchor: `${padding} text-sm hover:text-aqua-50`,
-							delete: `${padding} text-sm text-rose-600/80 hover:text-rose-500`
+							anchor: `${padding} button-option--rich`,
+							delete: `${padding} button-option--danger`
 						}}
 					/>
 				</div>

@@ -41,13 +41,11 @@
 			</span>
 			{#if isOwner}
 				<div class="flex items-center gap-3">
-					<a class="px-2 text-sm hover:text-aqua-50" href="{path}/edit" data-sveltekit-prefetch>
+					<a class="button-option button-option--rich" href="{path}/edit" data-sveltekit-prefetch>
 						Edit
 					</a>
 					<form action="{path}/delete/?redirect-to={redirectTo}" method="post">
-						<button class="px-2 text-sm text-rose-600/80 hover:text-rose-500" type="submit">
-							Delete
-						</button>
+						<button class="button-option button-option--danger" type="submit"> Delete </button>
 					</form>
 				</div>
 			{/if}

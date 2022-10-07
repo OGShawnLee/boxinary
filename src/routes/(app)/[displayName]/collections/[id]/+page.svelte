@@ -3,7 +3,7 @@
 	import { currentUser } from "@root/state";
 	import { page } from "$app/stores";
 	import { getFormatedDate } from "$lib/utils";
-	import { Card } from "@root/lib/components";
+	import { Card } from "$lib/components";
 
 	export let data: PageData;
 
@@ -45,7 +45,7 @@
 			{#if isOwner}
 				<div class="flex items-center gap-9">
 					<a
-						class="px-2 text-sm text-white font-medium hover:(text-aqua-50 underline)"
+						class="text-sm button-option--emphasis"
 						href="{path}/add"
 						aria-label="Add Definitions to your Collection"
 						data-sveltekit-prefetch
@@ -53,7 +53,7 @@
 						Add
 					</a>
 					<a
-						class="text-sm hover:text-aqua-50"
+						class="text-sm button-option--rich"
 						href="{path}/edit"
 						aria-label="Edit Collection"
 						data-sveltekit-prefetch
@@ -61,9 +61,7 @@
 						Edit
 					</a>
 					<form action="{path}/delete/?redirect-to=/home" method="post">
-						<button class="text-sm text-rose-600/80 hover:text-rose-500" type="submit">
-							Delete
-						</button>
+						<button class="text-sm button-option--danger" type="submit"> Delete </button>
 					</form>
 				</div>
 			{/if}
