@@ -93,7 +93,7 @@
 							Edit
 						</a>
 						<form
-							action="/{foundUser.displayName}/collections/{collection.id}/delete/?redirect-to={path}"
+							action="/{foundUser.displayName}/dictionary/{name}/delete/?redirect-to={path}"
 							method="post"
 						>
 							<button class={className.delete} type="submit"> Delete </button>
