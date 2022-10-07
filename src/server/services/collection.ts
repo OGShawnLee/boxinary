@@ -14,7 +14,21 @@ export function deleteCollection(id: number) {
 }
 
 export function findCollection(id: number, displayName: string) {
-	return useAwait(() => db.collection.findFirst({ where: { id, user: { displayName } } }));
+	return useAwait(() =>
+		db.collection.findFirst({
+			where: { id, user: { displayName } },
+			include: {
+				definitions: {
+					select: {
+						definition: {
+							select: { id: true, name: true, definition: true, createdAt: true }
+						}
+					},
+					orderBy: { createdAt: "desc" }
+				}
+			}
+		})
+	);
 }
 
 export function updateCollection(

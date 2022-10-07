@@ -1,12 +1,16 @@
 <script lang="ts">
 	import type { Nullable } from "malachite-ui/types";
 	import { getFormatedDate } from "$lib/utils";
+	import { isNullish } from "malachite-ui/predicate";
 
-	export let title: string;
-	export let content: string;
+	export let title: Nullable<string> = undefined;
+	export let content: Nullable<string> = undefined;
 	export let createdAt: Nullable<Date> = undefined;
 	export let isOwner = false;
 	export let compact = false;
+
+	if (!$$slots.body && (isNullish(title) || isNullish(content)))
+		throw Error("Title and Content must be defined if Card is created without a body slot!");
 </script>
 
 <article class="relative w-full | flex flex-col">

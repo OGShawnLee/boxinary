@@ -3,6 +3,7 @@
 	import { currentUser } from "@root/state";
 	import { page } from "$app/stores";
 	import { getFormatedDate } from "$lib/utils";
+	import { Card } from "@root/lib/components";
 
 	export let data: PageData;
 
@@ -15,12 +16,12 @@
 	<title>{collection.name} Collection / Boxinary</title>
 </svelte:head>
 
-<main>
+<main class="grid gap-12">
 	<div class="relative | grid gap-3">
 		<div class="min-h-10" aria-hidden />
 		<div class="h-full | grid gap-6">
 			<header class="grid">
-				<h1 class="text-xl text-white md:text-2xl">{collection.name}</h1>
+				<h1 class="text-3xl text-white font-bold md:text-2xl">{collection.name}</h1>
 				<span class="text-xs">
 					Created by:
 					<a
@@ -68,4 +69,40 @@
 			{/if}
 		</div>
 	</div>
+	{#if collection.definitions.length}
+		<section class="grid gap-6">
+			<h2 class="text-xl text-white font-semibold">Definitions</h2>
+			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				{#each collection.definitions as { definition: { id, name, definition, createdAt } } (id)}
+					<Card {isOwner} compact {createdAt} let:className>
+						<svelte:fragment slot="body">
+							<h3 class="text-xl text-rich-90 font-medium">
+								<a
+									class="hover:(text-aqua-50 underline)"
+									href="/{foundUser.displayName}/dictionary/{name}"
+									data-sveltekit-prefetch
+								>
+									{name}
+								</a>
+							</h3>
+							<p>{definition}</p>
+						</svelte:fragment>
+						<a
+							class={className.anchor}
+							href="/{foundUser.displayName}/collections/{collection.id}/edit"
+							data-sveltekit-prefetch
+						>
+							Edit
+						</a>
+						<form
+							action="/{foundUser.displayName}/collections/{collection.id}/delete/?redirect-to={path}"
+							method="post"
+						>
+							<button class={className.delete} type="submit"> Delete </button>
+						</form>
+					</Card>
+				{/each}
+			</div>
+		</section>
+	{/if}
 </main>
