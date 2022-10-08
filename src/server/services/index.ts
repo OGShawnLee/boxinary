@@ -1,4 +1,5 @@
 export { createCollection, deleteCollection, findCollection, updateCollection } from "./collection";
+export { deleteDefinition } from "./definition";
 export { deleteExample, getExample, updateExample } from "./example";
 export {
 	addDefinitionExample,
