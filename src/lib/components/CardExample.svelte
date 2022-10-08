@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Nullable } from "malachite-ui/types";
 	import { isNullish } from "malachite-ui/predicate";
-	import { getFormatedDate } from "$lib/utils";
+	import { createExamplePathing, getFormatedDate } from "$lib/utils";
 	import { currentUser } from "@root/state";
 
 	export let isDedicated = false;
@@ -20,7 +20,7 @@
 
 {#if isDedicated && typeof id === "bigint" && definition && createdAt}
 	{@const isOwner = $currentUser?.displayName === displayName}
-	{@const path = `/${displayName}/dictionary/${definition.name}/examples/${id}`}
+	{@const pathing = createExamplePathing(displayName).definition(definition.name)}
 	<article class="relative w-full | flex flex-col">
 		<div class="min-h-10" aria-hidden />
 		<div
@@ -41,10 +41,14 @@
 			</span>
 			{#if isOwner}
 				<div class="flex items-center gap-3">
-					<a class="button-option button-option--rich" href="{path}/edit" data-sveltekit-prefetch>
+					<a
+						class="button-option button-option--rich"
+						href={pathing.edit(id)}
+						data-sveltekit-prefetch
+					>
 						Edit
 					</a>
-					<form action="{path}/delete/?redirect-to={redirectTo}" method="post">
+					<form action={pathing.$delete(id, redirectTo)} method="post">
 						<button class="button-option button-option--danger" type="submit"> Delete </button>
 					</form>
 				</div>

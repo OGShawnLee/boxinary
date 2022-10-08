@@ -2,6 +2,11 @@
 	import type { PageData } from "./$types";
 	import { Card, Header } from "$lib/components";
 	import { page } from "$app/stores";
+	import {
+		getCollectionAddAction,
+		getDefinitionDeleteAction,
+		getDefinitionEditPath
+	} from "$lib/utils";
 
 	export let data: PageData;
 
@@ -23,22 +28,19 @@
 			{#each definitions as { id, name, definition, createdAt } (id)}
 				<Card isOwner compact title={name} content={definition} {createdAt} let:className>
 					<form
-						action="/{foundUser.displayName}/collections/{collection.id}/add?definition-id={id}"
+						action={getCollectionAddAction(foundUser.displayName, collection.id, id)}
 						method="post"
 					>
 						<button class="button-option button-option--emphasis" type="submit"> Add </button>
 					</form>
 					<a
 						class={className.anchor}
-						href="/{foundUser.displayName}/collections/{collection.id}/edit"
+						href={getDefinitionEditPath(foundUser.displayName, name)}
 						data-sveltekit-prefetch
 					>
 						Edit
 					</a>
-					<form
-						action="/{foundUser.displayName}/collections/{collection.id}/delete/?redirect-to={path}"
-						method="post"
-					>
+					<form action={getDefinitionDeleteAction(foundUser.displayName, name, path)} method="post">
 						<button class={className.delete} type="submit"> Delete </button>
 					</form>
 				</Card>

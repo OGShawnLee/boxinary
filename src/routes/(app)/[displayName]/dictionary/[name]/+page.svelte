@@ -3,6 +3,11 @@
 	import { CardExample } from "$lib/components";
 	import { page } from "$app/stores";
 	import { isEmpty } from "malachite-ui/predicate";
+	import {
+		createExamplePathing,
+		getDefinitionDeleteAction,
+		getDefinitionEditPath
+	} from "$lib/utils";
 
 	export let data: PageData;
 	const { definition, user: currentUser } = data;
@@ -27,7 +32,7 @@
 				<div class="flex-grow flex items-center justify-end gap-6">
 					<a
 						class="button button--raisin grid-center"
-						href="/{definition.user.displayName}/dictionary/{definition.name}/edit"
+						href={getDefinitionEditPath(currentUser.displayName, definition.name)}
 						data-sveltekit-prefetch
 					>
 						Update Definition
@@ -42,7 +47,7 @@
 					{/if}
 					<form
 						method="post"
-						action="/{definition.user.displayName}/dictionary/{definition.name}/delete"
+						action={getDefinitionDeleteAction(currentUser.displayName, definition.name)}
 					>
 						<button class="button button--rose" type="submit"> Delete Definition </button>
 					</form>
@@ -55,12 +60,13 @@
 		</div>
 	</main>
 	{#if hasExamples}
+		{@const pathing = createExamplePathing(definition.user.displayName).definition(definition.name)}
 		<aside class="col-span-3">
 			<header class="flex flex-col gap-4.5">
 				<h2 class="text-xl text-white font-medium">
 					<a
 						class="hover:text-aqua-50"
-						href="{path}/examples"
+						href={pathing.self}
 						title="View {definition.name} Examples"
 						data-sveltekit-prefetch
 					>
@@ -73,10 +79,7 @@
 					{/each}
 				</div>
 				{#if isOwner}
-					<a
-						class="button button--raisin grid-center | max-w-fit mt-1.5"
-						href="{path}/examples/add"
-					>
+					<a class="button button--raisin grid-center | max-w-fit mt-1.5" href={pathing.add}>
 						Add Example
 					</a>
 				{/if}

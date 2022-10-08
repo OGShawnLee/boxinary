@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { currentUser } from "@root/state";
+	import { getDefinitionDeleteAction, getDefinitionEditPath, getDefinitionPath } from "$lib/utils";
 
 	export let name: string;
 	export let definition: string;
@@ -16,7 +17,7 @@
 			<h2 class="text-xl text-rich-90 font-medium">
 				<a
 					class="hover:(text-aqua-50 underline)"
-					href="/{displayName}/dictionary/{name}"
+					href={getDefinitionPath(displayName, name)}
 					data-sveltekit-prefetch
 				>
 					{name}
@@ -29,12 +30,12 @@
 		<div class="flex items-center gap-3">
 			<a
 				class="button button--raisin grid-center"
-				href="/{displayName}/dictionary/{name}/edit"
+				href={getDefinitionEditPath(displayName, name)}
 				data-sveltekit-prefetch
 			>
 				Edit
 			</a>
-			<form method="post" action="/{displayName}/dictionary/{name}/delete">
+			<form method="post" action={getDefinitionDeleteAction(displayName, name)}>
 				<button class="button button--rose" type="submit"> Delete </button>
 			</form>
 		</div>

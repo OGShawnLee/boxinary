@@ -2,6 +2,7 @@
 	import type { ClientUser } from "@root/app";
 	import type { Nullable } from "malachite-ui/types";
 	import { ListItemLink } from "$lib/components";
+	import { getDefinitionCreatePath, getProfilePath } from "$lib/utils";
 
 	export let currentUser: Nullable<ClientUser> = undefined;
 </script>
@@ -25,7 +26,7 @@
 			{#if currentUser}
 				<div class="flex items-center gap-6">
 					<div class="grid">
-						<a href="/{currentUser.displayName}">
+						<a href={getProfilePath(currentUser.displayName)}>
 							<span class="text-sm text-white font-bold"> {currentUser.name} </span>
 						</a>
 						<span class="text-xs font-medium"> @{currentUser.displayName} </span>
@@ -33,7 +34,7 @@
 					<div class="flex items-center gap-3">
 						<a
 							class="button button--aqua grid-center"
-							href="/{currentUser.displayName}/dictionary/i/add"
+							href={getDefinitionCreatePath(currentUser.displayName)}
 						>
 							New
 						</a>

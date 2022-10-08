@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { formatUserJoinDate } from "$lib/utils";
+	import { formatUserJoinDate, getProfilePath } from "$lib/utils";
 
 	export let name: string;
 	export let displayName: string;
@@ -9,7 +9,9 @@
 <article class="px-6 py-3 | bg-raisin-12 rounded-md">
 	<header>
 		<h2 class="text-lg text-white font-medium">
-			<a class="hover:text-aqua-50" href="/{displayName}" data-sveltekit-prefetch> {name} </a>
+			<a class="hover:text-aqua-50" href={getProfilePath(displayName)} data-sveltekit-prefetch>
+				{name}
+			</a>
 		</h2>
 		<div class="flex items-end justify-between gap-6">
 			<span class="text-sm">@{displayName}</span>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
 	import { CardCollection, CardDefinition, CardExample } from "$lib/components";
+	import { getCollectionCreatePath } from "@root/lib/utils/pathing";
 
 	export let data: PageData;
 
@@ -20,7 +21,7 @@
 				<h2 class="text-2xl text-white font-semibold">Collections</h2>
 				<a
 					class="button button--raisin grid-center"
-					href="/{currentUser.displayName}/collections/i/create">Create Collection</a
+					href={getCollectionCreatePath(currentUser.displayName)}>Create Collection</a
 				>
 			</header>
 			<div class="grid gap-6">

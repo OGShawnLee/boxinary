@@ -3,7 +3,7 @@
 	import { CardExample, Header } from "$lib/components";
 	import { page } from "$app/stores";
 	import { currentUser } from "@root/state";
-	import { possessive } from "$lib/utils";
+	import { getDefinitionPath, possessive } from "$lib/utils";
 
 	export let data: PageData;
 
@@ -39,7 +39,7 @@
 					<h2 class="text-xl text-rich-90 font-medium">
 						<a
 							class="hover:(text-aqua-50 underline)"
-							href="/{foundUser.displayName}/dictionary/{name}"
+							href={getDefinitionPath(foundUser.displayName, name)}
 							title="View {name} Details"
 							data-sveltekit-prefetch
 						>

@@ -3,6 +3,7 @@
 	import { CardExample } from "$lib/components";
 	import { currentUser } from "@root/state";
 	import { page } from "$app/stores";
+	import { getDefinitionExampleAddPath } from "$lib/utils";
 
 	export let data: PageData;
 
@@ -27,7 +28,7 @@
 		{#if isOwner}
 			<a
 				class="button button--raisin grid-center | w-full mt-1.5 | sm:max-w-[fit-content]"
-				href="{path}/add"
+				href={getDefinitionExampleAddPath(displayName, definition.name)}
 			>
 				Add Example
 			</a>

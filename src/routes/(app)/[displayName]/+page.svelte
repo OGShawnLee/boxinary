@@ -2,7 +2,12 @@
 	import type { PageData } from "./$types";
 	import { CardCollection, CardDefinition, CardExample } from "$lib/components";
 	import { currentUser } from "@root/state";
-	import { getFormatedDate, possessive } from "$lib/utils";
+	import {
+		getCollectionCreatePath,
+		getFormatedDate,
+		getUserExamplesPath,
+		possessive
+	} from "$lib/utils";
 
 	export let data: PageData;
 
@@ -34,7 +39,7 @@
 			<h2 class="text-2xl text-white font-semibold">
 				<a
 					class="hover:(text-aqua-50 underline)"
-					href="{foundUser.displayName}/dictionary/examples"
+					href={getUserExamplesPath(foundUser.displayName)}
 					title="View {isOwner ? 'your' : possessive(foundUser.displayName)} Examples"
 					data-sveltekit-prefetch
 				>
@@ -55,7 +60,7 @@
 				{#if isOwner}
 					<a
 						class="button button--raisin grid-center"
-						href="/{foundUser.displayName}/collections/i/create">Create Collection</a
+						href={getCollectionCreatePath(foundUser.displayName)}>Create Collection</a
 					>
 				{/if}
 			</header>

@@ -1,6 +1,11 @@
 <script lang="ts">
 	import type { Collection } from "@prisma/client";
-	import { getFormatedDate } from "$lib/utils";
+	import {
+		getCollectionDeleteAction,
+		getCollectionEditPath,
+		getCollectionPath,
+		getFormatedDate
+	} from "$lib/utils";
 	import { currentUser } from "@root/state";
 
 	export let user: { id: number; displayName: string };
@@ -8,6 +13,8 @@
 	export let redirectTo = "/home";
 
 	const isOwner = $currentUser?.id === user.id;
+	const displayName = user.displayName;
+	const { id, name, description, createdAt } = collection;
 </script>
 
 <article class="relative w-full | grid">
@@ -16,37 +23,34 @@
 		<h3 class="text-xl text-rich-90 font-medium">
 			<a
 				class="hover:(text-aqua-50 underline)"
-				href="/{user.displayName}/collections/{collection.id}"
+				href={getCollectionPath(displayName, id)}
 				aria-label="View Collection Details"
 				data-sveltekit-prefetch
 			>
-				{collection.name}
+				{name}
 			</a>
 		</h3>
-		{#if collection.description}
-			<span>{collection.description}</span>
+		{#if description}
+			<span>{description}</span>
 		{/if}
 	</div>
 	<div class="absolute inset-x-0 top-0 h-10 | flex items-center justify-between">
 		<time
 			class="h-full px-6 | grid-center | bg-raisin-12 rounded-t-md text-xs"
-			datetime={collection.createdAt.toISOString()}
+			datetime={createdAt.toISOString()}
 		>
-			{getFormatedDate(collection.createdAt)}
+			{getFormatedDate(createdAt)}
 		</time>
 		{#if isOwner}
 			<div class="flex items-center gap-3">
 				<a
 					class="button-option button-option--rich"
-					href="/{user.displayName}/collections/{collection.id}/edit"
+					href={getCollectionEditPath(displayName, id)}
 					data-sveltekit-prefetch
 				>
 					Edit
 				</a>
-				<form
-					action="/{user.displayName}/collections/{collection.id}/delete/?redirect-to={redirectTo}"
-					method="post"
-				>
+				<form action={getCollectionDeleteAction(displayName, id, redirectTo)} method="post">
 					<button class="button-option button-option--danger" type="submit"> Delete </button>
 				</form>
 			</div>
