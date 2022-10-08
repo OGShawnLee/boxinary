@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { currentUser } from "@root/state";
 	import { getDefinitionDeleteAction, getDefinitionEditPath, getDefinitionPath } from "$lib/utils";
+	import { page } from "$app/stores";
 
 	export let name: string;
 	export let definition: string;
 	export let displayName: string;
+	export let redirect = $page.url.pathname;
 
 	$: isOwner = $currentUser?.displayName === displayName;
 </script>
@@ -35,7 +37,7 @@
 			>
 				Edit
 			</a>
-			<form method="post" action={getDefinitionDeleteAction(displayName, name)}>
+			<form method="post" action={getDefinitionDeleteAction(displayName, name, redirect)}>
 				<button class="button button--rose" type="submit"> Delete </button>
 			</form>
 		</div>

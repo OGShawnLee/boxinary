@@ -3,6 +3,7 @@
 	import { isNullish } from "malachite-ui/predicate";
 	import { createExamplePathing, getFormatedDate } from "$lib/utils";
 	import { currentUser } from "@root/state";
+	import { page } from "$app/stores";
 
 	export let isDedicated = false;
 	export let hasBackground = true;
@@ -12,7 +13,7 @@
 	export let text: string;
 	export let definition: Nullable<{ name: string }> = undefined;
 	export let source: Nullable<string> = displayName;
-	export let redirectTo = "/home";
+	export let redirect = $page.url.pathname;
 
 	if (isDedicated && (isNullish(id) || isNullish(createdAt) || isNullish(definition)))
 		throw Error("id, createdAt and definition must be defined if Example is dedicated!");
@@ -48,7 +49,7 @@
 					>
 						Edit
 					</a>
-					<form action={pathing.$delete(id, redirectTo)} method="post">
+					<form action={pathing.$delete(id, redirect)} method="post">
 						<button class="button-option button-option--danger" type="submit"> Delete </button>
 					</form>
 				</div>
