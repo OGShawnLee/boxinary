@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
+	import { Card, LayoutSeparated } from "$lib/components";
 	import { currentUser } from "@root/state";
 	import { page } from "$app/stores";
-	import { UserPathing, getFormatedDate } from "$lib/utils";
-	import { Card } from "$lib/components";
+	import { UserPathing } from "$lib/utils";
 
 	export let data: PageData;
 
@@ -11,90 +11,58 @@
 	const isOwner = $currentUser?.id === foundUser.id;
 	const path = $page.url.pathname;
 	const pathing = new UserPathing(foundUser.displayName);
+	const collectionPath = pathing.collections.collection(collection.id);
 </script>
 
 <svelte:head>
 	<title>{collection.name} Collection / Boxinary</title>
 </svelte:head>
 
-<main class="grid gap-12">
-	<div class="relative | grid gap-3">
-		<div class="min-h-10" aria-hidden />
-		<div class="h-full | grid gap-6">
-			<header class="grid">
-				<h1 class="text-3xl text-white font-bold md:text-2xl">{collection.name}</h1>
-				<span class="text-xs">
-					Created by:
-					<a class="text-sm text-rich-90 hover:(text-aqua-50 underline)" href={pathing.profile}>
-						@{foundUser.displayName}
-					</a>
-				</span>
-			</header>
-			<div class="h-0.75 w-full | bg-raisin-20 rounded-xl" aria-hidden />
-			<div class="mt-1.75 | grid gap-0.75 | leading-relaxed">
-				<p class="text-rich-90 md:text-lg">{collection.description}</p>
-				<p class="text-sm md:text-base">{collection.details}</p>
-			</div>
+<LayoutSeparated
+	{isOwner}
+	title={collection.name}
+	createdAt={collection.createdAt}
+	displayName={foundUser.displayName}
+	pathing={{
+		add: { path: collectionPath.add.path, title: "Add Definitions to Collection" },
+		edit: { path: collectionPath.edit, title: "Edit Collection" },
+		$delete: { path: collectionPath.$delete(), title: "Delete Collection" }
+	}}
+>
+	<main class="mt-1.75 | grid gap-12">
+		<div class="grid gap-0.75 | leading-relaxed">
+			<p class="text-rich-90 md:text-lg">{collection.description}</p>
+			<p class="text-sm md:text-base">{collection.details}</p>
 		</div>
-		<div class="absolute top-0 inset-x-0 h-10 | flex items-center justify-between">
-			<time class="h-full | grid-center | text-sm" datetime={collection.createdAt.toISOString()}>
-				{getFormatedDate(collection.createdAt)}
-			</time>
-			{#if isOwner}
-				{@const collectionPath = pathing.collections.collection(collection.id)}
-				<div class="flex items-center gap-9">
-					<a
-						class="text-sm button-option--emphasis"
-						href={collectionPath.add.path}
-						aria-label="Add Definitions to your Collection"
-						data-sveltekit-prefetch
-					>
-						Add
-					</a>
-					<a
-						class="text-sm button-option--rich"
-						href={collectionPath.edit}
-						aria-label="Edit Collection"
-						data-sveltekit-prefetch
-					>
-						Edit
-					</a>
-					<form action={collectionPath.$delete()} method="post">
-						<button class="text-sm button-option--danger" type="submit"> Delete </button>
-					</form>
+		{#if collection.definitions.length}
+			<section class="grid gap-6">
+				<h2 class="text-xl text-white font-semibold">Definitions</h2>
+				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+					{#each collection.definitions as { definition: { id, name, definition, createdAt } } (id)}
+						{@const definitionPath = pathing.dictionary.definition(name)}
+						<Card {isOwner} compact {createdAt} let:className>
+							<svelte:fragment slot="body">
+								<h3 class="text-xl text-rich-90 font-medium">
+									<a
+										class="hover:(text-aqua-50 underline)"
+										href={definitionPath.path}
+										data-sveltekit-prefetch
+									>
+										{name}
+									</a>
+								</h3>
+								<p>{definition}</p>
+							</svelte:fragment>
+							<a class={className.anchor} href={definitionPath.edit} data-sveltekit-prefetch>
+								Edit
+							</a>
+							<form action={definitionPath.$delete(path)} method="post">
+								<button class={className.delete} type="submit"> Delete </button>
+							</form>
+						</Card>
+					{/each}
 				</div>
-			{/if}
-		</div>
-	</div>
-	{#if collection.definitions.length}
-		<section class="grid gap-6">
-			<h2 class="text-xl text-white font-semibold">Definitions</h2>
-			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each collection.definitions as { definition: { id, name, definition, createdAt } } (id)}
-					{@const definitionPath = pathing.dictionary.definition(name)}
-					<Card {isOwner} compact {createdAt} let:className>
-						<svelte:fragment slot="body">
-							<h3 class="text-xl text-rich-90 font-medium">
-								<a
-									class="hover:(text-aqua-50 underline)"
-									href={definitionPath.path}
-									data-sveltekit-prefetch
-								>
-									{name}
-								</a>
-							</h3>
-							<p>{definition}</p>
-						</svelte:fragment>
-						<a class={className.anchor} href={definitionPath.edit} data-sveltekit-prefetch>
-							Edit
-						</a>
-						<form action={definitionPath.$delete(path)} method="post">
-							<button class={className.delete} type="submit"> Delete </button>
-						</form>
-					</Card>
-				{/each}
-			</div>
-		</section>
-	{/if}
-</main>
-
+			</section>
+		{/if}
+	</main>
+</LayoutSeparated>

@@ -9,6 +9,11 @@ type OnlyObject<T> = T extends object ? T : never;
 
 type Optional<T> = { [V in keyof T]?: T[V] };
 
+interface FloatingOption {
+	title: string;
+	path: string;
+}
+
 type ValidationUnit<T = string> =
 	| T
 	| Optional<Record<"duplicate" | "incorrect" | "invalid" | "missing" | "not-found", boolean>>;
