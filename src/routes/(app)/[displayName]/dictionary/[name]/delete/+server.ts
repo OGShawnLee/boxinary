@@ -8,7 +8,7 @@ function defineMessage(message: string) {
 	return JSON.stringify({ message });
 }
 
-export const POST: RequestHandler = async ({ cookies, params: { displayName, name } }) => {
+export const POST: RequestHandler = async ({ cookies, params: { displayName, name }, url }) => {
 	const currentUser = await handleAuthState(cookies);
 	if (displayName !== currentUser.displayName)
 		return new Response(defineMessage("Action Forbidden"), { status: 403 });
@@ -26,7 +26,9 @@ export const POST: RequestHandler = async ({ cookies, params: { displayName, nam
 
 	const inCollection = definition.collections.length > 0;
 	const [deletedDefinition] = await deleteDefinition(definition.id, inCollection);
-	return deletedDefinition
-		? new Response(null, { status: 303, headers: { location: "/home" } })
-		: new Response(defineMessage("Failed to Delete Definition"), { status: 500 });
+	if (isNullish(deletedDefinition))
+		return new Response(defineMessage("Failed to Delete Definition"), { status: 500 });
+
+	const location = url.searchParams.get("redirect-to") || "/home";
+	return new Response(null, { status: 303, headers: { location } });
 };
