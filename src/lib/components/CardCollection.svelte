@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Collection } from "@prisma/client";
 	import {
+		getCollectionAddPath,
 		getCollectionDeleteAction,
 		getCollectionEditPath,
 		getCollectionPath,
@@ -43,6 +44,15 @@
 		</time>
 		{#if isOwner}
 			<div class="flex items-center gap-3">
+				<a
+					class="button-option button-option--emphasis"
+					href={getCollectionAddPath(displayName, id)}
+					data-sveltekit-prefetch
+					aria-label="Add Definitions to {collection.name}"
+					title="Add Definitions to {collection.name}"
+				>
+					Add
+				</a>
 				<a
 					class="button-option button-option--rich"
 					href={getCollectionEditPath(displayName, id)}
