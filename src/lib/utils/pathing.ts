@@ -148,7 +148,7 @@ export function getExampleDeleteAction(configuration: {
 }
 
 export function getUserExamplesPath(displayName: string) {
-	return `${displayName}/dictionary/example`;
+	return `/${displayName}/dictionary/examples`;
 }
 
 // * User
