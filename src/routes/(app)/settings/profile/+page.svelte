@@ -18,7 +18,7 @@
 			<InputGroup id="name" charLimit={50} error={form?.name} value={data.user.name} />
 			<InputGroup
 				id="display-name"
-				label="Display Name"
+				label="username"
 				charLimit={16}
 				error={form?.displayName}
 				value={data.user.displayName}
