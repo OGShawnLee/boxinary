@@ -21,6 +21,9 @@ export class UserPathing {
 					edit: getCollectionEditPath(displayName, id),
 					$delete(redirect = "/home") {
 						return getCollectionDeleteAction(displayName, id, redirect);
+					},
+					$remove(definitionid: Definition["id"], redirect: string) {
+						return getCollectionRemoveAction({ displayName, id, definitionid, redirect });
 					}
 				};
 			}
@@ -60,6 +63,17 @@ export function getCollectionAddAction(
 	definitionid: Definition["id"]
 ) {
 	return `${getCollectionPath(displayName, id)}/add?definition-id=${definitionid}`;
+}
+
+export function getCollectionRemoveAction(configuration: {
+	displayName: string;
+	id: Collection["id"];
+	definitionid: Definition["id"];
+	redirect: string;
+}) {
+	const { displayName, id, definitionid, redirect } = configuration;
+	const collectionPath = getCollectionPath(displayName, id);
+	return `${collectionPath}?/remove&definition-id=${definitionid}&redirect-to=${redirect}`;
 }
 
 export function getCollectionPath(displayName: string, id: Collection["id"]) {

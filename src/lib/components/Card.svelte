@@ -39,7 +39,8 @@
 					<slot
 						className={{
 							anchor: `${padding} button-option--rich`,
-							delete: `${padding} button-option--danger`
+							delete: `${padding} button-option--danger`,
+							remove: `${padding} button-option--caution`
 						}}
 					/>
 				</div>

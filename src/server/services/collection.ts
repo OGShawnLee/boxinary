@@ -31,6 +31,22 @@ export function findCollection(id: number, displayName: string) {
 	);
 }
 
+export function removeFromCollection({
+	collectionid,
+	definitionid
+}: {
+	collectionid: number;
+	definitionid: number;
+}) {
+	return useAwait(() =>
+		db.definitionOnCollection.delete({
+			where: {
+				definitionId_collectionId: { definitionId: definitionid, collectionId: collectionid }
+			}
+		})
+	);
+}
+
 export function updateCollection(
 	id: number,
 	data: Pick<Collection, "name" | "description" | "details">

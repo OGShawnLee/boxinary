@@ -10,6 +10,7 @@ export default defineConfig({
 		"button-option": "px-2 text-sm",
 		"button-option-compact": "px-0.5 md:px-2 text-sm",
 		"button-option--rich": "hover:text-aqua-50",
+		"button-option--caution": "text-amber-600/80 hover:text-amber-500",
 		"button-option--danger": "text-rose-600/80 hover:text-rose-500",
 		"button-option--emphasis": "text-white font-medium hover:(text-aqua-50 underline)",
 		"grid-center": "grid place-content-center",

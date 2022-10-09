@@ -1,4 +1,10 @@
-export { createCollection, deleteCollection, findCollection, updateCollection } from "./collection";
+export {
+	createCollection,
+	deleteCollection,
+	findCollection,
+	removeFromCollection,
+	updateCollection
+} from "./collection";
 export { deleteDefinition } from "./definition";
 export { deleteExample, getExample, updateExample } from "./example";
 export {

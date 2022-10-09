@@ -56,6 +56,16 @@
 							<a class={className.anchor} href={definitionPath.edit} data-sveltekit-prefetch>
 								Edit
 							</a>
+							<form action={collectionPath.$remove(id, path)} method="post">
+								<button
+									class={className.remove}
+									type="submit"
+									title="Remove Definition from Collection"
+									aria-label="Remove Definition from Collection"
+								>
+									Remove
+								</button>
+							</form>
 							<form action={definitionPath.$delete(path)} method="post">
 								<button class={className.delete} type="submit"> Delete </button>
 							</form>
