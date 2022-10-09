@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { Collection } from "@prisma/client";
+	import { FloatingOptions } from "$lib/components";
 	import {
 		getCollectionAddPath,
 		getCollectionDeleteAction,
 		getCollectionEditPath,
-		getCollectionPath,
-		getFormatedDate
+		getCollectionPath
 	} from "$lib/utils";
 	import { currentUser } from "@root/state";
 
@@ -13,7 +13,6 @@
 	export let collection: Pick<Collection, "id" | "name" | "createdAt" | "description">;
 	export let redirectTo = "/home";
 
-	const isOwner = $currentUser?.id === user.id;
 	const displayName = user.displayName;
 	const { id, name, description, createdAt } = collection;
 </script>
@@ -35,35 +34,23 @@
 			<span>{description}</span>
 		{/if}
 	</div>
-	<div class="absolute inset-x-0 top-0 h-10 | flex items-center justify-between">
-		<time
-			class="h-full px-6 | grid-center | bg-raisin-12 rounded-t-md text-xs"
-			datetime={createdAt.toISOString()}
-		>
-			{getFormatedDate(createdAt)}
-		</time>
-		{#if isOwner}
-			<div class="flex items-center gap-3">
-				<a
-					class="button-option button-option--emphasis"
-					href={getCollectionAddPath(displayName, id)}
-					data-sveltekit-prefetch
-					aria-label="Add Definitions to {collection.name}"
-					title="Add Definitions to {collection.name}"
-				>
-					Add
-				</a>
-				<a
-					class="button-option button-option--rich"
-					href={getCollectionEditPath(displayName, id)}
-					data-sveltekit-prefetch
-				>
-					Edit
-				</a>
-				<form action={getCollectionDeleteAction(displayName, id, redirectTo)} method="post">
-					<button class="button-option button-option--danger" type="submit"> Delete </button>
-				</form>
-			</div>
-		{/if}
-	</div>
+	<FloatingOptions
+		{createdAt}
+		hasBackground
+		isOwner={$currentUser?.id === user.id}
+		pathing={{
+			add: {
+				path: getCollectionAddPath(displayName, id),
+				title: `Add Definitions to ${collection.name}`
+			},
+			edit: {
+				path: getCollectionEditPath(displayName, id),
+				title: "Edit Collection"
+			},
+			$delete: {
+				path: getCollectionDeleteAction(displayName, id, redirectTo),
+				title: "Delete Collection"
+			}
+		}}
+	/>
 </article>

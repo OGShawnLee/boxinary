@@ -1,7 +1,8 @@
 <script lang="ts">
 	import type { Nullable } from "malachite-ui/types";
+	import { FloatingOptions } from "$lib/components";
 	import { isNullish } from "malachite-ui/predicate";
-	import { createExamplePathing, getFormatedDate } from "$lib/utils";
+	import { createExamplePathing } from "$lib/utils";
 	import { currentUser } from "@root/state";
 	import { page } from "$app/stores";
 
@@ -20,7 +21,6 @@
 </script>
 
 {#if isDedicated && typeof id === "bigint" && definition && createdAt}
-	{@const isOwner = $currentUser?.displayName === displayName}
 	{@const pathing = createExamplePathing(displayName).definition(definition.name)}
 	<article class="relative w-full | flex flex-col">
 		<div class="min-h-10" aria-hidden />
@@ -32,29 +32,15 @@
 			<h3 class="text-rich-90">{text}</h3>
 			<span class="text-xs italic | md:text-sm"> {source} </span>
 		</div>
-		<div class="absolute inset-x-0 top-0 h-10 | flex items-center justify-between">
-			<span
-				class="h-full | grid-center | rounded-t-md text-xs"
-				class:bg-raisin-12={hasBackground}
-				class:px-6={hasBackground}
-			>
-				{getFormatedDate(createdAt)}
-			</span>
-			{#if isOwner}
-				<div class="flex items-center gap-3">
-					<a
-						class="button-option button-option--rich"
-						href={pathing.edit(id)}
-						data-sveltekit-prefetch
-					>
-						Edit
-					</a>
-					<form action={pathing.$delete(id, redirect)} method="post">
-						<button class="button-option button-option--danger" type="submit"> Delete </button>
-					</form>
-				</div>
-			{/if}
-		</div>
+		<FloatingOptions
+			{createdAt}
+			{hasBackground}
+			isOwner={Boolean($currentUser?.displayName === displayName)}
+			pathing={{
+				edit: { path: pathing.edit(id), title: "Edit Example" },
+				$delete: { path: pathing.$delete(id, redirect), title: "Delete Example" }
+			}}
+		/>
 	</article>
 {:else}
 	<article class="space-y-1.5">

@@ -4,10 +4,17 @@
 	export let isOwner: boolean;
 	export let createdAt: Date;
 	export let pathing: { add?: FloatingOption; edit: FloatingOption; $delete: FloatingOption };
+	export let hasBackground = false;
 </script>
 
 <div class="absolute top-0 inset-x-0 h-10 | flex items-center justify-between">
-	<time class="h-full | grid-center | text-sm" datetime={createdAt.toISOString()}>
+	<time
+		class="h-full | grid-center | text-sm"
+		class:px-6={hasBackground}
+		class:bg-raisin-12={hasBackground}
+		class:rounded-t-md={hasBackground}
+		datetime={createdAt.toISOString()}
+	>
 		{getFormatedDate(createdAt)}
 	</time>
 	{#if isOwner}
