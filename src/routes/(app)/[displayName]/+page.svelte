@@ -28,7 +28,20 @@
 					<span class="font-medium"> @{foundUser.displayName} </span>
 				</div>
 				{#if isOwner}
-					<a class="button button--raisin grid-center" href="/settings/profile"> Edit Profile </a>
+					<a
+						class="button button--raisin | hidden xl:(grid place-content-center)"
+						href="/settings/profile"
+					>
+						Edit Profile
+					</a>
+					<a
+						class="min-h-10 min-w-10 w-10 | grid-center | border-2 border-raisin-20 rounded-full | xl:hidden"
+						href="/settings/profile"
+						aria-label="Edit your Profile"
+						title="Edit your Profile"
+					>
+						<i class="bx bx-pen" />
+					</a>
 				{/if}
 			</div>
 			<span class="text-sm text-rich-50">

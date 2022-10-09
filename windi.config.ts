@@ -13,7 +13,8 @@ export default defineConfig({
 		"button-option--danger": "text-rose-600/80 hover:text-rose-500",
 		"button-option--emphasis": "text-white font-medium hover:(text-aqua-50 underline)",
 		"grid-center": "grid place-content-center",
-		"max-w-fit": "max-w-[fit-content]"
+		"max-w-fit": "max-w-[fit-content]",
+		"layout-length": "md:max-w-2xl lg:max-w-4xl xl:max-w-6xl"
 	},
 	theme: {
 		extend: {

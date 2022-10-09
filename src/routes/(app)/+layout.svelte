@@ -5,6 +5,6 @@
 
 <NavBar currentUser={$currentUser} />
 
-<div class="w-full max-w-6xl mx-auto mt-24 mb-12 px-4 lg:(mt-6 px-0)">
+<div class="w-full mx-auto mt-24 mb-12 px-4 | layout-length | lg:(mt-6 px-0)">
 	<slot />
 </div>
