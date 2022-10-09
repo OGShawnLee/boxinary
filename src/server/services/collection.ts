@@ -2,6 +2,20 @@ import type { Collection } from "@prisma/client";
 import db from "$lib/db";
 import { useAwait } from "$lib/hooks";
 
+export function addToCollection({
+	collectionid,
+	definitionid
+}: {
+	collectionid: number;
+	definitionid: number;
+}) {
+	return useAwait(() =>
+		db.definitionOnCollection.create({
+			data: { collectionId: collectionid, definitionId: definitionid }
+		})
+	);
+}
+
 export function createCollection(
 	uid: number,
 	data: Pick<Collection, "name" | "description" | "details">

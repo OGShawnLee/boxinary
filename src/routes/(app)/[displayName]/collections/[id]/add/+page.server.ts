@@ -4,6 +4,7 @@ import { handleAuth } from "@server/services";
 import { error, redirect } from "@sveltejs/kit";
 import { isNullish } from "malachite-ui/predicate";
 import { useAwait } from "$lib/hooks";
+import { addToCollection } from "@server/services";
 import { isNotDefinitionOwner } from "@server/validation";
 import { handleNumber } from "@server/utils";
 
@@ -35,11 +36,7 @@ export const actions: Actions = {
 		const [isStranger] = await isNotDefinitionOwner(definitionid, id);
 		if (isStranger) throw error(403, { message: "Action Forbidden" });
 
-		const [collection] = await useAwait(() =>
-			db.definitionOnCollection.create({
-				data: { collectionId: collectionid, definitionId: definitionid }
-			})
-		);
+		const [collection] = await addToCollection({ collectionid, definitionid });
 		if (isNullish(collection))
 			throw error(500, { message: "Unable to Add Definition to Collection" });
 
