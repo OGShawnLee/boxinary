@@ -2,19 +2,20 @@ import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/db";
 import { handleAuth } from "@server/services";
 import { error, redirect } from "@sveltejs/kit";
-import { isEmpty, isNullish } from "malachite-ui/predicate";
+import { isNullish } from "malachite-ui/predicate";
 import { useAwait } from "$lib/hooks";
 import { isNotDefinitionOwner } from "@server/validation";
+import { handleNumber } from "@server/utils";
 
 export const load: PageServerLoad = async ({ cookies, parent, params }) => {
-	if (Number.isNaN(+params.id)) throw error(400, { message: "Invalid Collection ID" });
+	const collectionid = handleNumber(params.id, "collection-id");
 
 	const { foundUser } = await parent();
 	const { id } = await handleAuth(cookies, foundUser.id);
 
 	const [definitions, err] = await useAwait(() =>
 		db.definition.findMany({
-			where: { userId: id, collections: { none: { collectionId: +params.id } } },
+			where: { userId: id, collections: { none: { collectionId: collectionid } } },
 			select: { id: true, name: true, definition: true, createdAt: true },
 			orderBy: { createdAt: "desc" }
 		})
@@ -27,24 +28,23 @@ export const load: PageServerLoad = async ({ cookies, parent, params }) => {
 
 export const actions: Actions = {
 	default: async ({ cookies, params, url }) => {
-		const did = url.searchParams.get("definition-id");
-		if (isNullish(did) || isEmpty(did)) throw error(400, { message: "Definition ID is required!" });
-		if (Number.isNaN(+did)) throw error(400, { message: "Invalid Definition ID" });
-		const cid = +params.id;
-		if (Number.isNaN(cid)) throw error(400, { message: "Invalid Collection ID" });
+		const collectionid = handleNumber(params.id, "collection-id");
+		const definitionid = handleNumber(url.searchParams.get("definition-id"), "definition-id");
 
 		const { id, displayName } = await handleAuth(cookies, params.displayName, true);
-		const [isStranger] = await isNotDefinitionOwner(+did, id);
+		const [isStranger] = await isNotDefinitionOwner(definitionid, id);
 		if (isStranger) throw error(403, { message: "Action Forbidden" });
 
 		const [collection] = await useAwait(() =>
-			db.definitionOnCollection.create({ data: { collectionId: cid, definitionId: +did } })
+			db.definitionOnCollection.create({
+				data: { collectionId: collectionid, definitionId: definitionid }
+			})
 		);
 		if (isNullish(collection))
 			throw error(500, { message: "Unable to Add Definition to Collection" });
 
 		const location = url.searchParams.get("redirect-to");
 		if (location) throw redirect(303, location);
-		throw redirect(303, `/${displayName}/collections/${cid}/add`);
+		throw redirect(303, `/${displayName}/collections/${collectionid}/add`);
 	}
 };

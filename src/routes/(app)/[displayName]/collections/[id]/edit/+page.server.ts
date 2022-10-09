@@ -2,6 +2,7 @@ import type { Actions, PageServerLoad } from "./$types";
 import { findUserCoreData, handleAuthState, updateCollection } from "@server/services";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { isEmpty, isNullish } from "malachite-ui/predicate";
+import { handleNumber } from "@server/utils";
 
 export const load: PageServerLoad = async ({ cookies, parent }) => {
 	const { id } = await handleAuthState(cookies);
@@ -11,8 +12,7 @@ export const load: PageServerLoad = async ({ cookies, parent }) => {
 
 export const actions: Actions = {
 	default: async ({ cookies, request, params }) => {
-		const id = Number(params.id);
-		if (Number.isNaN(id)) throw error(400, { message: "Invalid Collection ID" });
+		const collectionid = handleNumber(params.id, "collection-id");
 
 		const currentUser = await handleAuthState(cookies);
 		const [targetUser, err] = await findUserCoreData(params.displayName);
@@ -43,7 +43,7 @@ export const actions: Actions = {
 			if (isEmpty(details)) return invalid(400, { details: { missing: true }, name, description });
 		}
 
-		const [collection] = await updateCollection(id, { name, description, details });
+		const [collection] = await updateCollection(collectionid, { name, description, details });
 		if (collection) throw redirect(303, `/${currentUser.displayName}/collections/${collection.id}`);
 		throw error(500, { message: "Unable to Update Collection" });
 	}
