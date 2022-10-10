@@ -29,7 +29,6 @@
 		displayName={definition.user.displayName}
 		createdAt={definition.createdAt}
 		definition={definition.definition}
-		isBigAuthorText={false}
 		isBigTitle
 		pathing={{
 			edit: { path: pathing.edit, title: "Edit Definition" },

@@ -13,7 +13,6 @@
 	export let definition: Nullable<string> = null;
 	export let createdAt: Date;
 	export let pathing: FloatingOptionsPathing;
-	export let isBigAuthorText = true;
 	export let isBigTitle = false;
 
 	$: finalClassName = clearString(`grid gap-6 ${className}`);
@@ -36,10 +35,9 @@
 				{/if}
 			</div>
 			<span class="text-xs" class:mt-1.75={definition}>
-				Created by:
+				Created by
 				<a
-					class="text-rich-90 hover:(text-aqua-50 underline)"
-					class:text-sm={isBigAuthorText}
+					class="text-rich-90 font-semibold hover:(text-aqua-50 underline)"
 					href={getProfilePath(displayName)}
 				>
 					@{displayName}
@@ -48,6 +46,5 @@
 			<FloatingOptions {isOwner} {createdAt} {pathing} />
 		</header>
 	</div>
-	<div class="h-0.75 w-full | bg-raisin-20 rounded-xl" aria-hidden />
 	<slot />
 </div>
