@@ -7,5 +7,5 @@
 </script>
 
 <li>
-	<a class={className} {href}>{text}</a>
+	<a class={className} {href} data-sveltekit-prefetch>{text}</a>
 </li>
