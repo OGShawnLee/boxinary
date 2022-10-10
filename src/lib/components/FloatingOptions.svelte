@@ -53,17 +53,19 @@
 			</form>
 		</div>
 	{:else if $currentUser && pathing.$bookmark && isBoolean(pathing.$bookmark.isBookmarked)}
+		{@const isBookmarked = pathing.$bookmark.isBookmarked}
 		<form action={pathing.$bookmark.path} method="post">
 			<button
-				class="button-option button-option--emphasis"
+				class="text-white {isBookmarked ? 'hover:text-rose-500' : 'hover:text-aqua-50'}"
 				type="submit"
 				title={pathing.$bookmark.title}
 				aria-label={pathing.$bookmark.title}
-				aria-disabled={pathing.$bookmark.isBookmarked}
-				disabled={pathing.$bookmark.isBookmarked}
 			>
-				<span class:text-aqua-50={pathing.$bookmark.isBookmarked}>
-					{pathing.$bookmark.isBookmarked ? "Bookmarked" : "Bookmark"}
+				<span class="flex items-center gap-1.75">
+					<i class="bx bx-bookmark-alt-{isBookmarked ? 'minus' : 'plus'} text-xl" />
+					<span class="text-xs sm:text-sm" aria-hidden>
+						{isBookmarked ? "Remove Bookmark" : "Bookmark"}
+					</span>
 				</span>
 			</button>
 		</form>

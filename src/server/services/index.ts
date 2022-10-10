@@ -1,4 +1,4 @@
-export { createBookmark, findBookmark } from "./bookmark";
+export { createBookmark, deleteBookmark, findBookmark } from "./bookmark";
 export {
 	addToCollection,
 	createCollection,

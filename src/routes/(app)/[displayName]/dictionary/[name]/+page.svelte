@@ -34,7 +34,11 @@
 		pathing={{
 			edit: { path: pathing.edit, title: "Edit Definition" },
 			$delete: { path: pathing.$delete(), title: "Delete Definition" },
-			$bookmark: { path: pathing.$bookmark(path), title: "Bookmark Definition", isBookmarked }
+			$bookmark: {
+				path: pathing.$bookmark(path),
+				title: `${isBookmarked ? "Remove Definition Bookmark" : "Bookmark Definition"}`,
+				isBookmarked
+			}
 		}}
 	>
 		<main class="mt-1.75 | grid gap-3">
