@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { getFormatedDate } from "$lib/utils";
+	import { currentUser } from "@root/state";
+	import { isBoolean } from "malachite-ui/predicate";
 
 	export let isOwner: boolean;
 	export let createdAt: Date;
-	export let pathing: { add?: FloatingOption; edit: FloatingOption; $delete: FloatingOption };
+	export let pathing: FloatingOptionsPathing;
 	export let hasBackground = false;
 </script>
 
@@ -50,5 +52,20 @@
 				</button>
 			</form>
 		</div>
+	{:else if $currentUser && pathing.$bookmark && isBoolean(pathing.$bookmark.isBookmarked)}
+		<form action={pathing.$bookmark.path} method="post">
+			<button
+				class="button-option button-option--emphasis"
+				type="submit"
+				title={pathing.$bookmark.title}
+				aria-label={pathing.$bookmark.title}
+				aria-disabled={pathing.$bookmark.isBookmarked}
+				disabled={pathing.$bookmark.isBookmarked}
+			>
+				<span class:text-aqua-50={pathing.$bookmark.isBookmarked}>
+					{pathing.$bookmark.isBookmarked ? "Bookmarked" : "Bookmark"}
+				</span>
+			</button>
+		</form>
 	{/if}
 </div>

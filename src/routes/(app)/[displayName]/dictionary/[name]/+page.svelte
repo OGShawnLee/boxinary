@@ -3,13 +3,15 @@
 	import { CardExample, LayoutSeparated } from "$lib/components";
 	import { isEmpty } from "malachite-ui/predicate";
 	import { createExamplePathing, UserPathing } from "$lib/utils";
+	import { page } from "$app/stores";
 
 	export let data: PageData;
-	const { definition, user: currentUser } = data;
+	const { definition, user: currentUser, isBookmarked } = data;
 
 	const isOwner = currentUser?.displayName === definition.user.displayName;
 	const hasExamples = !isEmpty(definition.examples);
 
+	const path = $page.url.pathname;
 	const pathing = new UserPathing(definition.user.displayName).dictionary.definition(
 		definition.name
 	);
@@ -31,7 +33,8 @@
 		isBigTitle
 		pathing={{
 			edit: { path: pathing.edit, title: "Edit Definition" },
-			$delete: { path: pathing.$delete(), title: "Delete Definition" }
+			$delete: { path: pathing.$delete(), title: "Delete Definition" },
+			$bookmark: { path: pathing.$bookmark(path), title: "Bookmark Definition", isBookmarked }
 		}}
 	>
 		<main class="mt-1.75 | grid gap-3">

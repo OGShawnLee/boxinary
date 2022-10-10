@@ -14,6 +14,13 @@ interface FloatingOption {
 	path: string;
 }
 
+interface FloatingOptionsPathing {
+	add?: FloatingOption;
+	edit: FloatingOption;
+	$bookmark?: FloatingOption & { isBookmarked?: boolean | string };
+	$delete: FloatingOption;
+}
+
 type ValidationUnit<T = string> =
 	| T
 	| Optional<Record<"duplicate" | "incorrect" | "invalid" | "missing" | "not-found", boolean>>;

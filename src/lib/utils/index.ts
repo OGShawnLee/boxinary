@@ -2,6 +2,7 @@ export { exclude } from "./object";
 export {
 	createExamplePathing,
 	UserPathing,
+	getBookmarkAction,
 	getCollectionAddAction,
 	getCollectionAddPath,
 	getCollectionCreatePath,

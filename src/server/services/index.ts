@@ -1,3 +1,4 @@
+export { createBookmark, findBookmark } from "./bookmark";
 export {
 	addToCollection,
 	createCollection,
@@ -13,6 +14,7 @@ export {
 	createDefinition,
 	deleteUserDefinition,
 	findUserCoreData,
+	getAuthToken,
 	getDefinitionByName,
 	getDefinitionExamples,
 	getDefinitionId,

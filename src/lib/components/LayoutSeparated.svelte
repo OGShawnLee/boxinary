@@ -12,7 +12,7 @@
 	export let displayName: string;
 	export let definition: Nullable<string> = null;
 	export let createdAt: Date;
-	export let pathing: { add?: FloatingOption; edit: FloatingOption; $delete: FloatingOption };
+	export let pathing: FloatingOptionsPathing;
 	export let isBigAuthorText = true;
 	export let isBigTitle = false;
 

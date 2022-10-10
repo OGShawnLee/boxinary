@@ -39,6 +39,9 @@ export class UserPathing {
 				return {
 					path: getDefinitionPath(self.displayName, name),
 					edit: getDefinitionEditPath(self.displayName, name),
+					$bookmark(redirect: string) {
+						return getBookmarkAction(self.displayName, name, redirect);
+					},
 					$delete(redirect = "/home") {
 						return getDefinitionDeleteAction(self.displayName, name, redirect);
 					}
@@ -94,6 +97,11 @@ export function getCollectionDeleteAction(
 
 export function getCollectionEditPath(displayName: string, id: Collection["id"]) {
 	return `${getCollectionPath(displayName, id)}/edit`;
+}
+
+// * Bookmark
+export function getBookmarkAction(displayName: string, name: string, redirect: string) {
+	return `/${displayName}/dictionary/${name}?/bookmark&redirect-to=${redirect}`;
 }
 
 // * Definition

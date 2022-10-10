@@ -36,6 +36,11 @@ export function deleteUserDefinition(definitionId: number) {
 	return useAwait(() => db.definition.delete({ where: { id: definitionId } }));
 }
 
+export function getAuthToken(cookies: Cookies) {
+	const token = cookies.get(AUTH_COOKIE);
+	return token ? getUserJWTTokenPayload(token) : undefined;
+}
+
 export function getDefinitionByName(displayName: string, name: string) {
 	return useAwait(() =>
 		db.definition.findFirst({

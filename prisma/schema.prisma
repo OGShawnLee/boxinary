@@ -20,6 +20,7 @@ model User {
   definitions Definition[]
   examples    Example[]
   collections Collection[]
+  bookmarks   Bookmark[]
 }
 
 model Definition {
@@ -34,6 +35,7 @@ model Definition {
   userId      Int
   examples    Example[]
   collections DefinitionOnCollection[]
+  bookmarks   Bookmark[]
 }
 
 model Example {
@@ -68,4 +70,14 @@ model DefinitionOnCollection {
   createdAt    DateTime   @default(now())
 
   @@id([definitionId, collectionId])
+}
+
+model Bookmark {
+  createdAt     DateTime   @default(now())
+  definition    Definition @relation(fields: [definition_id], references: [id])
+  definition_id Int
+  user          User       @relation(fields: [user_id], references: [id])
+  user_id       Int
+
+  @@id([definition_id, user_id])
 }
