@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
 	import { CardCollection, CardDefinition, CardExample } from "$lib/components";
-	import { getCollectionCreatePath } from "@root/lib/utils/pathing";
+	import { getCollectionCreatePath } from "$lib/utils";
 
 	export let data: PageData;
 
-	const { currentUser, collections, definitions, examples } = data;
+	const { bookmarks, currentUser, collections, definitions, examples } = data;
 </script>
 
 <svelte:head>
@@ -39,21 +39,33 @@
 			</div>
 		</section>
 	</div>
-	<section class="grid gap-9 lg:col-span-4">
-		<h2 class="text-2xl text-white font-semibold">
-			<a
-				class="hover:(text-aqua-50 underline)"
-				href="{currentUser.displayName}/dictionary/examples"
-				title="View your Examples"
-				data-sveltekit-prefetch
-			>
-				Examples
-			</a>
-		</h2>
-		<div class="grid gap-6 @md:grid-cols-2">
-			{#each examples as example}
-				<CardExample isDedicated {...example} displayName={currentUser.displayName} />
-			{/each}
-		</div>
-	</section>
+	<div class="grid gap-9 | lg:col-span-4">
+		{#if bookmarks.length}
+			<section class="grid gap-9">
+				<h2 class="text-2xl text-white font-semibold">Bookmarks</h2>
+				<div class="grid gap-6">
+					{#each bookmarks as { definition: { id, name, definition, user } } (id)}
+						<CardDefinition displayName={user.displayName} {name} {definition} />
+					{/each}
+				</div>
+			</section>
+		{/if}
+		<section class="grid gap-9">
+			<h2 class="text-2xl text-white font-semibold">
+				<a
+					class="hover:(text-aqua-50 underline)"
+					href="{currentUser.displayName}/dictionary/examples"
+					title="View your Examples"
+					data-sveltekit-prefetch
+				>
+					Examples
+				</a>
+			</h2>
+			<div class="grid gap-6 @md:grid-cols-2">
+				{#each examples as example}
+					<CardExample isDedicated {...example} displayName={currentUser.displayName} />
+				{/each}
+			</div>
+		</section>
+	</div>
 </main>

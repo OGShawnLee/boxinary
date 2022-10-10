@@ -108,6 +108,21 @@ export function getUserDashboard(id: number) {
 		db.user.findFirst({
 			where: { id },
 			select: {
+				bookmarks: {
+					select: {
+						createdAt: true,
+						definition: {
+							select: {
+								id: true,
+								createdAt: true,
+								name: true,
+								definition: true,
+								user: { select: { displayName: true } }
+							}
+						}
+					},
+					orderBy: { createdAt: "desc" }
+				},
 				collections: {
 					select: { id: true, name: true, description: true, createdAt: true },
 					orderBy: { createdAt: "desc" }
