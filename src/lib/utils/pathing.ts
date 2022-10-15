@@ -10,13 +10,11 @@ export class UserPathing {
 			collection(id: Collection["id"]) {
 				return {
 					path: getCollectionPath(displayName, id),
-					get add() {
-						return {
-							path: getCollectionAddPath(displayName, id),
-							$add(definitionid: Definition["id"]) {
-								return getCollectionAddAction(displayName, id, definitionid);
-							}
-						};
+					add: {
+						path: getCollectionAddPath(displayName, id),
+						$add(definitionid: Definition["id"]) {
+							return getCollectionAddAction(displayName, id, definitionid);
+						}
 					},
 					edit: getCollectionEditPath(displayName, id),
 					$delete(redirect = "/home") {
