@@ -56,7 +56,7 @@
 							hasBackground={false}
 							{...example}
 							displayName={foundUser.displayName}
-							redirectTo={path}
+							redirect={path}
 						/>
 					{/each}
 				</div>
