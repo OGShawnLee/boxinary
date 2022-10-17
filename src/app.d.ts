@@ -2,7 +2,7 @@
 // for information about these interfaces
 // and what to do when importing types
 
-import type { User } from "@prisma/client";
+import type { Definition, User } from "@prisma/client";
 import type { Nullable } from "malachite-ui/types";
 
 declare global {
@@ -17,3 +17,5 @@ declare global {
 }
 
 type ClientUser = Omit<User, "email" | "password">;
+
+type GameDefinition = Definition & { options: string[] };

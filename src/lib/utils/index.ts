@@ -1,3 +1,4 @@
+export { shuffle } from "./array";
 export { exclude } from "./object";
 export {
 	createExamplePathing,

@@ -37,7 +37,7 @@
 		{#if collection.definitions.length}
 			<section class="grid gap-6">
 				<h2 class="text-xl text-white font-semibold">Definitions</h2>
-				<div class="grid gap-6 | lg:grid-cols-2 xl:grid-cols-3">
+				<div class="grid gap-6 | lg:grid-cols-2">
 					{#each collection.definitions as { definition: { id, name, definition, createdAt } } (id)}
 						{@const definitionPath = pathing.dictionary.definition(name)}
 						<Card {isOwner} compact {createdAt} let:className>

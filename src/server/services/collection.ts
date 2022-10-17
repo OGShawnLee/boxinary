@@ -33,11 +33,7 @@ export function findCollection(id: number, displayName: string) {
 			where: { id, user: { displayName } },
 			include: {
 				definitions: {
-					select: {
-						definition: {
-							select: { id: true, name: true, definition: true, createdAt: true }
-						}
-					},
+					include: { definition: true },
 					orderBy: { createdAt: "desc" }
 				}
 			}

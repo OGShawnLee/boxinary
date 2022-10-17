@@ -4,6 +4,7 @@ export {
 	createCollection,
 	deleteCollection,
 	findCollection,
+	findCollectionWithDefinitions,
 	removeFromCollection,
 	updateCollection
 } from "./collection";
