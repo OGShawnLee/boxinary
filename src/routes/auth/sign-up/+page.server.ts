@@ -7,7 +7,7 @@ import { genSalt, hash } from "bcrypt";
 import { useAwait, useAwaitError } from "$lib/hooks";
 import { verify } from "jsonwebtoken";
 import { deleteAuthCookie } from "@server/utils";
-import { isJWTPayloadState } from "@server/validation";
+import { isJWTPayloadState } from "@server/predicate";
 
 export const load: ServerLoad = async ({ cookies }) => {
 	const authStateCookie = cookies.get(AUTH_COOKIE);

@@ -7,7 +7,7 @@ import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import { useAwait } from "$lib/hooks";
 import { exclude } from "$lib/utils";
 import { verify } from "jsonwebtoken";
-import { isJWTPayloadState } from "@server/validation";
+import { isJWTPayloadState } from "@server/predicate";
 import { deleteAuthCookie } from "@server/utils";
 import { error, redirect } from "@sveltejs/kit";
 import { isEmpty, isNullish, isString } from "malachite-ui/predicate";

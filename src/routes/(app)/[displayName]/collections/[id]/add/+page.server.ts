@@ -5,7 +5,7 @@ import { error, redirect, type Cookies } from "@sveltejs/kit";
 import { isNullish } from "malachite-ui/predicate";
 import { useAwait } from "$lib/hooks";
 import { addToCollection } from "@server/services";
-import { isNotDefinitionOwner } from "@server/validation";
+import { isNotDefinitionOwner } from "@server/predicate";
 import { handleBigint } from "@server/utils";
 
 export const load: PageServerLoad = async ({ cookies, params }) => {
