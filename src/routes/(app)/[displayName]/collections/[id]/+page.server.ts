@@ -3,12 +3,12 @@ import { handleAuth } from "@server/services";
 import { isNullish } from "malachite-ui/predicate";
 import { error, redirect } from "@sveltejs/kit";
 import { removeFromCollection } from "@server/services";
-import { handleNumber } from "@server/utils";
+import { handleBigint } from "@server/utils";
 
 export const actions: Actions = {
 	remove: async ({ cookies, params, url }) => {
-		const collectionid = handleNumber(params.id, "collection-id");
-		const definitionid = handleNumber(url.searchParams.get("definition-id"), "definition-id");
+		const collectionid = handleBigint(params.id, "collection-id");
+		const definitionid = handleBigint(url.searchParams.get("definition-id"), "definition-id");
 
 		await handleAuth(cookies, params.displayName, true);
 		const [definition, err] = await removeFromCollection({ collectionid, definitionid });

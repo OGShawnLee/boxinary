@@ -4,19 +4,18 @@ generator client {
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
+  id          String       @id @default(cuid())
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  name        String       @db.VarChar(50)
-  displayName String       @unique @db.VarChar(16)
-  email       String       @unique @db.VarChar(254)
-  password    String       @db.VarChar(60)
+  name        String       @db.String(50)
+  displayName String       @unique @db.String(16)
+  email       String       @unique @db.String(254)
+  password    String       @db.String(60)
   definitions Definition[]
   examples    Example[]
   collections Collection[]
@@ -24,15 +23,15 @@ model User {
 }
 
 model Definition {
-  id          Int                      @id @default(autoincrement())
+  id          BigInt                   @id @default(autoincrement())
   createdAt   DateTime                 @default(now())
   updatedAt   DateTime                 @updatedAt
-  name        String                   @db.VarChar(50)
-  summary     String                   @db.VarChar(560)
-  description String                   @db.VarChar(300)
-  definition  String                   @db.VarChar(80)
+  name        String                   @db.String(50)
+  summary     String                   @db.String(560)
+  description String                   @db.String(300)
+  definition  String                   @db.String(80)
   user        User                     @relation(fields: [userId], references: [id])
-  userId      Int
+  userId      String
   examples    Example[]
   collections DefinitionOnCollection[]
   bookmarks   Bookmark[]
@@ -43,28 +42,28 @@ model Example {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   definition   Definition @relation(fields: [definitionId], references: [id])
-  definitionId Int
+  definitionId BigInt
   user         User       @relation(fields: [userId], references: [id])
-  userId       Int
-  text         String     @db.VarChar(240)
-  source       String?    @db.VarChar(60)
+  userId       String
+  text         String     @db.String(240)
+  source       String?    @db.String(60)
 }
 
 model Collection {
   id          BigInt                   @id @default(autoincrement())
   createdAt   DateTime                 @default(now())
   updatedAt   DateTime                 @updatedAt
-  name        String                   @db.VarChar(80)
-  details     String?                  @db.VarChar(460)
-  description String?                  @db.VarChar(120)
+  name        String                   @db.String(80)
+  details     String?                  @db.String(460)
+  description String?                  @db.String(120)
   user        User                     @relation(fields: [userId], references: [id])
-  userId      Int
+  userId      String
   definitions DefinitionOnCollection[]
 }
 
 model DefinitionOnCollection {
   definition   Definition @relation(fields: [definitionId], references: [id])
-  definitionId Int
+  definitionId BigInt
   collection   Collection @relation(fields: [collectionId], references: [id])
   collectionId BigInt
   createdAt    DateTime   @default(now())
@@ -75,9 +74,9 @@ model DefinitionOnCollection {
 model Bookmark {
   createdAt     DateTime   @default(now())
   definition    Definition @relation(fields: [definition_id], references: [id])
-  definition_id Int
+  definition_id BigInt
   user          User       @relation(fields: [user_id], references: [id])
-  user_id       Int
+  user_id       String
 
   @@id([definition_id, user_id])
 }

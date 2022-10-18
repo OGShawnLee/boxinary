@@ -1,4 +1,4 @@
-import type { Collection } from "@prisma/client";
+import type { Collection, Definition, User } from "@prisma/client";
 import db from "$lib/db";
 import { useAwait } from "$lib/hooks";
 
@@ -6,8 +6,8 @@ export function addToCollection({
 	collectionid,
 	definitionid
 }: {
-	collectionid: number;
-	definitionid: number;
+	collectionid: Collection["id"];
+	definitionid: Definition["id"];
 }) {
 	return useAwait(() =>
 		db.definitionOnCollection.create({
@@ -17,7 +17,7 @@ export function addToCollection({
 }
 
 export function createCollection(
-	uid: number,
+	uid: User["id"],
 	data: Pick<Collection, "name" | "description" | "details">
 ) {
 	return useAwait(() => db.collection.create({ data: { userId: uid, ...data } }));
@@ -27,7 +27,7 @@ export function deleteCollection(id: number) {
 	return useAwait(() => db.collection.delete({ where: { id } }));
 }
 
-export function findCollection(id: number, displayName: string) {
+export function findCollection(id: Collection["id"], displayName: string) {
 	return useAwait(() =>
 		db.collection.findFirst({
 			where: { id, user: { displayName } },
@@ -49,8 +49,8 @@ export function removeFromCollection({
 	collectionid,
 	definitionid
 }: {
-	collectionid: number;
-	definitionid: number;
+	collectionid: Collection["id"];
+	definitionid: Definition["id"];
 }) {
 	return useAwait(() =>
 		db.definitionOnCollection.delete({

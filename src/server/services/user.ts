@@ -10,11 +10,11 @@ import { verify } from "jsonwebtoken";
 import { isJWTPayloadState } from "@server/validation";
 import { deleteAuthCookie } from "@server/utils";
 import { error, redirect } from "@sveltejs/kit";
-import { isEmpty, isNullish, isNumber, isString } from "malachite-ui/predicate";
+import { isEmpty, isNullish, isString } from "malachite-ui/predicate";
 
 export function addDefinitionExample(
 	id: number,
-	data: { uid: number; text: string; source: Nullable<string> }
+	data: { uid: User["id"]; text: string; source: Nullable<string> }
 ) {
 	const { uid, text, source } = data;
 	return useAwait(() =>
@@ -23,7 +23,7 @@ export function addDefinitionExample(
 }
 
 export function createDefinition(
-	userId: number,
+	userId: User["id"],
 	data: Pick<Definition, "name" | "definition" | "description" | "summary">
 ) {
 	const { name, definition, description, summary } = data;
@@ -95,7 +95,7 @@ export function getDefinitionId(displayName: string, name: string) {
 	});
 }
 
-export function getUser(id: number) {
+export function getUser(id: User["id"]) {
 	return useAwait(() => db.user.findFirstOrThrow({ where: { id } }));
 }
 
@@ -103,7 +103,7 @@ export function getUserByDisplayName(displayName: string) {
 	return useAwait(() => db.user.findFirst({ where: { displayName } }));
 }
 
-export function getUserDashboard(id: number) {
+export function getUserDashboard(id: User["id"]) {
 	return useAwait(() =>
 		db.user.findFirst({
 			where: { id },
@@ -162,7 +162,7 @@ export function getUserDefinitions(displayName: string) {
 	);
 }
 
-export function getUserDefinitionsById(id: number) {
+export function getUserDefinitionsById(id: User["id"]) {
 	return useAwait(() =>
 		db.definition.findMany({
 			where: { userId: id },
@@ -172,7 +172,7 @@ export function getUserDefinitionsById(id: number) {
 	);
 }
 
-export function getUserExamples(uid: number) {
+export function getUserExamples(uid: User["id"]) {
 	return useAwait(() =>
 		db.example.findMany({
 			where: { userId: uid },
@@ -245,19 +245,19 @@ export function getUserProfileData(displayName: string) {
 	});
 }
 
-export async function handleAuth(cookies: Cookies, uid: string | number, isAction = false) {
-	const { id, displayName } = await handleAuthState(cookies);
+export async function handleAuth(
+	cookies: Cookies,
+	displayName: User["displayName"],
+	isAction = false
+) {
+	const currentUser = await handleAuthState(cookies);
+
 	const message = isAction ? "Action Denied" : "Access Denied";
 
-	if (isNumber(uid)) {
-		if (id !== uid) throw error(403, { message });
-		return { id, displayName };
-	}
-
-	const [targetUser, err] = await findUserCoreData(uid);
+	const [targetUser, err] = await findUserCoreData(displayName);
 	if (err) throw error(500, { message: "Unable to Verify Authorisation" });
 	if (isNullish(targetUser)) throw error(404, { message: "User not Found" });
-	if (id !== targetUser.id) throw error(403, { message });
+	if (currentUser.displayName !== targetUser.displayName) throw error(403, { message });
 	return targetUser;
 }
 
@@ -272,14 +272,14 @@ export async function handleAuthState(cookies: Cookies) {
 	return authState;
 }
 
-export async function handleClientUser(id: number) {
+export async function handleClientUser(id: User["id"]) {
 	const [currentUser, err] = await useAwait(() => db.user.findUnique({ where: { id } }));
 	if (err) throw error(500, { message: "Unable to Find User" });
 	if (currentUser) return exclude(currentUser, "email", "password");
 	throw error(404, { message: "User Not Found" });
 }
 
-export function updateUser(id: number, data: Partial<Omit<User, "id">>) {
+export function updateUser(id: User["id"], data: Partial<Omit<User, "id">>) {
 	return useAwait<ClientUser>(async () => {
 		const updatedUser = await db.user.update({ where: { id }, data });
 		return exclude(updatedUser, "email", "password");

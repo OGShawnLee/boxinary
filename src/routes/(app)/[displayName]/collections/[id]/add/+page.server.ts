@@ -1,22 +1,21 @@
 import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/db";
-import { handleAuth } from "@server/services";
-import { error, redirect } from "@sveltejs/kit";
+import { handleAuthState } from "@server/services";
+import { error, redirect, type Cookies } from "@sveltejs/kit";
 import { isNullish } from "malachite-ui/predicate";
 import { useAwait } from "$lib/hooks";
 import { addToCollection } from "@server/services";
 import { isNotDefinitionOwner } from "@server/validation";
-import { handleNumber } from "@server/utils";
+import { handleBigint } from "@server/utils";
 
-export const load: PageServerLoad = async ({ cookies, parent, params }) => {
-	const collectionid = handleNumber(params.id, "collection-id");
-
-	const { foundUser } = await parent();
-	const { id } = await handleAuth(cookies, foundUser.id);
+export const load: PageServerLoad = async ({ cookies, params }) => {
+	const collectionid = handleBigint(params.id, "collection-id");
+	const { displayName } = await handleAuthState(cookies);
+	if (displayName !== params.displayName) throw error(403, { message: "Access Forbidden" });
 
 	const [definitions, err] = await useAwait(() =>
 		db.definition.findMany({
-			where: { userId: id, collections: { none: { collectionId: collectionid } } },
+			where: { user: { displayName }, collections: { none: { collectionId: collectionid } } },
 			select: { id: true, name: true, definition: true, createdAt: true },
 			orderBy: { createdAt: "desc" }
 		})
@@ -29,10 +28,11 @@ export const load: PageServerLoad = async ({ cookies, parent, params }) => {
 
 export const actions: Actions = {
 	default: async ({ cookies, params, url }) => {
-		const collectionid = handleNumber(params.id, "collection-id");
-		const definitionid = handleNumber(url.searchParams.get("definition-id"), "definition-id");
+		const collectionid = handleBigint(params.id, "collection-id");
+		const definitionid = handleBigint(url.searchParams.get("definition-id"), "definition-id");
 
-		const { id, displayName } = await handleAuth(cookies, params.displayName, true);
+		const { id, displayName } = await handleAuthState(cookies);
+		if (displayName !== params.displayName) throw error(403, { message: "Action Forbidden" });
 		const [isStranger] = await isNotDefinitionOwner(definitionid, id);
 		if (isStranger) throw error(403, { message: "Action Forbidden" });
 

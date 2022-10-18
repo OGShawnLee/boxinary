@@ -1,2 +1,2 @@
 export { createUserJWT, deleteAuthCookie } from "./auth";
-export { handleNumber } from "./params";
+export { handleBigint } from "./params";

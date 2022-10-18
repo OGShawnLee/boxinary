@@ -8,12 +8,14 @@ import type { Nullable } from "malachite-ui/types";
 declare global {
 	declare namespace App {
 		interface Locals {
-			currentUser: Nullable<{ id: number; name: string; displayName: string }>;
+			currentUser: Nullable<{ id: string; name: string; displayName: string }>;
 		}
 		// interface PageData {}
 		// interface Error {}
 		// interface Platform {}
 	}
+
+	type JWTPayloadState = Pick<User, "displayName" | "email" | "id" | "name">;
 }
 
 type ClientUser = Omit<User, "email" | "password">;

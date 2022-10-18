@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Collection } from "@prisma/client";
+	import type { Collection, User } from "@prisma/client";
 	import { FloatingOptions } from "$lib/components";
 	import {
 		getCollectionAddPath,
@@ -9,7 +9,7 @@
 	} from "$lib/utils";
 	import { currentUser } from "@root/state";
 
-	export let user: { id: number; displayName: string };
+	export let user: Pick<User, "id" | "displayName">;
 	export let collection: Pick<Collection, "id" | "name" | "createdAt" | "description">;
 	export let redirectTo = "/home";
 
