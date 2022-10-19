@@ -1,12 +1,11 @@
 import type { Actions } from "./$types";
-import { createDefinition, handleAuthState } from "@server/services";
+import { createDefinition, handleAuth } from "@server/services";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { isEmpty } from "malachite-ui/predicate";
 
 export const actions: Actions = {
 	default: async ({ cookies, request, params }) => {
-		const { id, displayName } = await handleAuthState(cookies);
-		if (displayName !== params.displayName) throw error(403, { message: "Action Forbidden" });
+		const { id, displayName } = await handleAuth(cookies, params.displayName, true);
 
 		const data = await request.formData();
 		const name = data.get("name");
@@ -26,8 +25,8 @@ export const actions: Actions = {
 		if (typeof summary !== "string") return invalid(400, { summary: { invalid: true } });
 		if (isEmpty(summary)) return invalid(400, { summary: { missing: true } });
 
-		const [def] = await createDefinition(id, { name, definition, description, summary });
-		if (def) throw redirect(303, `/${displayName}/dictionary/${def.name}`);
+		const [payload] = await createDefinition(id, { name, definition, description, summary });
+		if (payload) throw redirect(303, `/${displayName}/dictionary/${payload.name}`);
 		throw error(500, { message: "Unable to Create Definition" });
 	}
 };

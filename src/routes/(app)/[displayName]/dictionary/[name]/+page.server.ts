@@ -4,7 +4,7 @@ import {
 	createBookmark,
 	deleteBookmark,
 	findBookmark,
-	getDefinitionId,
+	findDefinitionId,
 	handleAuthState
 } from "@server/services";
 import { isNullish } from "malachite-ui/predicate";
@@ -12,7 +12,7 @@ import { isNullish } from "malachite-ui/predicate";
 export const actions: Actions = {
 	bookmark: async ({ cookies, params: { displayName, name }, url }) => {
 		const { id } = await handleAuthState(cookies);
-		const [definition_id] = await getDefinitionId(displayName, name);
+		const [definition_id] = await findDefinitionId(displayName, name);
 		if (definition_id === undefined) throw error(404, { message: "Definition not Found." });
 		if (definition_id === null) throw error(500, { message: "Unable to Create Bookmark." });
 

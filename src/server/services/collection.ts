@@ -23,7 +23,7 @@ export function createCollection(
 	return useAwait(() => db.collection.create({ data: { userId: uid, ...data } }));
 }
 
-export function deleteCollection(id: number) {
+export function deleteCollection(id: Collection["id"]) {
 	return useAwait(() => db.collection.delete({ where: { id } }));
 }
 
@@ -62,7 +62,7 @@ export function removeFromCollection({
 }
 
 export function updateCollection(
-	id: number,
+	id: Collection["id"],
 	data: Pick<Collection, "name" | "description" | "details">
 ) {
 	return useAwait(() => db.collection.update({ where: { id }, data }));

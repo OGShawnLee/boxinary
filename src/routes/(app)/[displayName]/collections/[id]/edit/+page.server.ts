@@ -1,25 +1,17 @@
 import type { Actions, PageServerLoad } from "./$types";
-import { findUserCoreData, handleAuthState, updateCollection } from "@server/services";
+import { handleAuth, updateCollection } from "@server/services";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { isEmpty, isNullish } from "malachite-ui/predicate";
+import { isEmpty } from "malachite-ui/predicate";
 import { handleBigint } from "@server/utils";
 
-export const load: PageServerLoad = async ({ cookies, parent }) => {
-	const { id } = await handleAuthState(cookies);
-	const { foundUser } = await parent();
-	if (id !== foundUser.id) throw error(403, { message: "Access Denied" });
+export const load: PageServerLoad = async ({ cookies, params }) => {
+	await handleAuth(cookies, params.displayName);
 };
 
 export const actions: Actions = {
 	default: async ({ cookies, request, params }) => {
 		const collectionid = handleBigint(params.id, "collection-id");
-
-		const currentUser = await handleAuthState(cookies);
-		const [targetUser, err] = await findUserCoreData(params.displayName);
-		if (err) throw error(500, { message: "Unable to Verify User Authentication" });
-		if (isNullish(targetUser)) throw error(404, { message: "User not Found" });
-
-		if (targetUser.id !== currentUser.id) throw error(404, { message: "Action Forbidden" });
+		const currentUser = await handleAuth(cookies, params.displayName);
 
 		const data = await request.formData();
 		const name = data.get("name");

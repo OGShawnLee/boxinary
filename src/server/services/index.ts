@@ -1,3 +1,4 @@
+export { getAuthToken, getUserJWTTokenPayload, handleAuth, handleAuthState } from "./auth";
 export { createBookmark, deleteBookmark, findBookmark } from "./bookmark";
 export {
 	addToCollection,
@@ -7,27 +8,21 @@ export {
 	removeFromCollection,
 	updateCollection
 } from "./collection";
-export { deleteDefinition } from "./definition";
-export { deleteExample, getExample, updateExample } from "./example";
 export {
-	addDefinitionExample,
 	createDefinition,
-	deleteUserDefinition,
+	deleteDefinition,
+	findDefinitionId,
+	findDefinitionExamplesPageData,
+	findDefinitionPageData,
+	updateDefinition
+} from "./definition";
+export { addExample, deleteExample, findExample, updateExample } from "./example";
+export {
+	findUser,
 	findUserCoreData,
-	getAuthToken,
-	getDefinitionByName,
-	getDefinitionExamples,
-	getDefinitionId,
-	getUser,
-	getUserByDisplayName,
+	findUserExamples,
 	getUserDashboard,
-	getUserDefinitions,
-	getUserDefinitionsById,
-	getUserExamples,
-	getUserJWTTokenPayload,
 	getUserProfileData,
-	handleAuth,
-	handleAuthState,
 	handleClientUser,
 	updateUser
 } from "./user";

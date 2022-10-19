@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/db";
-import { handleAuthState } from "@server/services";
-import { error, redirect, type Cookies } from "@sveltejs/kit";
+import { handleAuth } from "@server/services";
+import { error, redirect } from "@sveltejs/kit";
 import { isNullish } from "malachite-ui/predicate";
 import { useAwait } from "$lib/hooks";
 import { addToCollection } from "@server/services";
@@ -10,8 +10,7 @@ import { handleBigint } from "@server/utils";
 
 export const load: PageServerLoad = async ({ cookies, params }) => {
 	const collectionid = handleBigint(params.id, "collection-id");
-	const { displayName } = await handleAuthState(cookies);
-	if (displayName !== params.displayName) throw error(403, { message: "Access Forbidden" });
+	const { displayName } = await handleAuth(cookies, params.displayName);
 
 	const [definitions, err] = await useAwait(() =>
 		db.definition.findMany({
@@ -31,8 +30,7 @@ export const actions: Actions = {
 		const collectionid = handleBigint(params.id, "collection-id");
 		const definitionid = handleBigint(url.searchParams.get("definition-id"), "definition-id");
 
-		const { id, displayName } = await handleAuthState(cookies);
-		if (displayName !== params.displayName) throw error(403, { message: "Action Forbidden" });
+		const { id, displayName } = await handleAuth(cookies, params.displayName, true);
 		const [isStranger] = await isNotDefinitionOwner(definitionid, id);
 		if (isStranger) throw error(403, { message: "Action Forbidden" });
 

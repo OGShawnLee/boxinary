@@ -1,12 +1,11 @@
 import type { Actions } from "./$types";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { addDefinitionExample, getDefinitionId, handleAuthState } from "@server/services";
+import { addExample, findDefinitionId, handleAuth } from "@server/services";
 import { isEmpty, isNullish } from "malachite-ui/predicate";
 
 export const actions: Actions = {
 	default: async ({ cookies, params, request }) => {
-		const { id, displayName } = await handleAuthState(cookies);
-		if (displayName !== params.displayName) throw error(403, { message: "Action Forbidden" });
+		const { id, displayName } = await handleAuth(cookies, params.displayName, true);
 
 		const data = await request.formData();
 		const text = data.get("example");
@@ -20,12 +19,12 @@ export const actions: Actions = {
 			if (isEmpty(source)) return invalid(400, { text, source: { missing: true } });
 		}
 
-		const [definitionId, err] = await getDefinitionId(displayName, params.name);
+		const [definitionId, err] = await findDefinitionId(displayName, params.name);
 		if (isNullish(definitionId)) throw error(404, { message: "Definition not Found" });
 		if (err) throw error(500, { message: "Unable to Add Example" });
 
-		const [example] = await addDefinitionExample(definitionId, { uid: id, text, source });
-		if (example) throw redirect(303, `/${displayName}/dictionary/${params.name}`);
+		const [payload] = await addExample(definitionId, id, { text, source });
+		if (payload) throw redirect(303, `/${displayName}/dictionary/${params.name}`);
 		throw error(500, { message: "Unable to Add Example" });
 	}
 };

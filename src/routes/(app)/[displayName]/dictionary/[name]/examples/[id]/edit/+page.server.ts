@@ -1,21 +1,25 @@
 import type { Actions, PageServerLoad } from "./$types";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { getExample, handleAuthState, updateExample } from "@server/services";
+import { findExample, handleAuth, updateExample } from "@server/services";
+import { handleBigint } from "@server/utils";
 import { isEmpty } from "malachite-ui/predicate";
 
-export const load: PageServerLoad = async ({ cookies, params: { displayName, id, name } }) => {
-	const currentUser = await handleAuthState(cookies);
-	if (currentUser.displayName !== displayName) throw error(403, { message: "Access Denied" });
-	const [example, err] = await getExample(Number(id), name);
+export const load: PageServerLoad = async ({
+	cookies,
+	params: { displayName, name, id: str_id }
+}) => {
+	await handleAuth(cookies, displayName);
+
+	const id = handleBigint(str_id, "example-id");
+	const [example, err] = await findExample(id, name);
 	if (err) throw error(500, { message: "Unable to Get Example" });
 	if (example) return { example };
 	throw error(404, { message: "Example not Found" });
 };
 
 export const actions: Actions = {
-	default: async ({ cookies, params: { displayName, id, name }, request }) => {
-		const currentUser = await handleAuthState(cookies);
-		if (currentUser.displayName !== displayName) throw error(403, { message: "Action Forbidden" });
+	default: async ({ cookies, params: { displayName, name, id: str_id }, request }) => {
+		await handleAuth(cookies, displayName);
 
 		const data = await request.formData();
 		const text = data.get("example");
@@ -29,7 +33,8 @@ export const actions: Actions = {
 			if (isEmpty(text)) return invalid(400, { source: { missing: true }, text });
 		}
 
-		const [initialExample, err] = await getExample(Number(id), name);
+		const id = handleBigint(str_id, "example-id");
+		const [initialExample, err] = await findExample(id, name);
 		if (err) throw error(500, { message: "Unable to Update Example" });
 		if (!initialExample)
 			throw error(403, { message: "Example does not belong to this Definition" });

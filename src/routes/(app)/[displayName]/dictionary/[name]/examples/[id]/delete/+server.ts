@@ -1,13 +1,18 @@
 import type { RequestHandler } from "./$types";
-import { deleteExample, getExample, handleAuthState } from "@server/services";
+import { deleteExample, findExample, handleAuthState } from "@server/services";
 import { defineMessage } from "$lib/utils";
+import { toBigint } from "@server/utils";
+import { isNullish } from "malachite-ui/predicate";
 
-export const POST: RequestHandler = async ({ cookies, params: { displayName, name, id }, url }) => {
+export const POST: RequestHandler = async ({ cookies, params, url }) => {
 	const currentUser = await handleAuthState(cookies);
-	if (currentUser.displayName !== displayName)
+	if (currentUser.displayName !== params.displayName)
 		return new Response(defineMessage("Action Forbidden"), { status: 403 });
 
-	const [initialExample, err] = await getExample(Number(id), name);
+	const id = toBigint(params.id);
+	if (isNullish(id)) return new Response(defineMessage("Invalid Example ID"));
+
+	const [initialExample, err] = await findExample(id, params.name);
 	if (err) return new Response(defineMessage("Unable to Delete Example"), { status: 500 });
 	if (!initialExample) return new Response(defineMessage("Example not Found"), { status: 404 });
 

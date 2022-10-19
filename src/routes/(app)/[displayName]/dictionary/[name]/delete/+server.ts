@@ -3,10 +3,7 @@ import db from "$lib/db";
 import { deleteDefinition, handleAuthState } from "@server/services";
 import { isNullish } from "malachite-ui/predicate";
 import { useAwait } from "$lib/hooks";
-
-function defineMessage(message: string) {
-	return JSON.stringify({ message });
-}
+import { defineMessage } from "$lib/utils";
 
 export const POST: RequestHandler = async ({ cookies, params: { displayName, name }, url }) => {
 	const currentUser = await handleAuthState(cookies);
@@ -25,8 +22,8 @@ export const POST: RequestHandler = async ({ cookies, params: { displayName, nam
 		return new Response(defineMessage("Definition not Found"), { status: 404 });
 
 	const inCollection = definition.collections.length > 0;
-	const [deletedDefinition] = await deleteDefinition(definition.id, inCollection);
-	if (isNullish(deletedDefinition))
+	const [payload] = await deleteDefinition(definition.id, inCollection);
+	if (isNullish(payload))
 		return new Response(defineMessage("Failed to Delete Definition"), { status: 500 });
 
 	const location = url.searchParams.get("redirect-to") || "/home";

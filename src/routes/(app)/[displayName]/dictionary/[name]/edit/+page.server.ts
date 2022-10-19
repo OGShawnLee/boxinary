@@ -1,14 +1,11 @@
 import type { Actions } from "./$types";
-import db from "$lib/db";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { handleAuthState } from "@server/services";
-import { useAwait, useAwaitError } from "$lib/hooks";
+import { findDefinitionId, handleAuth, updateDefinition } from "@server/services";
 import { isEmpty } from "malachite-ui/predicate";
 
 export const actions: Actions = {
 	default: async ({ cookies, params, request }) => {
-		const { id, displayName } = await handleAuthState(cookies);
-		if (displayName !== params.displayName) throw error(403, "Action Forbidden");
+		const { displayName } = await handleAuth(cookies, params.displayName, true);
 
 		const data = await request.formData();
 		const name = data.get("name");
@@ -36,21 +33,12 @@ export const actions: Actions = {
 		if (isEmpty(summary))
 			return invalid(400, { summary: { missing: true }, name, definition, description });
 
-		const [initialDefinition] = await useAwait(() =>
-			db.definition.findFirst({
-				where: { name: params.name, userId: id },
-				select: { id: true }
-			})
-		);
-		if (!initialDefinition) throw error(500, { message: "Unable to Update Definition" });
+		const [id] = await findDefinitionId(params.displayName, params.name);
+		if (id === undefined) throw error(404, { message: "Definition not Found" });
+		if (id === null) throw error(500, { message: "Unable to Update Definition" });
 
-		const updateError = await useAwaitError(async () => {
-			await db.definition.update({
-				where: { id: initialDefinition.id },
-				data: { name, definition, description, summary }
-			});
-		});
-		if (updateError) throw error(500, { message: "Unable to Update Definition" });
-		throw redirect(303, `/${displayName}/dictionary/${name}`);
+		const [payload] = await updateDefinition(id, { name, definition, summary, description });
+		if (payload) throw redirect(303, `/${displayName}/dictionary/${name}`);
+		throw error(500, { message: "Unable to Update Definition" });
 	}
 };
