@@ -36,7 +36,10 @@
 		</div>
 		{#if collection.definitions.length}
 			<section class="grid gap-6">
-				<h2 class="text-xl text-white font-semibold">Definitions</h2>
+				<div class="flex items-center justify-between">
+					<h2 class="text-xl text-white font-semibold">Definitions</h2>
+					<a class="button button--aqua grid-center" href={collectionPath.play}> Play </a>
+				</div>
 				<div class="grid gap-6 | lg:grid-cols-2 xl:grid-cols-3">
 					{#each collection.definitions as { definition: { id, name, definition, createdAt } } (id)}
 						{@const definitionPath = pathing.dictionary.definition(name)}

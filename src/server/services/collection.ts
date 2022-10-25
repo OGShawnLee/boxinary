@@ -27,24 +27,21 @@ export function deleteCollection(id: Collection["id"]) {
 	return useAwait(() => db.collection.delete({ where: { id } }));
 }
 
-export function findCollection(id: Collection["id"], displayName: string) {
+export function findCollection(id: Collection["id"], displayName: User["displayName"]) {
 	return useAwait(() =>
 		db.collection.findFirst({
 			where: { id, user: { displayName } },
 			include: {
 				definitions: {
-					select: {
-						definition: {
-							select: { id: true, name: true, definition: true, createdAt: true }
-						}
-					},
-					orderBy: { createdAt: "desc" }
+					include: { definition: true },
+					orderBy: {
+						createdAt: "desc"
+					}
 				}
 			}
 		})
 	);
 }
-
 export function removeFromCollection({
 	collectionid,
 	definitionid

@@ -17,6 +17,7 @@ export class UserPathing {
 						}
 					},
 					edit: getCollectionEditPath(displayName, id),
+					play: getCollectionPlayPath(displayName, id),
 					$delete(redirect = "/home") {
 						return getCollectionDeleteAction(displayName, id, redirect);
 					},
@@ -169,6 +170,11 @@ export function getExampleDeleteAction(configuration: {
 
 export function getUserExamplesPath(displayName: string) {
 	return `/${displayName}/dictionary/examples`;
+}
+
+// * Play
+export function getCollectionPlayPath(displayName: string, id: bigint) {
+	return `${getCollectionPath(displayName, id)}/play`;
 }
 
 // * User

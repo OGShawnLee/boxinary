@@ -1,4 +1,5 @@
 export { exclude } from "./object";
+export { shuffle } from "./array";
 export {
 	createExamplePathing,
 	UserPathing,
@@ -9,6 +10,7 @@ export {
 	getCollectionDeleteAction,
 	getCollectionEditPath,
 	getCollectionPath,
+	getCollectionPlayPath,
 	getDefinitionCreatePath,
 	getDefinitionDeleteAction,
 	getDefinitionEditPath,
