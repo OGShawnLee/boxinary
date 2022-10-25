@@ -39,7 +39,13 @@
 				{#if collection.definitions.length >= 5}
 					<div class="flex items-center justify-between">
 						<h2 class="text-xl text-white font-semibold">Definitions</h2>
-						<a class="button button--aqua grid-center" href={collectionPath.play}> Play </a>
+						<a
+							class="button button--aqua grid-center"
+							href={collectionPath.play}
+							data-sveltekit-prefetch
+						>
+							Play
+						</a>
 					</div>
 				{:else}
 					<h2 class="text-xl text-white font-semibold">Definitions</h2>
