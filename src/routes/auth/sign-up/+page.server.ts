@@ -7,7 +7,7 @@ import { genSalt, hash } from "bcrypt";
 import { useAwait, useAwaitError } from "$lib/hooks";
 import { verify } from "jsonwebtoken";
 import { deleteAuthCookie } from "@server/utils";
-import { isJWTPayloadState } from "@server/predicate";
+import { isInvalidEmail, isJWTPayloadState } from "@server/predicate";
 
 export const load: ServerLoad = async ({ cookies }) => {
 	const authStateCookie = cookies.get(AUTH_COOKIE);
@@ -39,6 +39,7 @@ export const actions: Actions = {
 		if (typeof email !== "string")
 			return invalid(400, { name, displayName, email: { invalid: true } });
 		if (isEmpty(email)) return invalid(400, { name, displayName, email: { missing: true } });
+		if (isInvalidEmail(email)) return invalid(400, { name, displayName, email: { invalid: true } });
 
 		if (typeof password !== "string")
 			return invalid(400, { name, displayName, email, password: { invalid: true } });

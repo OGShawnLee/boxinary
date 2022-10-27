@@ -1,6 +1,7 @@
 import type { Definition, User } from "@prisma/client";
 import type { Cookies } from "@sveltejs/kit";
 import db from "$lib/db";
+import isEmail from "validator/lib/isEmail";
 import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import { verify } from "jsonwebtoken";
 import { isEmpty, isInterface, isString, isNullish } from "malachite-ui/predicate";
@@ -12,6 +13,10 @@ export function isIncorrectPassword(data: string | Buffer, password: string) {
 		const isCorrectPassword = await compare(data, password);
 		return !isCorrectPassword;
 	});
+}
+
+export function isInvalidEmail(email: string) {
+	return !isEmail(email);
 }
 
 export async function isLoggedIn(cookies: Cookies) {
