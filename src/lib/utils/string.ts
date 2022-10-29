@@ -12,3 +12,7 @@ export function defineMessage(message: string) {
 export function possessive(name: string) {
 	return name.toLowerCase().endsWith("s") ? name + "'" : name + "'s";
 }
+
+export function plural(str: string, count: number) {
+	return count > 1 ? str + "s" : str;
+}

@@ -24,4 +24,4 @@ export {
 	getUserExamplesPath
 } from "./pathing";
 export { formatUserJoinDate, getFormatedDate, getStringMonth } from "./time";
-export { capitalise, defineMessage, possessive } from "./string";
+export { capitalise, defineMessage, plural, possessive } from "./string";

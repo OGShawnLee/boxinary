@@ -56,7 +56,7 @@
 	}
 </script>
 
-<div class="group grid gap-1.5">
+<div class="w-full group grid gap-1.5">
 	<div class="flex items-center justify-between">
 		<label class="font-medium capitalize group-focus-within:text-white" for={id}>
 			{handleDashes(label)}
