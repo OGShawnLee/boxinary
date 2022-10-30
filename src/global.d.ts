@@ -12,6 +12,7 @@ interface FloatingOptionsPathing {
 	edit: FloatingOption;
 	$bookmark?: FloatingOption & { isBookmarked?: boolean | string };
 	$delete: FloatingOption;
+	example?: FloatingOption & { condition?: boolean };
 }
 
 type ValidationUnit<T = string> =

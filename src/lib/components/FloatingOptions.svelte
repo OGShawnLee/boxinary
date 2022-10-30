@@ -41,6 +41,17 @@
 			>
 				Edit
 			</a>
+			{#if pathing.example && pathing.example.condition}
+				<a
+					class="text-sm button-option--rich"
+					href={pathing.example.path}
+					title={pathing.example.title}
+					aria-label={pathing.example.title}
+					data-sveltekit-prefetch
+				>
+					Add Example
+				</a>
+			{/if}
 			<form action={pathing.$delete.path} method="post">
 				<button
 					class="text-sm button-option--danger"

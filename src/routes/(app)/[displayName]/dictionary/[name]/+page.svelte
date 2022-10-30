@@ -2,7 +2,7 @@
 	import type { PageData } from "./$types";
 	import { CardExample, LayoutSeparated } from "$lib/components";
 	import { isEmpty } from "malachite-ui/predicate";
-	import { createExamplePathing, UserPathing } from "$lib/utils";
+	import { createExamplePathing, getDefinitionExampleAddPath, UserPathing } from "$lib/utils";
 	import { page } from "$app/stores";
 
 	export let data: PageData;
@@ -32,6 +32,11 @@
 		isBigTitle
 		pathing={{
 			edit: { path: pathing.edit, title: "Edit Definition" },
+			example: {
+				path: getDefinitionExampleAddPath(definition.user.displayName, definition.name),
+				title: "Add Example",
+				condition: definition.examples.length === 0
+			},
 			$delete: { path: pathing.$delete(), title: "Delete Definition" },
 			$bookmark: {
 				path: pathing.$bookmark(path),
