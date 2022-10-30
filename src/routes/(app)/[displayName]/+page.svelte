@@ -47,6 +47,9 @@
 			<span class="text-sm text-rich-50">
 				Joined {getFormatedDate(foundUser.createdAt)}
 			</span>
+			{#if foundUser.description}
+				<p class="leading-relaxed">{foundUser.description}</p>
+			{/if}
 		</header>
 		<section class="grid gap-9">
 			<h2 class="text-2xl text-white font-semibold">

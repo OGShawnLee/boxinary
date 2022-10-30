@@ -82,6 +82,7 @@ export function getUserProfileData(displayName: string) {
 				id: true,
 				name: true,
 				displayName: true,
+				description: true,
 				createdAt: true,
 				collections: {
 					select: { id: true, name: true, createdAt: true, description: true },
@@ -111,6 +112,7 @@ export function getUserProfileData(displayName: string) {
 					id: foundUser.id,
 					name: foundUser.name,
 					displayName,
+					description: foundUser.description,
 					createdAt: foundUser.createdAt
 				},
 				definitions: foundUser.definitions.map((definition) => {
