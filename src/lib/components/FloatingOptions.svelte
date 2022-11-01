@@ -20,7 +20,7 @@
 		{getFormatedDate(createdAt)}
 	</time>
 	{#if isOwner}
-		<div class="flex items-center gap-9">
+		<div class="flex items-center gap-4.5 lg:gap-6">
 			{#if pathing.add}
 				<a
 					class="text-sm button-option--emphasis"
