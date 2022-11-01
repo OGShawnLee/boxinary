@@ -14,7 +14,7 @@
 {#each definitions as { definition, name, examples } (name)}
 	<section class="py-6 | grid gap-3 | bg-raisin-12 rounded-md">
 		<header class="px-6 | grid">
-			<svelte:element this={headingLevel} class="text-xl text-rich-90 font-medium">
+			<svelte:element this={headingLevel} class="m-0 | text-xl text-rich-90 font-medium">
 				<a
 					class="hover:(text-aqua-50 underline)"
 					href={getDefinitionPath(displayName, name)}

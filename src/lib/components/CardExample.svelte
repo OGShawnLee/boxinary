@@ -30,7 +30,9 @@
 			class:bg-raisin-12={hasBackground}
 			class:p-6={hasBackground}
 		>
-			<svelte:element this={headingLevel} class="text-rich-90 font-normal"> {text} </svelte:element>
+			<svelte:element this={headingLevel} class="m-0 | text-rich-90 font-normal">
+				{text}
+			</svelte:element>
 			<span class="text-xs italic | md:text-sm"> {source} </span>
 		</div>
 		<FloatingOptions
@@ -45,7 +47,7 @@
 	</article>
 {:else}
 	<article class="space-y-1.5">
-		<svelte:element this={headingLevel} class="text-sm font-normal"> {text} </svelte:element>
+		<svelte:element this={headingLevel} class="m-0 | text-sm font-normal"> {text} </svelte:element>
 		<span class="text-xs italic | text-rich-50"> {source} </span>
 	</article>
 {/if}
