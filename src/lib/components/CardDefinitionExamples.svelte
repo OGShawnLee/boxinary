@@ -6,6 +6,7 @@
 
 	export let displayName: User["displayName"];
 	export let definitions: ReturnType<typeof groupExamplesByDefinition>;
+	export let headingLevel: "h2" | "h3" = "h2";
 
 	const path = $page.url.pathname;
 </script>
@@ -13,7 +14,7 @@
 {#each definitions as { definition, name, examples } (name)}
 	<section class="py-6 | grid gap-3 | bg-raisin-12 rounded-md">
 		<header class="px-6 | grid">
-			<h3 class="text-xl text-rich-90 font-medium">
+			<svelte:element this={headingLevel} class="text-xl text-rich-90 font-medium">
 				<a
 					class="hover:(text-aqua-50 underline)"
 					href={getDefinitionPath(displayName, name)}
@@ -22,7 +23,7 @@
 				>
 					{name}
 				</a>
-			</h3>
+			</svelte:element>
 			<span class="text-sm text-aqua-50"> {definition} </span>
 		</header>
 		<div class="h-0.75 w-full | bg-raisin-20" aria-hidden />

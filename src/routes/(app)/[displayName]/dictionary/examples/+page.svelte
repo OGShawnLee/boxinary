@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardExample, Header } from "$lib/components";
+	import { CardDefinitionExamples, Header } from "$lib/components";
 	import { page } from "$app/stores";
 	import { currentUser } from "@root/state";
-	import { getDefinitionPath, possessive } from "$lib/utils";
+	import { possessive } from "$lib/utils";
 
 	export let data: PageData;
 
-	const { definitions, foundUser } = data;
+	const { examples, foundUser } = data;
 	const path = $page.url.pathname;
 	const isOwner = $currentUser?.displayName === foundUser.displayName;
 
@@ -33,34 +33,10 @@
 		</span>
 	</Header>
 	<main class="grid items-start grid-rows-[masonry] gap-6 | md:grid-cols-2 xl:grid-cols-3">
-		{#each definitions as { definition, name, examples } (name)}
-			<section class="py-6 | grid gap-3 | bg-raisin-12 rounded-md">
-				<header class="px-6 | grid">
-					<h2 class="text-xl text-rich-90 font-medium">
-						<a
-							class="hover:(text-aqua-50 underline)"
-							href={getDefinitionPath(foundUser.displayName, name)}
-							title="View {name} Details"
-							data-sveltekit-prefetch
-						>
-							{name}
-						</a>
-					</h2>
-					<span class="text-sm text-aqua-50"> {definition} </span>
-				</header>
-				<div class="h-0.75 w-full | bg-raisin-20" aria-hidden />
-				<div class="px-6 flex flex-wrap gap-6">
-					{#each examples as example (example.id)}
-						<CardExample
-							isDedicated
-							hasBackground={false}
-							{...example}
-							displayName={foundUser.displayName}
-							redirect={path}
-						/>
-					{/each}
-				</div>
-			</section>
-		{/each}
+		<CardDefinitionExamples
+			displayName={foundUser.displayName}
+			definitions={examples}
+			headingLevel="h2"
+		/>
 	</main>
 </div>
