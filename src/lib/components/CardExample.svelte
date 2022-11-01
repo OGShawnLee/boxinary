@@ -15,6 +15,7 @@
 	export let definition: Nullable<{ name: string }> = undefined;
 	export let source: Nullable<string> = displayName;
 	export let redirect = $page.url.pathname;
+	export let headingLevel: "h3" | "h4" = "h3";
 
 	if (isDedicated && (isNullish(id) || isNullish(createdAt) || isNullish(definition)))
 		throw Error("id, createdAt and definition must be defined if Example is dedicated!");
@@ -29,7 +30,7 @@
 			class:bg-raisin-12={hasBackground}
 			class:p-6={hasBackground}
 		>
-			<h3 class="text-rich-90">{text}</h3>
+			<svelte:element this={headingLevel} class="text-rich-90"> {text} </svelte:element>
 			<span class="text-xs italic | md:text-sm"> {source} </span>
 		</div>
 		<FloatingOptions
@@ -44,7 +45,7 @@
 	</article>
 {:else}
 	<article class="space-y-1.5">
-		<h3 class="text-sm">{text}</h3>
+		<svelte:element this={headingLevel} class="text-sm"> {text} </svelte:element>
 		<span class="text-xs italic | text-rich-50"> {source} </span>
 	</article>
 {/if}

@@ -62,7 +62,11 @@
 				</a>
 			</h2>
 			<div class="grid gap-6 @md:grid-cols-2">
-				<CardDefinitionExamples displayName={currentUser.displayName} definitions={examples} />
+				<CardDefinitionExamples
+					displayName={currentUser.displayName}
+					definitions={examples}
+					headingLevel="h3"
+				/>
 			</div>
 		</section>
 	</div>

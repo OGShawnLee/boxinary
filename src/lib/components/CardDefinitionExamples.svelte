@@ -29,7 +29,14 @@
 		<div class="h-0.75 w-full | bg-raisin-20" aria-hidden />
 		<div class="px-6 flex flex-wrap gap-6">
 			{#each examples as example (example.id)}
-				<CardExample isDedicated hasBackground={false} {...example} {displayName} redirect={path} />
+				<CardExample
+					isDedicated
+					hasBackground={false}
+					{...example}
+					{displayName}
+					redirect={path}
+					headingLevel={headingLevel === "h2" ? "h3" : "h4"}
+				/>
 			{/each}
 		</div>
 	</section>
