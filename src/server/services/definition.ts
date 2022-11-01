@@ -41,6 +41,10 @@ export function findDefinitionPageData(displayName: User["displayName"], name: D
 				examples: {
 					select: { text: true, source: true },
 					orderBy: { createdAt: "desc" }
+				},
+				definitions: {
+					select: { id: true, definition: true, example: true },
+					orderBy: { createdAt: "desc" }
 				}
 			}
 		})

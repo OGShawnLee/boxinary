@@ -2,6 +2,7 @@ import { defineConfig } from "vite-plugin-windicss";
 
 export default defineConfig({
 	shortcuts: {
+		"bold-poppins": "font-bold font-poppins",
 		button: "min-h-10 px-6 | border-2 rounded-xl",
 		"button--lg": "min-h-12 px-8 | text-xl",
 		"button--aqua": "border-aqua-50 text-lg text-white font-medium",

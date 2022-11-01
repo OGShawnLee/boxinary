@@ -36,6 +36,7 @@ model Definition {
   examples    Example[]
   collections DefinitionOnCollection[]
   bookmarks   Bookmark[]
+  definitions SubDefinition[]
 }
 
 model Example {
@@ -80,4 +81,14 @@ model Bookmark {
   user_id       String
 
   @@id([definition_id, user_id])
+}
+
+model SubDefinition {
+  id         BigInt     @id @default(autoincrement())
+  word       Definition @relation(fields: [wordId], references: [id])
+  wordId     BigInt
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  definition String     @db.Char(180)
+  example    String?    @db.Char(80)
 }

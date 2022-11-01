@@ -6,7 +6,7 @@
 	import { page } from "$app/stores";
 
 	export let data: PageData;
-	const { definition, user: currentUser, isBookmarked } = data;
+	const { definition, user: currentUser, foundUser, isBookmarked } = data;
 
 	const isOwner = currentUser?.displayName === definition.user.displayName;
 	const hasExamples = !isEmpty(definition.examples);
@@ -45,9 +45,39 @@
 			}
 		}}
 	>
-		<main class="mt-1.75 | grid gap-3">
-			<p class="text-lg text-rich-90 leading-relaxed">{definition.description}</p>
-			<p class="text leading-relaxed">{definition.summary}</p>
+		<main class="mt-1.75 | grid gap-9">
+			<section class="grid gap-3">
+				<h2 class="sr-only">Main Content</h2>
+				<p class="text-lg text-rich-90 leading-relaxed">{definition.description}</p>
+				<p class="text leading-relaxed">{definition.summary}</p>
+			</section>
+			{#if definition.definitions.length || isOwner}
+				<section class="grid gap-6">
+					<header class="flex items-center justify-between">
+						<h2 class="text-xl text-white font-bold font-poppins">Definitions</h2>
+						{#if isOwner}
+							<a
+								class="button button--raisin grid-center"
+								href="/{foundUser.displayName}/dictionary/{definition.name}/definitions/add"
+							>
+								Add Definition
+							</a>
+						{/if}
+					</header>
+					<div class="grid gap-6">
+						{#each definition.definitions as { id, definition: def, example } (id)}
+							<article class="leading-relaxed">
+								<h3 class="text-rich-90">{def}</h3>
+								<p>
+									<i>
+										{example}
+									</i>
+								</p>
+							</article>
+						{/each}
+					</div>
+				</section>
+			{/if}
 		</main>
 	</LayoutSeparated>
 	{#if hasExamples}
