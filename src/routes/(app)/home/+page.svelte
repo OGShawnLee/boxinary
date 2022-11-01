@@ -61,7 +61,7 @@
 					Examples
 				</a>
 			</h2>
-			<div class="grid gap-6 @md:grid-cols-2">
+			<div class="grid items-start grid-rows-[masonry] gap-6 @md:grid-cols-2">
 				<CardDefinitionExamples
 					displayName={currentUser.displayName}
 					definitions={examples}
