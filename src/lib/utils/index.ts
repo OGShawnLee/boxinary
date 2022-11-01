@@ -1,5 +1,5 @@
 export { exclude } from "./object";
-export { shuffle } from "./array";
+export { groupExamplesByDefinition, shuffle } from "./array";
 export {
 	createExamplePathing,
 	UserPathing,

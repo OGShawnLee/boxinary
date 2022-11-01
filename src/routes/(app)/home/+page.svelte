@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardCollection, CardDefinition, CardExample } from "$lib/components";
+	import { CardCollection, CardDefinition, CardDefinitionExamples } from "$lib/components";
 	import { getCollectionCreatePath } from "$lib/utils";
 
 	export let data: PageData;
@@ -62,9 +62,7 @@
 				</a>
 			</h2>
 			<div class="grid gap-6 @md:grid-cols-2">
-				{#each examples as example}
-					<CardExample isDedicated {...example} displayName={currentUser.displayName} />
-				{/each}
+				<CardDefinitionExamples displayName={currentUser.displayName} definitions={examples} />
 			</div>
 		</section>
 	</div>

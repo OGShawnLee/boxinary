@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardCollection, CardDefinition, CardExample } from "$lib/components";
+	import { CardCollection, CardDefinition, CardDefinitionExamples } from "$lib/components";
 	import { currentUser } from "@root/state";
 	import {
 		getCollectionCreatePath,
@@ -63,9 +63,7 @@
 				</a>
 			</h2>
 			<div class="grid gap-6">
-				{#each examples as example}
-					<CardExample isDedicated {...example} displayName={foundUser.displayName} />
-				{/each}
+				<CardDefinitionExamples displayName={foundUser.displayName} definitions={examples} />
 			</div>
 		</section>
 	</div>

@@ -1,5 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { error } from "@sveltejs/kit";
+import { groupExamplesByDefinition } from "$lib/utils";
 import { getUserDashboard, handleAuthState } from "@server/services";
 
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -10,7 +11,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			bookmarks: dashboard.bookmarks,
 			collections: dashboard.collections,
 			definitions: dashboard.definitions,
-			examples: dashboard.examples,
+			examples: groupExamplesByDefinition(dashboard.examples),
 			currentUser: { id, displayName }
 		};
 	throw error(500, { message: "Unable to Get User Definitions" });

@@ -2,7 +2,7 @@
 // for information about these interfaces
 // and what to do when importing types
 
-import type { User } from "@prisma/client";
+import type { Definition, Example, User } from "@prisma/client";
 import type { Nullable } from "malachite-ui/types";
 
 declare global {
@@ -18,4 +18,7 @@ declare global {
 	type JWTPayloadState = Pick<User, "displayName" | "email" | "id" | "name">;
 }
 
+type ClientExample = Pick<Example, "id" | "createdAt" | "text" | "source"> & {
+	definition: Pick<Definition, "name" | "definition">;
+};
 type ClientUser = Omit<User, "email" | "password">;

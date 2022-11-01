@@ -2,7 +2,7 @@ import type { User } from "@prisma/client";
 import type { ClientUser } from "@root/app";
 import db from "$lib/db";
 import { useAwait } from "$lib/hooks";
-import { exclude } from "$lib/utils";
+import { exclude, groupExamplesByDefinition } from "$lib/utils";
 import { error } from "@sveltejs/kit";
 
 export function findUserCoreData(displayName: string) {
@@ -64,7 +64,7 @@ export function getUserDashboard(id: User["id"]) {
 						text: true,
 						source: true,
 						createdAt: true,
-						definition: { select: { name: true } }
+						definition: { select: { name: true, definition: true } }
 					},
 					take: 4,
 					orderBy: { createdAt: "desc" }
@@ -98,7 +98,7 @@ export function getUserProfileData(displayName: string) {
 						text: true,
 						source: true,
 						createdAt: true,
-						definition: { select: { name: true } }
+						definition: { select: { name: true, definition: true } }
 					},
 					take: 4,
 					orderBy: { createdAt: "desc" }
@@ -118,7 +118,7 @@ export function getUserProfileData(displayName: string) {
 				definitions: foundUser.definitions.map((definition) => {
 					return { ...definition, user: { displayName } };
 				}),
-				examples: foundUser.examples,
+				examples: groupExamplesByDefinition(foundUser.examples),
 				collections: foundUser.collections
 			};
 		}
