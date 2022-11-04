@@ -19,8 +19,8 @@
 	<title>{foundUser.name} (@{foundUser.displayName}) / Boxinary</title>
 </svelte:head>
 
-<main class="grid grid-cols-12 gap-9 items-start">
-	<div class="col-span-4 grid gap-9">
+<main class="grid lg:grid-cols-12 gap-9 items-start">
+	<div class="lg:col-span-4 grid gap-9">
 		<header class="grid gap-3">
 			<div class="flex items-center justify-between">
 				<div class="grid">
@@ -67,7 +67,7 @@
 			</div>
 		</section>
 	</div>
-	<div class="grid gap-9 col-span-8">
+	<div class="grid gap-9 lg:col-span-8">
 		<section class="grid gap-9">
 			<header class="flex items-center justify-between">
 				<h2 class="text-2xl text-white font-semibold">Collections</h2>
