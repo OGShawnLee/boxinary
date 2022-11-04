@@ -1,14 +1,12 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
 	import { CardDefinitionExamples, Header } from "$lib/components";
-	import { page } from "$app/stores";
 	import { currentUser } from "@root/state";
 	import { possessive } from "$lib/utils";
 
 	export let data: PageData;
 
 	const { examples, foundUser } = data;
-	const path = $page.url.pathname;
 	const isOwner = $currentUser?.displayName === foundUser.displayName;
 
 	// TODO: ADD MASONRY FALLBACK SUPPORT
