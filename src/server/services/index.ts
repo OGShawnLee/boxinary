@@ -11,6 +11,7 @@ export {
 export {
 	createDefinition,
 	deleteDefinition,
+	findDefinitionsByName,
 	findDefinitionId,
 	findDefinitionExamplesPageData,
 	findDefinitionPageData,

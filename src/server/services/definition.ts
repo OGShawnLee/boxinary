@@ -12,6 +12,16 @@ export function createDefinition(
 	);
 }
 
+export function findDefinitionsByName(name: string) {
+	return useAwait(() =>
+		db.definition.findMany({
+			where: { name: { startsWith: name } },
+			include: { user: { select: { displayName: true } } },
+			orderBy: { name: "asc" }
+		})
+	);
+}
+
 export function findDefinitionId(displayName: User["displayName"], name: Definition["name"]) {
 	return useAwait(async () => {
 		const definition = await db.definition.findFirst({ where: { user: { displayName }, name } });
