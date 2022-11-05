@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardExample, Heading } from "$lib/components";
+	import { CardExample, Header } from "$lib/components";
 	import { currentUser } from "@root/state";
 	import { page } from "$app/stores";
 	import { getDefinitionExampleAddPath } from "$lib/utils";
@@ -18,7 +18,7 @@
 </svelte:head>
 
 <div class="grid gap-9">
-	<Heading class="flex flex-wrap items-center justify-between gap-3" text={definition.definition}>
+	<Header class="flex flex-wrap items-center justify-between gap-3" text={definition.definition}>
 		<b class="medium">Examples</b> of
 		<b class="bold">{definition.name}</b>
 		<svelte:fragment slot="right-side">
@@ -31,7 +31,7 @@
 				</a>
 			{/if}
 		</svelte:fragment>
-	</Heading>
+	</Header>
 	<main class="grid gap-6 | sm:grid-cols-2 lg:grid-cols-3">
 		{#each examples as example}
 			<CardExample isDedicated {...example} {displayName} redirect={path} />

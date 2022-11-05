@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { Heading, InputGroup } from "$lib/components";
+	import { Header, InputGroup } from "$lib/components";
 
 	export let data: PageData;
 	export let form: ValidationForm<"example" | "definition">;
@@ -14,10 +14,10 @@
 </svelte:head>
 
 <main class="grid gap-12">
-	<Heading text={word.definition}>
+	<Header text={word.definition}>
 		Creating a <b class="bold">definition</b>
 		for <b class="bold"> {word.name} </b>
-	</Heading>
+	</Header>
 	<form class="grid gap-9" method="post">
 		<div class="grid gap-6">
 			<InputGroup id="definition" charLimit={180} error={form?.definition} />

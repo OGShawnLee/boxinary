@@ -7,7 +7,6 @@ export { default as CardUser } from "./CardUser.svelte";
 export { default as Checkbox } from "./Checkbox.svelte";
 export { default as FloatingOptions } from "./FloatingOptions.svelte";
 export { default as Header } from "./Header.svelte";
-export { default as Heading } from "./Heading.svelte";
 export { default as InputGroup } from "./InputGroup.svelte";
 export { default as ListItemLink } from "./ListItemLink.svelte";
 export { default as LayoutSeparated } from "./LayoutSeparated.svelte";

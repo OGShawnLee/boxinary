@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Heading, InputGroup } from "$lib/components";
+	import { Header, InputGroup } from "$lib/components";
 
 	export let form: ValidationForm<"name" | "description" | "details">;
 </script>
@@ -9,9 +9,9 @@
 </svelte:head>
 
 <div class="grid gap-12">
-	<Heading>
+	<Header>
 		Creating <b class="bold">collection</b>
-	</Heading>
+	</Header>
 	<main>
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-4.5">

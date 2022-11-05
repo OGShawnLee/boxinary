@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { Heading, Quiz, QuizQuestion } from "$lib/components";
+	import { Header, Quiz, QuizQuestion } from "$lib/components";
 
 	export let data: PageData;
 
@@ -13,9 +13,9 @@
 </svelte:head>
 
 <main class="grid gap-12">
-	<Heading text={collection.description}>
+	<Header text={collection.description}>
 		Playing <b class="bold">{collection.name}</b>
-	</Heading>
+	</Header>
 	<Quiz
 		class="relative"
 		index={0}

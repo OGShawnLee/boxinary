@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { Heading, InputGroup } from "$lib/components";
+	import { Header, InputGroup } from "$lib/components";
 	import { isString } from "malachite-ui/predicate";
 
 	export let data: PageData;
@@ -14,9 +14,9 @@
 </svelte:head>
 
 <div class="grid gap-12">
-	<Heading text={collection.description}>
+	<Header text={collection.description}>
 		Editing <b class="bold">{collection.name}</b>
-	</Heading>
+	</Header>
 	<main>
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-4.5">

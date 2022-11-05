@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { Heading, InputGroup } from "$lib/components";
+	import { Header, InputGroup } from "$lib/components";
 
 	export let form: ValidationForm<"name" | "displayName" | "description">;
 	export let data: PageData;
@@ -13,9 +13,9 @@
 </svelte:head>
 
 <div class="grid gap-12">
-	<Heading>
+	<Header>
 		Editing <b class="bold">profile</b>
-	</Heading>
+	</Header>
 	<main>
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-6">

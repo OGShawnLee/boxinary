@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { Card, Heading } from "$lib/components";
+	import { Card, Header } from "$lib/components";
 	import { page } from "$app/stores";
 	import {
 		getCollectionAddAction,
@@ -19,10 +19,10 @@
 </svelte:head>
 
 <div class="grid gap-12">
-	<Heading text={collection.description}>
+	<Header text={collection.description}>
 		Adding <b class="medium"> definitions </b>
 		to <b class="bold"> {collection.name} </b>
-	</Heading>
+	</Header>
 	<section class="grid gap-6">
 		<h2 class="sr-only">Definitions</h2>
 		<div class="grid gap-6 | sm:grid-cols-2 lg:grid-cols-3">
