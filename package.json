@@ -21,6 +21,7 @@
 		"@types/validator": "^13.7.9",
 		"bcrypt": "^5.0.1",
 		"cookie": "^0.5.0",
+		"devalue": "^4.2.0",
 		"jsonwebtoken": "^8.5.1",
 		"malachite-ui": "^0.8.0",
 		"prettier": "^2.6.2",
