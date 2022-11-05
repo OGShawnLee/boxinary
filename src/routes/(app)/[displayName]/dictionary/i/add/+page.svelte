@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { Header, InputGroup } from "$lib/components";
+	import { Heading, InputGroup } from "$lib/components";
 
 	export let form: ValidationForm<"name" | "definition" | "description" | "summary">;
 </script>
 
 <svelte:head>
-	<title>Creating a new definition / Boxinary</title>
+	<title>Creating Definition / Boxinary</title>
 </svelte:head>
 
 <div class="grid gap-12">
-	<Header>
-		Creating a new <b class="text-white font-poppins"> definition </b>
-	</Header>
+	<Heading>
+		Creating <b class="bold">definition</b>
+	</Heading>
 	<main>
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-6">
@@ -26,7 +26,9 @@
 					<textarea {...input} use:bind />
 				</InputGroup>
 			</div>
-			<button class="button button--aqua" type="submit"> Submit </button>
+			<button class="button button--aqua" type="submit">
+				Create <b class="bold-poppins">definition</b>
+			</button>
 		</form>
 	</main>
 </div>

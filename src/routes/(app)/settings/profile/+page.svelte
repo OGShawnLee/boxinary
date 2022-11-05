@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { Header, InputGroup } from "$lib/components";
+	import { Heading, InputGroup } from "$lib/components";
 
 	export let form: ValidationForm<"name" | "displayName" | "description">;
 	export let data: PageData;
@@ -13,9 +13,9 @@
 </svelte:head>
 
 <div class="grid gap-12">
-	<Header>
-		<span class="text-white"> Editing Profile </span>
-	</Header>
+	<Heading>
+		Editing <b class="bold">profile</b>
+	</Heading>
 	<main>
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-6">
@@ -38,7 +38,9 @@
 					<textarea {...textarea} use:bind>{user.description || ""}</textarea>
 				</InputGroup>
 			</div>
-			<button class="button button--aqua" type="submit"> Update Profile </button>
+			<button class="button button--aqua" type="submit">
+				Update <b class="bold-poppins">profile</b>
+			</button>
 		</form>
 	</main>
 </div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { Header, InputGroup } from "$lib/components";
+	import { Heading, InputGroup } from "$lib/components";
 	import { isString } from "malachite-ui/predicate";
 
 	export let data: PageData;
@@ -10,13 +10,14 @@
 </script>
 
 <svelte:head>
-	<title>Creating {definition.name} Example / Boxinary</title>
+	<title>Creating example for {definition.name} / Boxinary</title>
 </svelte:head>
 
 <div class="grid gap-12">
-	<Header subtitle={definition.definition}>
-		Creating <strong class="text-white"> {definition.name} </strong> Example
-	</Header>
+	<Heading text={definition.definition}>
+		Creating an <b class="medium"> example </b>
+		for <b class="bold"> {definition.name} </b>
+	</Heading>
 	<main>
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-6">
@@ -25,7 +26,9 @@
 				</InputGroup>
 				<InputGroup id="source" charLimit={60} error={form?.source} />
 			</div>
-			<button class="button button--aqua | py-2" type="submit"> Submit </button>
+			<button class="button button--aqua | py-2" type="submit">
+				Create <b class="bold-poppins"> example </b>
+			</button>
 		</form>
 	</main>
 </div>

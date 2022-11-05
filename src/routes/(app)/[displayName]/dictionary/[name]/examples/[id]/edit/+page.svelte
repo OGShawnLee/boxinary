@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { InputGroup } from "$lib/components";
+	import { Heading, InputGroup } from "$lib/components";
 	import { isString } from "malachite-ui/predicate";
 
 	export let data: PageData;
@@ -14,14 +14,10 @@
 </svelte:head>
 
 <div class="grid gap-9">
-	<header>
-		<div class="grid">
-			<h1 class="text-2xl text-rich-90">
-				Editing <strong class="text-white"> {definition.name} </strong> Example
-			</h1>
-			<span class="text-sm text-aqua-50"> {definition.definition} </span>
-		</div>
-	</header>
+	<Heading text={definition.definition}>
+		Editing an <b class="medium">example</b>
+		of <b class="bold">{definition.name}</b>
+	</Heading>
 	<main>
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-6">
@@ -39,7 +35,9 @@
 				</InputGroup>
 				<InputGroup id="source" charLimit={60} value={example.source} error={form?.source} />
 			</div>
-			<button class="button button--aqua | py-2" type="submit"> Submit </button>
+			<button class="button button--aqua | py-2" type="submit">
+				Update <b class="bold-poppins"> example </b>
+			</button>
 		</form>
 	</main>
 </div>
