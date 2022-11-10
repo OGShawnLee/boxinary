@@ -22,13 +22,8 @@
 
 <div class="grid gap-9">
 	<Header>
-		<span class="text-white font-semibold">
-			{#if isOwner}
-				Your Examples
-			{:else}
-				{possessive(foundUser.displayName)} Examples
-			{/if}
-		</span>
+		<b class="bold"> {isOwner ? "Your" : possessive(foundUser.displayName)} </b>
+		<b class="medium">examples</b>
 	</Header>
 	<main class="grid items-start grid-rows-[masonry] gap-6 | md:grid-cols-2 xl:grid-cols-3">
 		<CardDefinitionExamples
