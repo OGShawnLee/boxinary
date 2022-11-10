@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardCollection, CardDefinition, CardDefinitionExamples } from "$lib/components";
+	import { CardCollection, CardDefinition, CardDefinitionExamples, Header } from "$lib/components";
 	import { currentUser } from "@root/state";
 	import {
 		getCollectionCreatePath,
@@ -52,16 +52,18 @@
 			{/if}
 		</header>
 		<section class="grid gap-9">
-			<h2 class="text-2xl text-white font-semibold">
+			<Header class="flex items-center justify-between gap-3" as="h2">
+				<span class="text-white font-medium"> Examples </span>
 				<a
-					class="hover:(text-aqua-50 underline)"
+					class="button button--raisin grid-center"
 					href={getUserExamplesPath(foundUser.displayName)}
 					title="View {isOwner ? 'your' : possessive(foundUser.displayName)} Examples"
 					data-sveltekit-prefetch
+					slot="right-side"
 				>
-					Examples
+					See All
 				</a>
-			</h2>
+			</Header>
 			<div class="grid gap-6">
 				<CardDefinitionExamples displayName={foundUser.displayName} definitions={examples} />
 			</div>

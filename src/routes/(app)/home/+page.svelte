@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardCollection, CardDefinition, CardDefinitionExamples } from "$lib/components";
-	import { getCollectionCreatePath } from "$lib/utils";
+	import { CardCollection, CardDefinition, CardDefinitionExamples, Header } from "$lib/components";
+	import { getCollectionCreatePath, getUserExamplesPath } from "$lib/utils";
 
 	export let data: PageData;
 
@@ -51,16 +51,17 @@
 			</section>
 		{/if}
 		<section class="grid gap-9">
-			<h2 class="text-2xl text-white font-semibold">
+			<Header class="flex items-center justify-between gap-3" as="h2">
+				<span class="text-white font-medium"> Examples </span>
 				<a
-					class="hover:(text-aqua-50 underline)"
-					href="{currentUser.displayName}/dictionary/examples"
-					title="View your Examples"
+					class="button button--raisin grid-center"
+					href={getUserExamplesPath(currentUser.displayName)}
 					data-sveltekit-prefetch
+					slot="right-side"
 				>
-					Examples
+					See All
 				</a>
-			</h2>
+			</Header>
 			<div class="grid items-start grid-rows-[masonry] gap-6 @md:grid-cols-2">
 				<CardDefinitionExamples
 					displayName={currentUser.displayName}

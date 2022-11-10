@@ -6,14 +6,15 @@
 	export { className as class };
 	export let title: Nullable<string> = undefined;
 	export let text: Nullable<string> = undefined;
+	export let as: "h1" | "h2" | "h3" = "h1";
 </script>
 
 <header class={className}>
 	<slot name="left-side" />
 	<div>
-		<h1 class="text-2xl text-rich-90">
+		<svelte:element this={as} class="p-0 | text-2xl text-rich-90 font-normal" data-heading>
 			<slot>{title}</slot>
-		</h1>
+		</svelte:element>
 		{#if text}
 			<p class="text-sm text-aqua-50">{text}</p>
 		{/if}
@@ -22,12 +23,12 @@
 </header>
 
 <style>
-	h1 :global(.bold) {
+	[data-heading] :global(.bold) {
 		color: white;
 		font-family: Poppins, sans-serif;
 	}
 
-	h1 :global(.medium) {
+	[data-heading] :global(.medium) {
 		color: white;
 		font-family: Poppins, sans-serif;
 		font-weight: 500;
