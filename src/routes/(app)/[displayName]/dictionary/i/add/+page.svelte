@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Header, InputGroup } from "$lib/components";
 
-	export let form: ValidationForm<"name" | "definition" | "description" | "summary">;
+	export let form: ValidationForm<"name" | "definition" | "description" | "summary" | "source">;
 </script>
 
 <svelte:head>
@@ -25,6 +25,7 @@
 				<InputGroup id="summary" charLimit={560} error={form?.summary} let:input let:bind>
 					<textarea {...input} use:bind />
 				</InputGroup>
+				<InputGroup id="source" charLimit={40} error={form?.source} />
 			</div>
 			<button class="button button--aqua" type="submit">
 				Create <b class="bold-poppins">definition</b>

@@ -4,11 +4,11 @@ import { useAwait } from "$lib/hooks";
 
 export function createDefinition(
 	uid: User["id"],
-	data: Pick<Definition, "name" | "definition" | "description" | "summary">
+	data: Pick<Definition, "name" | "definition" | "description" | "summary" | "source">
 ) {
-	const { name, definition, description, summary } = data;
+	const { name, definition, description, summary, source } = data;
 	return useAwait(async () =>
-		db.definition.create({ data: { userId: uid, name, definition, description, summary } })
+		db.definition.create({ data: { userId: uid, name, definition, description, summary, source } })
 	);
 }
 

@@ -14,13 +14,13 @@ model User {
   updatedAt   DateTime     @updatedAt
   name        String       @db.String(50)
   displayName String       @unique @db.String(16)
-  description String?      @db.String(300)
   email       String       @unique @db.String(254)
   password    String       @db.String(60)
+  description String?      @db.String(300)
+  bookmarks   Bookmark[]
+  collections Collection[]
   definitions Definition[]
   examples    Example[]
-  collections Collection[]
-  bookmarks   Bookmark[]
 }
 
 model Definition {
@@ -31,11 +31,12 @@ model Definition {
   summary     String                   @db.String(560)
   description String                   @db.String(300)
   definition  String                   @db.String(80)
-  user        User                     @relation(fields: [userId], references: [id])
   userId      String
-  examples    Example[]
-  collections DefinitionOnCollection[]
+  source      String?                  @db.String(40)
+  user        User                     @relation(fields: [userId], references: [id])
   bookmarks   Bookmark[]
+  collections DefinitionOnCollection[]
+  examples    Example[]
   definitions SubDefinition[]
 }
 
@@ -43,12 +44,12 @@ model Example {
   id           BigInt     @id @default(autoincrement())
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  definition   Definition @relation(fields: [definitionId], references: [id])
   definitionId BigInt
-  user         User       @relation(fields: [userId], references: [id])
   userId       String
   text         String     @db.String(240)
   source       String?    @db.String(60)
+  definition   Definition @relation(fields: [definitionId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
 }
 
 model Collection {
@@ -58,37 +59,37 @@ model Collection {
   name        String                   @db.String(80)
   details     String?                  @db.String(460)
   description String?                  @db.String(120)
-  user        User                     @relation(fields: [userId], references: [id])
   userId      String
+  user        User                     @relation(fields: [userId], references: [id])
   definitions DefinitionOnCollection[]
 }
 
 model DefinitionOnCollection {
-  definition   Definition @relation(fields: [definitionId], references: [id])
   definitionId BigInt
-  collection   Collection @relation(fields: [collectionId], references: [id])
   collectionId BigInt
   createdAt    DateTime   @default(now())
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  definition   Definition @relation(fields: [definitionId], references: [id])
 
   @@id([definitionId, collectionId])
 }
 
 model Bookmark {
   createdAt     DateTime   @default(now())
-  definition    Definition @relation(fields: [definition_id], references: [id])
   definition_id BigInt
-  user          User       @relation(fields: [user_id], references: [id])
   user_id       String
+  definition    Definition @relation(fields: [definition_id], references: [id])
+  user          User       @relation(fields: [user_id], references: [id])
 
   @@id([definition_id, user_id])
 }
 
 model SubDefinition {
   id         BigInt     @id @default(autoincrement())
-  word       Definition @relation(fields: [wordId], references: [id])
   wordId     BigInt
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   definition String     @db.Char(180)
   example    String?    @db.Char(80)
+  word       Definition @relation(fields: [wordId], references: [id])
 }

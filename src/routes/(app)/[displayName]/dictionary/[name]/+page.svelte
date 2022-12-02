@@ -50,6 +50,12 @@
 				<h2 class="sr-only">Main Content</h2>
 				<p class="text-lg text-rich-90 leading-relaxed">{definition.description}</p>
 				<p class="text leading-relaxed">{definition.summary}</p>
+				{#if definition.source}
+					<div class="mt-3 text-xs">
+						<span class="text-xs"> Source: </span>
+						<i>{definition.source}</i>
+					</div>
+				{/if}
 			</section>
 			{#if definition.definitions.length || isOwner}
 				<section class="grid gap-6">
