@@ -70,7 +70,7 @@ export function deleteDefinition(id: Definition["id"], inCollection: boolean) {
 
 export function updateDefinition(
 	id: Definition["id"],
-	data: Pick<Definition, "definition" | "description" | "name" | "summary">
+	data: Pick<Definition, "definition" | "description" | "name" | "summary" | "source">
 ) {
 	return useAwait(() => db.definition.update({ where: { id }, data }));
 }

@@ -12,6 +12,7 @@ export const actions: Actions = {
 		const definition = data.get("definition");
 		const description = data.get("description");
 		const summary = data.get("summary");
+		const source = data.get("source");
 
 		if (typeof name !== "string")
 			return invalid(400, { name: { invalid: true }, definition, description, summary });
@@ -33,11 +34,19 @@ export const actions: Actions = {
 		if (isEmpty(summary))
 			return invalid(400, { summary: { missing: true }, name, definition, description });
 
+		if (source) {
+			if (typeof source != "string")
+				return invalid(400, { summary, name, definition, description, source: { invalid: true } });
+			if (isEmpty(source))
+				return invalid(400, { summary, name, definition, description, source: { missing: true } });
+		}
+
 		const [id] = await findDefinitionId(params.displayName, params.name);
 		if (id === undefined) throw error(404, { message: "Definition not Found" });
 		if (id === null) throw error(500, { message: "Unable to Update Definition" });
 
-		const [payload] = await updateDefinition(id, { name, definition, summary, description });
+		const finalData = { name, definition, summary, description, source };
+		const [payload] = await updateDefinition(id, finalData);
 		if (payload) throw redirect(303, `/${displayName}/dictionary/${name}`);
 		throw error(500, { message: "Unable to Update Definition" });
 	}

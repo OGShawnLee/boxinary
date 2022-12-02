@@ -3,7 +3,7 @@
 	import { Header, InputGroup } from "$lib/components";
 
 	export let data: PageData;
-	export let form: ValidationForm<"name" | "definition" | "description" | "summary">;
+	export let form: ValidationForm<"name" | "definition" | "description" | "summary" | "source">;
 
 	const { definition } = data;
 </script>
@@ -50,6 +50,7 @@
 				>
 					<textarea {...textarea} use:bind>{definition.summary}</textarea>
 				</InputGroup>
+				<InputGroup id="source" charLimit={40} value={definition.source} error={form?.source} />
 			</div>
 			<button class="button button--aqua" type="submit">
 				Update <b class="bold-poppins"> definition </b>
