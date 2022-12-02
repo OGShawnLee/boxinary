@@ -31,7 +31,17 @@
 			</div>
 		</section>
 		<section class="grid gap-9">
-			<h2 class="text-2xl text-white font-semibold">Definitions</h2>
+			<Header class="flex items-center justify-between gap-3" as="h2">
+				<span class="text-white font-medium"> Definitions </span>
+				<a
+					class="button button--raisin grid-center"
+					href="/{currentUser.displayName}/dictionary/definitions"
+					data-sveltekit-prefetch
+					slot="right-side"
+				>
+					See All
+				</a>
+			</Header>
 			<div class="grid gap-6">
 				{#each definitions as { id, name, definition } (id)}
 					<CardDefinition displayName={currentUser.displayName} {definition} {name} />
