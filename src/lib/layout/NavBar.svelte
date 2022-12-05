@@ -12,7 +12,7 @@
 >
 	<div class="w-full mx-auto px-4 | flex items-center justify-between | layout-length | lg:px-0">
 		<div class="flex items-center gap-12">
-			<a class="text-2xl text-white font-medium font-poppins md:text-4xl" href="/"> Boxinary </a>
+			<a class="text-2xl text-white font-semibold font-poppins md:text-4xl" href="/"> Boxinary </a>
 			<nav class="hidden | lg:block">
 				<ul class="flex items-center gap-12 | font-medium">
 					<ListItemLink class="hover:text-white" href="/home" text="Home" />
