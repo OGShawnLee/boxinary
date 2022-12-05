@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { QuestionState, QuizObject } from "./state";
+	import type { QuizObject } from "./state";
 	import { createQuizState } from "./state";
 
 	let className: string;
