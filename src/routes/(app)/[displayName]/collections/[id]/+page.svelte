@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { Card, LayoutSeparated } from "$lib/components";
+	import { Card, Header, LayoutSeparated } from "$lib/components";
 	import { currentUser } from "@root/state";
 	import { page } from "$app/stores";
 	import { UserPathing } from "$lib/utils";
@@ -36,20 +36,19 @@
 		</div>
 		{#if collection.definitions.length}
 			<section class="grid gap-6">
-				{#if collection.definitions.length >= 5}
-					<div class="flex items-center justify-between">
-						<h2 class="text-xl text-white font-semibold">Definitions</h2>
-						<a
-							class="button button--aqua grid-center"
-							href={collectionPath.play}
-							data-sveltekit-prefetch
-						>
-							Play
-						</a>
-					</div>
-				{:else}
-					<h2 class="text-xl text-white font-semibold">Definitions</h2>
-				{/if}
+				<Header class="flex items-center justify-between" as="h2" title="Definitions">
+					<svelte:fragment slot="right-side">
+						{#if collection.definitions.length >= 5}
+							<a
+								class="button button--aqua grid-center"
+								href={collectionPath.play}
+								data-sveltekit-prefetch
+							>
+								Play
+							</a>
+						{/if}
+					</svelte:fragment>
+				</Header>
 				<div class="grid gap-6 | lg:grid-cols-2 xl:grid-cols-3">
 					{#each collection.definitions as { definition: { id, name, definition, createdAt } } (id)}
 						{@const definitionPath = pathing.dictionary.definition(name)}

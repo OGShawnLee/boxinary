@@ -17,13 +17,15 @@
 <main class="grid items-start gap-9 lg:grid-cols-12">
 	<div class="grid gap-9 lg:col-span-8">
 		<section class="grid gap-9">
-			<header class="flex flex-wrap items-center justify-between gap-3">
-				<h2 class="text-2xl text-white font-semibold">Collections</h2>
+			<Header class="flex flex-wrap items-center justify-between gap-3" as="h2" title="Collections">
 				<a
 					class="button button--raisin grid-center"
-					href={getCollectionCreatePath(currentUser.displayName)}>Create Collection</a
+					href={getCollectionCreatePath(currentUser.displayName)}
+					slot="right-side"
 				>
-			</header>
+					Create Collection
+				</a>
+			</Header>
 			<div class="grid gap-6">
 				{#each collections as collection (collection.id)}
 					<CardCollection user={currentUser} {collection} />
@@ -31,8 +33,7 @@
 			</div>
 		</section>
 		<section class="grid gap-9">
-			<Header class="flex items-center justify-between gap-3" as="h2">
-				<span class="text-white font-medium"> Definitions </span>
+			<Header class="flex items-center justify-between gap-3" as="h2" title="Definitions">
 				<a
 					class="button button--raisin grid-center"
 					href="/{currentUser.displayName}/dictionary/definitions"
@@ -52,7 +53,7 @@
 	<div class="grid gap-9 | lg:col-span-4">
 		{#if bookmarks.length}
 			<section class="grid gap-9">
-				<h2 class="text-2xl text-white font-semibold">Bookmarks</h2>
+				<Header as="h2" title="Bookmarks" />
 				<div class="grid gap-6">
 					{#each bookmarks as { definition: { id, name, definition, user } } (id)}
 						<CardDefinition displayName={user.displayName} {name} {definition} />
@@ -61,8 +62,7 @@
 			</section>
 		{/if}
 		<section class="grid gap-9">
-			<Header class="flex items-center justify-between gap-3" as="h2">
-				<span class="text-white font-medium"> Examples </span>
+			<Header class="flex items-center justify-between gap-3" as="h2" title="Examples">
 				<a
 					class="button button--raisin grid-center"
 					href={getUserExamplesPath(currentUser.displayName)}

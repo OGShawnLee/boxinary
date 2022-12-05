@@ -52,8 +52,7 @@
 			{/if}
 		</header>
 		<section class="grid gap-9">
-			<Header class="flex items-center justify-between gap-3" as="h2">
-				<span class="text-white font-medium"> Examples </span>
+			<Header class="flex items-center justify-between gap-3" as="h2" title="Examples">
 				<a
 					class="button button--raisin grid-center"
 					href={getUserExamplesPath(foundUser.displayName)}
@@ -71,15 +70,16 @@
 	</div>
 	<div class="grid gap-9 lg:col-span-8">
 		<section class="grid gap-9">
-			<header class="flex items-center justify-between">
-				<h2 class="text-2xl text-white font-semibold">Collections</h2>
-				{#if isOwner}
-					<a
-						class="button button--raisin grid-center"
-						href={getCollectionCreatePath(foundUser.displayName)}>Create Collection</a
-					>
-				{/if}
-			</header>
+			<Header class="flex items-center justify-between" as="h2" title="Collections">
+				<svelte:fragment slot="right-side">
+					{#if isOwner}
+						<a
+							class="button button--raisin grid-center"
+							href={getCollectionCreatePath(foundUser.displayName)}>Create Collection</a
+						>
+					{/if}
+				</svelte:fragment>
+			</Header>
 			<div class="grid gap-6">
 				{#each collections as collection (collection.id)}
 					<CardCollection user={foundUser} {collection} />
@@ -87,7 +87,7 @@
 			</div>
 		</section>
 		<section class="grid gap-9">
-			<h2 class="text-2xl text-white font-semibold">Definitions</h2>
+			<Header as="h2" title="Definitions" />
 			<div class="grid gap-6">
 				{#each definitions as { id, name, definition } (id)}
 					<CardDefinition displayName={foundUser.displayName} {name} {definition} />

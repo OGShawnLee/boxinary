@@ -7,12 +7,19 @@
 	export let title: Nullable<string> = undefined;
 	export let text: Nullable<string> = undefined;
 	export let as: "h1" | "h2" | "h3" = "h1";
+
+	$: finalClassName =
+		as == "h1"
+			? "text-2xl text-rich-90 font-medium"
+			: as === "h2"
+			? "text-xl text-white font-medium"
+			: "text-lg text-rich-90 font-normal";
 </script>
 
 <header class={className}>
 	<slot name="left-side" />
 	<div>
-		<svelte:element this={as} class="p-0 | text-2xl text-rich-90 font-normal" data-heading>
+		<svelte:element this={as} class="p-0 | {finalClassName} font-poppins" data-heading>
 			<slot>{title}</slot>
 		</svelte:element>
 		{#if text}

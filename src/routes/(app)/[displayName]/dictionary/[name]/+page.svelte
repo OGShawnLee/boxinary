@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardExample, DefinitionItem, LayoutSeparated } from "$lib/components";
+	import { CardExample, DefinitionItem, Header, LayoutSeparated } from "$lib/components";
 	import { isEmpty } from "malachite-ui/predicate";
 	import { createExamplePathing, getDefinitionExampleAddPath, UserPathing } from "$lib/utils";
 	import { page } from "$app/stores";
@@ -59,17 +59,18 @@
 			</section>
 			{#if definition.definitions.length || isOwner}
 				<section class="grid gap-6">
-					<header class="flex items-center justify-between">
-						<h2 class="text-xl text-white font-bold font-poppins">Definitions</h2>
-						{#if isOwner}
-							<a
-								class="button button--raisin grid-center"
-								href="/{foundUser.displayName}/dictionary/{definition.name}/definitions/add"
-							>
-								Add Definition
-							</a>
-						{/if}
-					</header>
+					<Header class="flex items-center justify-between" as="h2" title="Definitions">
+						<svelte:fragment slot="right-side">
+							{#if isOwner}
+								<a
+									class="button button--raisin grid-center"
+									href="/{foundUser.displayName}/dictionary/{definition.name}/definitions/add"
+								>
+									Add Definition
+								</a>
+							{/if}
+						</svelte:fragment>
+					</Header>
 					<ul class="grid gap-3">
 						{#each definition.definitions as def, index (def.id)}
 							<DefinitionItem {index} definition={def} />
@@ -82,24 +83,24 @@
 	{#if hasExamples}
 		{@const pathing = createExamplePathing(definition.user.displayName).definition(definition.name)}
 		<section class="grid gap-6 | lg:col-span-4">
-			<header class="flex items-center justify-between gap-4.5">
-				<h2 class="text-xl text-white font-medium">
-					<a
-						class="hover:text-aqua-50"
-						href={pathing.self}
-						title="View {definition.name} Examples"
-						aria-label="View {definition.name} Examples"
-						data-sveltekit-prefetch
-					>
-						Examples
-					</a>
-				</h2>
-				{#if isOwner}
-					<a class="button button--raisin grid-center | max-w-fit mt-1.5" href={pathing.add}>
-						Add Example
-					</a>
-				{/if}
-			</header>
+			<Header class="flex items-center justify-between gap-4.5" as="h2">
+				<a
+					class="hover:text-aqua-50"
+					href={pathing.self}
+					title="View {definition.name} Examples"
+					aria-label="View {definition.name} Examples"
+					data-sveltekit-prefetch
+				>
+					Examples
+				</a>
+				<svelte:fragment slot="right-side">
+					{#if isOwner}
+						<a class="button button--raisin grid-center | max-w-fit mt-1.5" href={pathing.add}>
+							Add Example
+						</a>
+					{/if}
+				</svelte:fragment>
+			</Header>
 			<div class="grid gap-3">
 				{#each definition.examples as { text, source }}
 					<CardExample {text} {source} displayName={definition.user.displayName} />

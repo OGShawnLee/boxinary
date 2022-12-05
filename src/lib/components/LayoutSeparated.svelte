@@ -26,7 +26,7 @@
 				<h1
 					class="{isBigTitle
 						? 'text-3xl md:text-4xl'
-						: 'text-2xl md:text-3xl'} text-white font-bold"
+						: 'text-2xl md:text-3xl'} text-white font-poppins font-semibold"
 				>
 					{title}
 				</h1>
