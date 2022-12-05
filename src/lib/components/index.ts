@@ -5,6 +5,7 @@ export { default as CardDefinitionExamples } from "./CardDefinitionExamples.svel
 export { default as CardExample } from "./CardExample.svelte";
 export { default as CardUser } from "./CardUser.svelte";
 export { default as Checkbox } from "./Checkbox.svelte";
+export { default as DefinitionItem } from "./DefinitionItem.svelte";
 export { default as FloatingOptions } from "./FloatingOptions.svelte";
 export { default as Header } from "./Header.svelte";
 export { default as InputGroup } from "./InputGroup.svelte";

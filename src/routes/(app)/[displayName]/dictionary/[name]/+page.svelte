@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import { CardExample, LayoutSeparated } from "$lib/components";
+	import { CardExample, DefinitionItem, LayoutSeparated } from "$lib/components";
 	import { isEmpty } from "malachite-ui/predicate";
 	import { createExamplePathing, getDefinitionExampleAddPath, UserPathing } from "$lib/utils";
 	import { page } from "$app/stores";
@@ -70,18 +70,11 @@
 							</a>
 						{/if}
 					</header>
-					<div class="grid gap-6">
-						{#each definition.definitions as { id, definition: def, example } (id)}
-							<article class="leading-relaxed">
-								<h3 class="text-rich-90">{def}</h3>
-								<p>
-									<i>
-										{example}
-									</i>
-								</p>
-							</article>
+					<ul class="grid gap-3">
+						{#each definition.definitions as def, index (def.id)}
+							<DefinitionItem {index} definition={def} />
 						{/each}
-					</div>
+					</ul>
 				</section>
 			{/if}
 		</main>
