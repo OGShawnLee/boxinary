@@ -7,10 +7,11 @@
 	export let title: Nullable<string> = undefined;
 	export let text: Nullable<string> = undefined;
 	export let as: "h1" | "h2" | "h3" = "h1";
+	export let big = false;
 
 	$: finalClassName =
 		as == "h1"
-			? "text-2xl text-rich-90 font-medium"
+			? `text-2xl text-rich-90 ${big ? "font-semibold" : "font-medium"}`
 			: as === "h2"
 			? "text-xl text-white font-medium"
 			: "text-lg text-rich-90 font-normal";

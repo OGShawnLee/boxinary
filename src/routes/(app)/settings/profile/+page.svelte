@@ -12,10 +12,8 @@
 	<title>Editing Profile / Boxinary</title>
 </svelte:head>
 
-<div class="grid gap-12">
-	<Header>
-		Editing <b class="bold">profile</b>
-	</Header>
+<div class="grid gap-7.5">
+	<Header as="h2">Editing Profile</Header>
 	<main>
 		<form class="grid gap-9" method="post">
 			<div class="grid gap-6">

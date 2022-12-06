@@ -12,3 +12,4 @@ export { default as InputGroup } from "./InputGroup.svelte";
 export { default as ListItemLink } from "./ListItemLink.svelte";
 export { default as LayoutSeparated } from "./LayoutSeparated.svelte";
 export { default as Quiz, QuizQuestion } from "./Quiz";
+export { default as SettingsLink } from "./SettingsLink.svelte";
