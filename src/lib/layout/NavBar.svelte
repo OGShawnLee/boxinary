@@ -18,7 +18,7 @@
 					<ListItemLink class="hover:text-white" href="/home" text="Home" />
 					<ListItemLink class="hover:text-white" href="/documentation" text="Documentation" />
 					<ListItemLink class="hover:text-white" href="/community" text="Community" />
-					<ListItemLink class="hover:text-white" href="/dictionary" text="Dictionary" />
+					<ListItemLink class="hover:text-white" href="/settings" text="Settings" />
 				</ul>
 			</nav>
 		</div>
