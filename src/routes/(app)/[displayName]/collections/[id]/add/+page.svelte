@@ -37,7 +37,7 @@
 					<a
 						class={className.anchor}
 						href={getDefinitionEditPath(foundUser.displayName, name)}
-						data-sveltekit-prefetch
+						data-svelkite-preload-data
 					>
 						Edit
 					</a>

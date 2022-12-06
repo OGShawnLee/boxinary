@@ -27,7 +27,7 @@
 					href={pathing.add.path}
 					title={pathing.add.title}
 					aria-label={pathing.add.title}
-					data-sveltekit-prefetch
+					data-svelkite-preload-data
 				>
 					Add
 				</a>
@@ -37,7 +37,7 @@
 				href={pathing.edit.path}
 				title={pathing.edit.title}
 				aria-label={pathing.edit.title}
-				data-sveltekit-prefetch
+				data-svelkite-preload-data
 			>
 				Edit
 			</a>
@@ -47,7 +47,7 @@
 					href={pathing.example.path}
 					title={pathing.example.title}
 					aria-label={pathing.example.title}
-					data-sveltekit-prefetch
+					data-svelkite-preload-data
 				>
 					Add Example
 				</a>

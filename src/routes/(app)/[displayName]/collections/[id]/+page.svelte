@@ -42,7 +42,7 @@
 							<a
 								class="button button--aqua grid-center"
 								href={collectionPath.play}
-								data-sveltekit-prefetch
+								data-svelkite-preload-data
 							>
 								Play
 							</a>
@@ -58,14 +58,14 @@
 									<a
 										class="hover:(text-aqua-50 underline)"
 										href={definitionPath.path}
-										data-sveltekit-prefetch
+										data-svelkite-preload-data
 									>
 										{name}
 									</a>
 								</h3>
 								<p>{definition}</p>
 							</svelte:fragment>
-							<a class={className.anchor} href={definitionPath.edit} data-sveltekit-prefetch>
+							<a class={className.anchor} href={definitionPath.edit} data-svelkite-preload-data>
 								Edit
 							</a>
 							<form action={collectionPath.$remove(id, path)} method="post">

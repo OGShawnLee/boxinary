@@ -89,7 +89,7 @@
 					href={pathing.self}
 					title="View {definition.name} Examples"
 					aria-label="View {definition.name} Examples"
-					data-sveltekit-prefetch
+					data-svelkite-preload-data
 				>
 					Examples
 				</a>

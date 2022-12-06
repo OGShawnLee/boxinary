@@ -25,7 +25,7 @@
 				class="hover:(text-aqua-50 underline)"
 				href={getCollectionPath(displayName, id)}
 				aria-label="View Collection Details"
-				data-sveltekit-prefetch
+				data-svelkite-preload-data
 			>
 				{name}
 			</a>

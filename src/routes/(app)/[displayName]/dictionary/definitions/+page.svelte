@@ -94,7 +94,7 @@
 						<a
 							class="hover:text-aqua-50"
 							href={getDefinitionPath(foundUser.displayName, name)}
-							data-sveltekit-prefetch
+							data-svelkite-preload-data
 						>
 							{name}
 						</a>

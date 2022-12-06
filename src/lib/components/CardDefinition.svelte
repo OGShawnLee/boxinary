@@ -20,7 +20,7 @@
 				<a
 					class="hover:(text-aqua-50 underline)"
 					href={getDefinitionPath(displayName, name)}
-					data-sveltekit-prefetch
+					data-svelkite-preload-data
 				>
 					{name}
 				</a>
@@ -33,7 +33,7 @@
 			<a
 				class="button button--raisin grid-center"
 				href={getDefinitionEditPath(displayName, name)}
-				data-sveltekit-prefetch
+				data-svelkite-preload-data
 			>
 				Edit
 			</a>

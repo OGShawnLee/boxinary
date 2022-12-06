@@ -37,7 +37,7 @@
 				<a
 					class="button button--raisin grid-center"
 					href="/{currentUser.displayName}/dictionary/definitions"
-					data-sveltekit-prefetch
+					data-svelkite-preload-data
 					slot="right-side"
 				>
 					See All
@@ -66,7 +66,7 @@
 				<a
 					class="button button--raisin grid-center"
 					href={getUserExamplesPath(currentUser.displayName)}
-					data-sveltekit-prefetch
+					data-svelkite-preload-data
 					slot="right-side"
 				>
 					See All

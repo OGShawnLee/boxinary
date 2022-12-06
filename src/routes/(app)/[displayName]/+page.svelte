@@ -57,7 +57,7 @@
 					class="button button--raisin grid-center"
 					href={getUserExamplesPath(foundUser.displayName)}
 					title="View {isOwner ? 'your' : possessive(foundUser.displayName)} Examples"
-					data-sveltekit-prefetch
+					data-svelkite-preload-data
 					slot="right-side"
 				>
 					See All

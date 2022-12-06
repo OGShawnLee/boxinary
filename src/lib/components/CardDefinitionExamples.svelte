@@ -19,7 +19,7 @@
 					class="hover:(text-aqua-50 underline)"
 					href={getDefinitionPath(displayName, name)}
 					title="View {name} Details"
-					data-sveltekit-prefetch
+					data-svelkite-preload-data
 				>
 					{name}
 				</a>
