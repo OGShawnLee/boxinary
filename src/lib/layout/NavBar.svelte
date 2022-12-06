@@ -18,7 +18,9 @@
 					<ListItemLink class="hover:text-white" href="/home" text="Home" />
 					<ListItemLink class="hover:text-white" href="/documentation" text="Documentation" />
 					<ListItemLink class="hover:text-white" href="/community" text="Community" />
-					<ListItemLink class="hover:text-white" href="/settings" text="Settings" />
+					{#if currentUser}
+						<ListItemLink class="hover:text-white" href="/settings" text="Settings" />
+					{/if}
 				</ul>
 			</nav>
 		</div>
