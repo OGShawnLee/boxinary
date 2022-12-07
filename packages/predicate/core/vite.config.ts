@@ -12,4 +12,9 @@ export default defineConfig({
     },
   },
   plugins: [dts({ insertTypesEntry: true })],
+  resolve: {
+    alias: {
+      $lib: resolve("src"),
+    },
+  },
 });
