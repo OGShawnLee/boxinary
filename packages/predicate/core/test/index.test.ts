@@ -336,6 +336,20 @@ describe("isObject", () => {
   });
 });
 
+describe("isPromise", () => {
+  const { isPromise } = core;
+  it("Should return true with promises", () => {
+    expect(isPromise(new Promise(() => {}))).toBe(true);
+  });
+
+  it("Should return false with non-promise values", () => {
+    const values = [() => {}, async () => {}, 0, "First", true, false, [], {}];
+    for (const value of values) {
+      expect(isPromise(value)).toBe(false);
+    }
+  });
+});
+
 describe("isString", () => {
   const { isString } = core;
   it("Should return true with string values", () => {

@@ -67,6 +67,10 @@ export function isObject<K extends PropertyKey>(value: unknown, properties?: K[]
   return properties ? isObj && properties.every((key) => key in value) : isObj;
 }
 
+export function isPromise(value: unknown): value is Promise<any> {
+  return value instanceof Promise;
+}
+
 export function isString(value: unknown): value is string {
   return typeof value === "string" || value instanceof String;
 }
