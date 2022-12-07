@@ -1,4 +1,4 @@
-import { isAround, isArray, isBoolean, isNumber, isString } from "$lib";
+import { isAround, isArray, isBoolean, isFunction, isNumber, isString } from "$lib";
 
 describe("isAround", () => {
   it("Should return true if the given number is around the given range", () => {
@@ -92,6 +92,22 @@ describe("isBoolean", () => {
     const values = [0, "string", null, undefined, {}, [], () => {}];
     for (const value of values) {
       expect(isBoolean(value)).toBe(false);
+    }
+  });
+});
+
+describe("isFunction", () => {
+  it("Should return true with functions", () => {
+    const values = [() => {}, async () => {}, function* () {}, new Function()];
+    for (const value of values) {
+      expect(isFunction(value)).toBe(true);
+    }
+  });
+
+  it("Should return false with non-function values", () => {
+    const values = [0, "First", false, true, new Promise<void>((res) => res()), {}, []];
+    for (const value of values) {
+      expect(isFunction(value)).toBe(false);
     }
   });
 });
