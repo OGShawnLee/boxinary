@@ -1,3 +1,8 @@
+export function isAround(num: number, range: { min: number; max?: number }) {
+  const { min, max = Infinity } = range;
+  return num >= min && num < max;
+}
+
 export function isArray(value: unknown): value is Array<any>;
 
 export function isArray<T>(

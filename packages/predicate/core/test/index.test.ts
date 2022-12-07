@@ -1,4 +1,41 @@
-import { isArray, isBoolean, isNumber, isString } from "$lib";
+import { isAround, isArray, isBoolean, isNumber, isString } from "$lib";
+
+describe("isAround", () => {
+  it("Should return true if the given number is around the given range", () => {
+    expect(isAround(10, { min: -10, max: 20 })).toBe(true);
+    expect(isAround(5, { min: -10, max: 20 })).toBe(true);
+    expect(isAround(-5, { min: -10, max: 20 })).toBe(true);
+    expect(isAround(-7.5, { min: -10, max: 20 })).toBe(true);
+  });
+
+  it("Should return false if the given number is not around the given range", () => {
+    expect(isAround(30, { min: -10, max: 20 })).toBe(false);
+    expect(isAround(100, { min: -10, max: 20 })).toBe(false);
+    expect(isAround(-20, { min: -10, max: 20 })).toBe(false);
+    expect(isAround(-50, { min: -10, max: 20 })).toBe(false);
+  });
+
+  describe("min", () => {
+    it("Should be inclusive", () => {
+      expect(isAround(-10, { min: -10, max: 20 })).toBe(true);
+      expect(isAround(10, { min: 10, max: 20 })).toBe(true);
+    });
+  });
+
+  describe("max", () => {
+    it("Should be exclusive", () => {
+      expect(isAround(20, { min: -10, max: 20 })).toBe(false);
+      expect(isAround(-10, { min: -50, max: -10 })).toBe(false);
+    });
+
+    it("Should default to Infinity", () => {
+      expect(isAround(-10, { min: -50 })).toBe(true);
+      expect(isAround(0, { min: -10 })).toBe(true);
+      expect(isAround(100, { min: -10 })).toBe(true);
+      expect(isAround(100_000, { min: -10 })).toBe(true);
+    });
+  });
+});
 
 describe("isArray", () => {
   it("Should return true with arrays", () => {
