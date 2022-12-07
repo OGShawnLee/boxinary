@@ -1,4 +1,3 @@
-import { describe, it, expect, vi } from "vitest";
 import { isArray, isBoolean, isNumber, isString } from "$lib";
 
 describe("isArray", () => {

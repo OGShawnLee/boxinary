@@ -1,5 +1,5 @@
 import dts from "vite-plugin-dts";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import { resolve } from "path";
 
 export default defineConfig({
@@ -16,5 +16,8 @@ export default defineConfig({
     alias: {
       $lib: resolve("src"),
     },
+  },
+  test: {
+    globals: true,
   },
 });
