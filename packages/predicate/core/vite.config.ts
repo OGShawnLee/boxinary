@@ -1,3 +1,4 @@
+import dts from "vite-plugin-dts";
 import { defineConfig } from "vite";
 import { resolve } from "path";
 
@@ -10,4 +11,5 @@ export default defineConfig({
       formats: ["cjs", "es", "iife", "umd"],
     },
   },
+  plugins: [dts({ insertTypesEntry: true })],
 });
