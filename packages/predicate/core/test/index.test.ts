@@ -1,4 +1,4 @@
-import { isAround, isArray, isBoolean, isFunction, isNumber, isString } from "$lib";
+import { isAround, isArray, isBoolean, isFunction, isNumber, isObject, isString } from "$lib";
 
 describe("isAround", () => {
   it("Should return true if the given number is around the given range", () => {
@@ -125,6 +125,41 @@ describe("isNumber", () => {
     for (const value of values) {
       expect(isNumber(value)).toBe(false);
     }
+  });
+});
+
+describe("isObject", () => {
+  it("Should return true with objects", () => {
+    const values = [[], {}, new Object({ name: "Smith" })];
+    for (const value of values) {
+      expect(isObject(value)).toBe(true);
+    }
+  });
+
+  it("Should return false with non-object values", () => {
+    const values = [0, false, true, () => 13, undefined, null, "string"];
+    for (const value of values) {
+      expect(isObject(value)).toBe(false);
+    }
+  });
+
+  it("Should return false with null", () => {
+    expect(isObject(null)).toBe(false);
+  });
+
+  describe("properties", () => {
+    it("Should return true if the object has all the given properties", () => {
+      const person = { name: "James", age: 43, country: "UK" };
+      expect(isObject(person, ["name"])).toBe(true);
+      expect(isObject(person, ["name", "age"])).toBe(true);
+      expect(isObject(person, ["name", "age", "country"])).toBe(true);
+    });
+
+    it("Should return false if the object does not have all the given properties", () => {
+      expect(isObject({}, ["name"])).toBe(false);
+      expect(isObject({ age: 43 }, ["name", "age"])).toBe(false);
+      expect(isObject({ age: 43, country: "uk" }, ["name", "age", "country"])).toBe(false);
+    });
   });
 });
 

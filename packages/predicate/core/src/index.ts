@@ -1,3 +1,5 @@
+export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
+
 export function isAround(num: number, range: { min: number; max?: number }) {
   const { min, max = Infinity } = range;
   return num >= min && num < max;
@@ -28,6 +30,18 @@ export function isFunction(value: unknown): value is Function {
 
 export function isNumber(value: unknown): value is number {
   return typeof value === "number" || value instanceof Number;
+}
+
+export function isObject(val: unknown): val is object;
+
+export function isObject<K extends PropertyKey>(
+  val: unknown,
+  properties: K[]
+): val is Expand<Record<K, unknown>>;
+
+export function isObject<K extends PropertyKey>(value: unknown, properties?: K[]) {
+  const isObj = value !== null && typeof value === "object" && value instanceof Object;
+  return properties ? isObj && properties.every((key) => key in value) : isObj;
 }
 
 export function isString(value: unknown): value is string {
