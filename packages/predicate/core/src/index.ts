@@ -28,6 +28,10 @@ export function isFunction(value: unknown): value is Function {
   return typeof value === "function" || value instanceof Function;
 }
 
+export function isNullish(value: unknown): value is null | undefined {
+  return value === null || typeof value === "undefined";
+}
+
 export function isNumber(value: unknown): value is number {
   return typeof value === "number" || value instanceof Number;
 }

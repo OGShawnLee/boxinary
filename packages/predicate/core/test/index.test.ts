@@ -1,6 +1,7 @@
-import { isAround, isArray, isBoolean, isFunction, isNumber, isObject, isString } from "$lib";
+import * as core from "$lib";
 
 describe("isAround", () => {
+  const { isAround } = core;
   it("Should return true if the given number is around the given range", () => {
     expect(isAround(10, { min: -10, max: 20 })).toBe(true);
     expect(isAround(5, { min: -10, max: 20 })).toBe(true);
@@ -38,6 +39,7 @@ describe("isAround", () => {
 });
 
 describe("isArray", () => {
+  const { isArray, isBoolean, isNumber, isString } = core;
   it("Should return true with arrays", () => {
     expect(isArray([])).toBe(true);
     expect(isArray(new Array())).toBe(true);
@@ -81,6 +83,7 @@ describe("isArray", () => {
 });
 
 describe("isBoolean", () => {
+  const { isBoolean } = core;
   it("Should return true with boolean values", () => {
     expect(isBoolean(true)).toBe(true);
     expect(isBoolean(false)).toBe(true);
@@ -97,6 +100,7 @@ describe("isBoolean", () => {
 });
 
 describe("isFunction", () => {
+  const { isFunction } = core;
   it("Should return true with functions", () => {
     const values = [() => {}, async () => {}, function* () {}, new Function()];
     for (const value of values) {
@@ -112,7 +116,23 @@ describe("isFunction", () => {
   });
 });
 
+describe("isNullish", () => {
+  const { isNullish } = core;
+  it("Should return true if value is nullish or undefined", () => {
+    expect(isNullish(undefined)).toBe(true);
+    expect(isNullish(null)).toBe(true);
+  });
+
+  it("Should return false with anything else", () => {
+    const values = [0, "string", false, true, "", {}, [], () => {}];
+    for (const value of values) {
+      expect(isNullish(value)).toBe(false);
+    }
+  });
+});
+
 describe("isNumber", () => {
+  const { isNumber } = core;
   it("Should return true with number values", () => {
     const values = [0, 0.125, new Number(400), new Number(400.25)];
     for (const value of values) {
@@ -129,6 +149,7 @@ describe("isNumber", () => {
 });
 
 describe("isObject", () => {
+  const { isObject } = core;
   it("Should return true with objects", () => {
     const values = [[], {}, new Object({ name: "Smith" })];
     for (const value of values) {
@@ -164,6 +185,7 @@ describe("isObject", () => {
 });
 
 describe("isString", () => {
+  const { isString } = core;
   it("Should return true with string values", () => {
     expect(isString("string")).toBe(true);
     expect(isString(new String("string"))).toBe(true);
