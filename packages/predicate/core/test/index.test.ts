@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isBoolean, isString } from "$lib";
+import { isBoolean, isNumber, isString } from "$lib";
 
 describe("isBoolean", () => {
   it("Should return true with boolean values", () => {
@@ -13,6 +13,22 @@ describe("isBoolean", () => {
     const values = [0, "string", null, undefined, {}, [], () => {}];
     for (const value of values) {
       expect(isBoolean(value)).toBe(false);
+    }
+  });
+});
+
+describe("isNumber", () => {
+  it("Should return true with number values", () => {
+    const values = [0, 0.125, new Number(400), new Number(400.25)];
+    for (const value of values) {
+      expect(isNumber(value)).toBe(true);
+    }
+  });
+
+  it("Should return false with non-number values", () => {
+    const values = [true, false, "string", null, undefined, {}, [], () => {}];
+    for (const value of values) {
+      expect(isNumber(value)).toBe(false);
     }
   });
 });
