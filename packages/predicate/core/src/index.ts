@@ -1,5 +1,7 @@
 export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 
+export type Predicate<T> = (value: unknown) => value is T;
+
 export function isAround(num: number, range: { min: number; max?: number }) {
   const { min, max = Infinity } = range;
   return num >= min && num < max;
@@ -26,6 +28,23 @@ export function isBoolean(value: unknown): value is boolean {
 
 export function isFunction(value: unknown): value is Function {
   return typeof value === "function" || value instanceof Function;
+}
+
+export function isInterface<T>(
+  value: unknown,
+  validation: {
+    [P in keyof T]: T[P] extends Function ? Predicate<Function> : Predicate<T[P]>;
+  }
+) {
+  if (isArray(value) || !isObject(value)) return false;
+  for (const [key, predicate] of Object.entries(validation)) {
+    if (!isFunction(predicate))
+      throw new TypeError(`Expected Predicate Function for property: ${key}`);
+    const hasKey = isObject(value, [key]);
+    if (!hasKey) return false;
+    if (!predicate(value[key])) return false;
+  }
+  return true;
 }
 
 export function isNullish(value: unknown): value is null | undefined {
