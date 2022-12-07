@@ -1,3 +1,18 @@
+export function isArray(value: unknown): value is Array<any>;
+
+export function isArray<T>(
+  value: unknown,
+  predicate: (value: unknown) => value is T
+): value is Array<T>;
+
+export function isArray<T = any>(
+  value: unknown,
+  predicate?: (value: unknown) => value is T
+): value is Array<T> {
+  if (predicate) return Array.isArray(value) && value.every((val) => predicate(val));
+  return Array.isArray(value);
+}
+
 export function isBoolean(value: unknown): value is boolean {
   return typeof value === "boolean" || value instanceof Boolean;
 }
