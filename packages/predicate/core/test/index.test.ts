@@ -350,3 +350,24 @@ describe("isString", () => {
     }
   });
 });
+
+describe("isWhitespace", () => {
+  const { isWhitespace } = core;
+  it("Should return true if the given string is whitespace", () => {
+    expect(isWhitespace("")).toBe(true);
+    expect(isWhitespace("   ")).toBe(true);
+    expect(
+      isWhitespace(`   
+      `)
+    ).toBe(true);
+  });
+
+  it("Should return false if the given string is not whitespace", () => {
+    expect(isWhitespace("John 117")).toBe(false);
+    expect(isWhitespace("  John 117  ")).toBe(false);
+    expect(
+      isWhitespace(`
+      John 117`)
+    ).toBe(false);
+  });
+});

@@ -70,3 +70,7 @@ export function isObject<K extends PropertyKey>(value: unknown, properties?: K[]
 export function isString(value: unknown): value is string {
   return typeof value === "string" || value instanceof String;
 }
+
+export function isWhitespace(value: string) {
+  return value.replace(/\s+/g, "").length === 0;
+}
