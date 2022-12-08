@@ -12,6 +12,7 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@boxinary/predicate-core": "workspace:*",
 		"@prisma/client": "^4.7.1",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
