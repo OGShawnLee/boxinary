@@ -1,7 +1,7 @@
 import type { PageServerLoad } from "./$types";
 import { findUserExamples } from "@server/services";
 import { error } from "@sveltejs/kit";
-import { isNullish } from "malachite-ui/predicate";
+import { isNullish } from "@boxinary/predicate-core";
 import { groupExamplesByDefinition } from "$lib/utils";
 
 export const load: PageServerLoad = async ({ params: { displayName } }) => {

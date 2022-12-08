@@ -3,7 +3,7 @@
 	import { CardDefinition, InputGroup } from "$lib/components";
 	import { fetchDefinitionsByName } from "$lib/client";
 	import { plural } from "$lib/utils";
-	import { isEmpty, isNullish } from "malachite-ui/predicate";
+	import { isNullish, isWhitespace } from "@boxinary/predicate-core";
 	import { slide } from "svelte/transition";
 
 	export let data: PageData;
@@ -13,7 +13,7 @@
 	async function handleSubmit(this: HTMLFormElement) {
 		const data = new FormData(this);
 		const title = data.get("name");
-		if (typeof title !== "string" || isEmpty(title)) return;
+		if (typeof title !== "string" || isWhitespace(title)) return;
 
 		const [definitions, error] = await fetchDefinitionsByName(title);
 		if (error || isNullish(definitions)) return console.log(error); // todo: handle error

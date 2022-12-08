@@ -1,8 +1,8 @@
-import { isEmpty, isNullish } from "malachite-ui/predicate";
+import { isNullish, isWhitespace } from "@boxinary/predicate-core";
 import { error } from "@sveltejs/kit";
 
 export function handleBigint(string: string | null, stringName: string) {
-	if (isNullish(string) || isEmpty(string))
+	if (isNullish(string) || isWhitespace(string))
 		throw error(400, { message: `${stringName} is required!` });
 	try {
 		return BigInt(string);
@@ -12,7 +12,7 @@ export function handleBigint(string: string | null, stringName: string) {
 }
 
 export function toBigint(string: string | null) {
-	if (isNullish(string) || isEmpty(string)) return null;
+	if (isNullish(string) || isWhitespace(string)) return null;
 	try {
 		return BigInt(string);
 	} catch {

@@ -1,6 +1,6 @@
 import type { Actions } from "./$types";
 import { handleAuth } from "@server/services";
-import { isNullish } from "malachite-ui/predicate";
+import { isNullish } from "@boxinary/predicate-core";
 import { error, redirect } from "@sveltejs/kit";
 import { removeFromCollection } from "@server/services";
 import { handleBigint } from "@server/utils";

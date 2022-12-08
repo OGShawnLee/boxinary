@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
 	import { Header, InputGroup } from "$lib/components";
-	import { isString } from "malachite-ui/predicate";
+	import { isString } from "@boxinary/predicate-core";
 
 	export let data: PageData;
 	export let form: ValidationForm<"name" | "description" | "details">;

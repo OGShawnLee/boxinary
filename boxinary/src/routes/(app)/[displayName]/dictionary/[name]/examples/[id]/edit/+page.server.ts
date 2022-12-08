@@ -2,7 +2,7 @@ import type { Actions, PageServerLoad } from "./$types";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { findExample, handleAuth, updateExample } from "@server/services";
 import { handleBigint } from "@server/utils";
-import { isEmpty } from "malachite-ui/predicate";
+import { isWhitespace } from "@boxinary/predicate-core";
 
 export const load: PageServerLoad = async ({
 	cookies,
@@ -26,11 +26,11 @@ export const actions: Actions = {
 		const source = data.get("source");
 
 		if (typeof text !== "string") return invalid(400, { text: { invalid: true }, source });
-		if (isEmpty(text)) return invalid(400, { text: { missing: true }, source });
+		if (isWhitespace(text)) return invalid(400, { text: { missing: true }, source });
 
 		if (source) {
 			if (typeof source !== "string") return invalid(400, { source: { invalid: true }, text });
-			if (isEmpty(text)) return invalid(400, { source: { missing: true }, text });
+			if (isWhitespace(text)) return invalid(400, { source: { missing: true }, text });
 		}
 
 		const id = handleBigint(str_id, "example-id");

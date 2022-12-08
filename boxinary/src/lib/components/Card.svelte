@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Nullable } from "malachite-ui/types";
 	import { getFormatedDate } from "$lib/utils";
-	import { isNullish } from "malachite-ui/predicate";
+	import { isNullish } from "@boxinary/predicate-core";
 
 	export let title: Nullable<string> = undefined;
 	export let content: Nullable<string> = undefined;

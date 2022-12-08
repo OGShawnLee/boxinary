@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getFormatedDate } from "$lib/utils";
 	import { currentUser } from "@root/state";
-	import { isBoolean } from "malachite-ui/predicate";
+	import { isBoolean } from "@boxinary/predicate-core";
 
 	export let isOwner: boolean;
 	export let createdAt: Date;

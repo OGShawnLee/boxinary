@@ -1,7 +1,7 @@
 import type { Actions } from "./$types";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { addExample, findDefinitionId, handleAuth } from "@server/services";
-import { isEmpty, isNullish } from "malachite-ui/predicate";
+import { isNullish, isWhitespace } from "@boxinary/predicate-core";
 
 export const actions: Actions = {
 	default: async ({ cookies, params, request }) => {
@@ -12,11 +12,11 @@ export const actions: Actions = {
 		const source = data.get("source");
 
 		if (typeof text !== "string") return invalid(400, { text: { invalid: true }, source });
-		if (isEmpty(text)) return invalid(400, { text: { missing: true }, source });
+		if (isWhitespace(text)) return invalid(400, { text: { missing: true }, source });
 
 		if (source) {
 			if (typeof source !== "string") return invalid(400, { text, source: { invalid: true } });
-			if (isEmpty(source)) return invalid(400, { text, source: { missing: true } });
+			if (isWhitespace(source)) return invalid(400, { text, source: { missing: true } });
 		}
 
 		const [definitionId, err] = await findDefinitionId(displayName, params.name);

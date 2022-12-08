@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from "./$types";
 import { handleAuth, updateCollection } from "@server/services";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { isEmpty } from "malachite-ui/predicate";
+import { isWhitespace } from "@boxinary/predicate-core";
 import { handleBigint } from "@server/utils";
 
 export const load: PageServerLoad = async ({ cookies, params }) => {
@@ -20,19 +20,20 @@ export const actions: Actions = {
 
 		if (typeof name !== "string")
 			return invalid(400, { name: { invalid: true }, description, details });
-		if (isEmpty(name)) return invalid(400, { name: { missing: true }, description, details });
+		if (isWhitespace(name)) return invalid(400, { name: { missing: true }, description, details });
 
 		if (description) {
 			if (typeof description !== "string")
 				return invalid(400, { description: { invalid: true }, name, details });
-			if (isEmpty(description))
+			if (isWhitespace(description))
 				return invalid(400, { description: { missing: true }, name, details });
 		}
 
 		if (details) {
 			if (typeof details !== "string")
 				return invalid(400, { details: { invalid: true }, name, description });
-			if (isEmpty(details)) return invalid(400, { details: { missing: true }, name, description });
+			if (isWhitespace(details))
+				return invalid(400, { details: { missing: true }, name, description });
 		}
 
 		const [collection] = await updateCollection(collectionid, { name, description, details });

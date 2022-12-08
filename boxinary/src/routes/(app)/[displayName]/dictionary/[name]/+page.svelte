@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
 	import { CardExample, DefinitionItem, Header, LayoutSeparated } from "$lib/components";
-	import { isEmpty } from "malachite-ui/predicate";
+	import { isEmpty, isWhitespace } from "@boxinary/predicate-core";
 	import { createExamplePathing, getDefinitionExampleAddPath, UserPathing } from "$lib/utils";
 	import { page } from "$app/stores";
 

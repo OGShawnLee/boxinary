@@ -2,7 +2,7 @@ import type { Actions, ServerLoad } from "@sveltejs/kit";
 import db from "$lib/db";
 import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { isEmpty } from "malachite-ui/predicate";
+import { isWhitespace } from "@boxinary/predicate-core";
 import { genSalt, hash } from "bcrypt";
 import { useAwait, useAwaitError } from "$lib/hooks";
 import { verify } from "jsonwebtoken";
@@ -11,7 +11,7 @@ import { isInvalidEmail, isJWTPayloadState } from "@server/predicate";
 
 export const load: ServerLoad = async ({ cookies }) => {
 	const authStateCookie = cookies.get(AUTH_COOKIE);
-	if (authStateCookie === undefined || isEmpty(authStateCookie)) return;
+	if (authStateCookie === undefined || isWhitespace(authStateCookie)) return;
 	const [authState, err] = await useAwait(() => verify(authStateCookie, ACCESS_TOKEN));
 	if (err) {
 		deleteAuthCookie(cookies);
@@ -30,20 +30,21 @@ export const actions: Actions = {
 
 		if (typeof name !== "string")
 			return invalid(400, { name: { invalid: true }, displayName, email });
-		if (isEmpty(name)) return invalid(400, { name: { missing: true }, displayName, email });
+		if (isWhitespace(name)) return invalid(400, { name: { missing: true }, displayName, email });
 
 		if (typeof displayName !== "string")
 			return invalid(400, { name, displayName: { invalid: true }, email });
-		if (isEmpty(displayName)) return invalid(400, { name, displayName: { missing: true }, email });
+		if (isWhitespace(displayName))
+			return invalid(400, { name, displayName: { missing: true }, email });
 
 		if (typeof email !== "string")
 			return invalid(400, { name, displayName, email: { invalid: true } });
-		if (isEmpty(email)) return invalid(400, { name, displayName, email: { missing: true } });
+		if (isWhitespace(email)) return invalid(400, { name, displayName, email: { missing: true } });
 		if (isInvalidEmail(email)) return invalid(400, { name, displayName, email: { invalid: true } });
 
 		if (typeof password !== "string")
 			return invalid(400, { name, displayName, email, password: { invalid: true } });
-		if (isEmpty(password))
+		if (isWhitespace(password))
 			return invalid(400, { name, displayName, email, password: { missing: true } });
 
 		const [isEmailTaken, err] = await useAwait(() => db.user.findFirst({ where: { email } }));

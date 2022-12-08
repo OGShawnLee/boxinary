@@ -1,7 +1,7 @@
 import type { Actions } from "./$types";
 import { createDefinition, handleAuth } from "@server/services";
 import { error, invalid, redirect } from "@sveltejs/kit";
-import { isEmpty } from "malachite-ui/predicate";
+import { isWhitespace } from "@boxinary/predicate-core";
 
 export const actions: Actions = {
 	default: async ({ cookies, request, params }) => {
@@ -15,20 +15,20 @@ export const actions: Actions = {
 		const source = data.get("source");
 
 		if (typeof name !== "string") return invalid(400, { name: { invalid: true } });
-		if (isEmpty(name)) return invalid(400, { name: { missing: true } });
+		if (isWhitespace(name)) return invalid(400, { name: { missing: true } });
 
 		if (typeof definition !== "string") return invalid(400, { definition: { invalid: true } });
-		if (isEmpty(definition)) return invalid(400, { definition: { missing: true } });
+		if (isWhitespace(definition)) return invalid(400, { definition: { missing: true } });
 
 		if (typeof description !== "string") return invalid(400, { description: { invalid: true } });
-		if (isEmpty(description)) return invalid(400, { description: { missing: true } });
+		if (isWhitespace(description)) return invalid(400, { description: { missing: true } });
 
 		if (typeof summary !== "string") return invalid(400, { summary: { invalid: true } });
-		if (isEmpty(summary)) return invalid(400, { summary: { missing: true } });
+		if (isWhitespace(summary)) return invalid(400, { summary: { missing: true } });
 
 		if (source) {
 			if (typeof source !== "string") return invalid(400, { source: { invalid: true } });
-			if (isEmpty(source)) return invalid(400, { source: { missing: true } });
+			if (isWhitespace(source)) return invalid(400, { source: { missing: true } });
 		}
 
 		const [payload] = await createDefinition(id, {

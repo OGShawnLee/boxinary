@@ -1,7 +1,7 @@
 import type { Actions } from "@sveltejs/kit";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { handleAuthState, updateUser } from "@server/services";
-import { isEmpty } from "malachite-ui/predicate";
+import { isWhitespace } from "@boxinary/predicate-core";
 
 export const actions: Actions = {
 	default: async ({ cookies, request }) => {
@@ -13,15 +13,16 @@ export const actions: Actions = {
 
 		if (typeof name !== "string")
 			return invalid(400, { description, displayName, name: { invalid: true } });
-		if (isEmpty(name)) return invalid(400, { description, displayName, name: { missing: true } });
+		if (isWhitespace(name))
+			return invalid(400, { description, displayName, name: { missing: true } });
 
 		if (typeof displayName !== "string")
 			return invalid(400, { description, displayName: { invalid: true }, name });
-		if (isEmpty(displayName))
+		if (isWhitespace(displayName))
 			return invalid(400, { description, displayName: { missing: true }, name });
 
 		if (description) {
-			if (typeof description !== "string" || isEmpty(description))
+			if (typeof description !== "string" || isWhitespace(description))
 				return invalid(400, { description: { invalid: true }, displayName, name });
 		}
 

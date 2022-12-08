@@ -1,7 +1,7 @@
 import type { Actions } from "./$types";
 import { error, invalid, redirect } from "@sveltejs/kit";
 import { findDefinitionId, handleAuth, updateDefinition } from "@server/services";
-import { isEmpty } from "malachite-ui/predicate";
+import { isWhitespace } from "@boxinary/predicate-core";
 
 export const actions: Actions = {
 	default: async ({ cookies, params, request }) => {
@@ -16,28 +16,28 @@ export const actions: Actions = {
 
 		if (typeof name !== "string")
 			return invalid(400, { name: { invalid: true }, definition, description, summary });
-		if (isEmpty(name))
+		if (isWhitespace(name))
 			return invalid(400, { name: { missing: true }, definition, description, summary });
 
 		if (typeof definition !== "string")
 			return invalid(400, { definition: { invalid: true }, name, description, summary });
-		if (isEmpty(definition))
+		if (isWhitespace(definition))
 			return invalid(400, { definition: { missing: true }, name, description, summary });
 
 		if (typeof description !== "string")
 			return invalid(400, { description: { invalid: true }, name, definition, summary });
-		if (isEmpty(description))
+		if (isWhitespace(description))
 			return invalid(400, { description: { missing: true }, name, definition, summary });
 
 		if (typeof summary !== "string")
 			return invalid(400, { summary: { invalid: true }, name, definition, description });
-		if (isEmpty(summary))
+		if (isWhitespace(summary))
 			return invalid(400, { summary: { missing: true }, name, definition, description });
 
 		if (source) {
 			if (typeof source != "string")
 				return invalid(400, { summary, name, definition, description, source: { invalid: true } });
-			if (isEmpty(source))
+			if (isWhitespace(source))
 				return invalid(400, { summary, name, definition, description, source: { missing: true } });
 		}
 

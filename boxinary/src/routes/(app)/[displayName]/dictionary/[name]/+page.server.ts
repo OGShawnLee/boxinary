@@ -7,7 +7,7 @@ import {
 	findDefinitionId,
 	handleAuthState
 } from "@server/services";
-import { isNullish } from "malachite-ui/predicate";
+import { isNullish } from "@boxinary/predicate-core";
 
 export const actions: Actions = {
 	bookmark: async ({ cookies, params: { displayName, name }, url }) => {

@@ -2,7 +2,7 @@ import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/db";
 import { handleAuth } from "@server/services";
 import { error, redirect } from "@sveltejs/kit";
-import { isNullish } from "malachite-ui/predicate";
+import { isNullish } from "@boxinary/predicate-core";
 import { useAwait } from "$lib/hooks";
 import { addToCollection } from "@server/services";
 import { isNotDefinitionOwner } from "@server/predicate";

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Nullable } from "malachite-ui/types";
 	import { FloatingOptions } from "$lib/components";
-	import { isNullish } from "malachite-ui/predicate";
+	import { isNullish } from "@boxinary/predicate-core";
 	import { createExamplePathing } from "$lib/utils";
 	import { currentUser } from "@root/state";
 	import { page } from "$app/stores";

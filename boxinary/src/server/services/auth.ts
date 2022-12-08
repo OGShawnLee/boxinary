@@ -3,7 +3,7 @@ import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import type { Cookies } from "@sveltejs/kit";
 import { error, redirect } from "@sveltejs/kit";
 import { verify } from "jsonwebtoken";
-import { isEmpty, isNullish } from "malachite-ui/predicate";
+import { isNullish, isWhitespace } from "@boxinary/predicate-core";
 import { useAwait } from "$lib/hooks";
 import { deleteAuthCookie } from "@server/utils";
 import { isJWTPayloadState } from "@server/predicate";
@@ -32,7 +32,8 @@ export async function handleAuth(
 
 export async function handleAuthState(cookies: Cookies) {
 	const authStateCookie = cookies.get(AUTH_COOKIE);
-	if (isNullish(authStateCookie) || isEmpty(authStateCookie)) throw redirect(303, "/auth/sign-in");
+	if (isNullish(authStateCookie) || isWhitespace(authStateCookie))
+		throw redirect(303, "/auth/sign-in");
 	const [authState, err] = await useAwait(() => getUserJWTTokenPayload(authStateCookie));
 	if (err || !authState) {
 		deleteAuthCookie(cookies);

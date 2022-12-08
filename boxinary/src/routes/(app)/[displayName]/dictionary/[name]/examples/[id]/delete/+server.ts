@@ -2,7 +2,7 @@ import type { RequestHandler } from "./$types";
 import { deleteExample, findExample, handleAuthState } from "@server/services";
 import { defineMessage } from "$lib/utils";
 import { toBigint } from "@server/utils";
-import { isNullish } from "malachite-ui/predicate";
+import { isNullish } from "@boxinary/predicate-core";
 
 export const POST: RequestHandler = async ({ cookies, params, url }) => {
 	const currentUser = await handleAuthState(cookies);

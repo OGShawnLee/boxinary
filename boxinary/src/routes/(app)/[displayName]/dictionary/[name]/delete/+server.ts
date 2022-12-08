@@ -1,7 +1,7 @@
 import type { RequestHandler } from "./$types";
 import db from "$lib/db";
 import { deleteDefinition, handleAuthState } from "@server/services";
-import { isNullish } from "malachite-ui/predicate";
+import { isNullish } from "@boxinary/predicate-core";
 import { useAwait } from "$lib/hooks";
 import { defineMessage } from "$lib/utils";
 

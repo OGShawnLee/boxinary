@@ -2,7 +2,7 @@ import type { RequestHandler } from "./$types";
 import { deleteCollection, handleAuthState } from "@server/services";
 import { toBigint } from "@server/utils";
 import { defineMessage } from "$lib/utils";
-import { isNullish } from "malachite-ui/predicate";
+import { isNullish } from "@boxinary/predicate-core";
 
 export const POST: RequestHandler = async ({ cookies, params, url }) => {
 	const id = toBigint(params.id);

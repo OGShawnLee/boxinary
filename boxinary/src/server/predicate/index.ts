@@ -4,7 +4,7 @@ import db from "$lib/db";
 import isEmail from "validator/lib/isEmail";
 import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
 import { verify } from "jsonwebtoken";
-import { isEmpty, isInterface, isString, isNullish } from "malachite-ui/predicate";
+import { isInterface, isNullish, isString, isWhitespace } from "@boxinary/predicate-core";
 import { compare } from "bcrypt";
 import { useAwait } from "$lib/hooks";
 
@@ -21,7 +21,7 @@ export function isInvalidEmail(email: string) {
 
 export async function isLoggedIn(cookies: Cookies) {
 	const authStateCookie = cookies.get(AUTH_COOKIE);
-	if (isNullish(authStateCookie) || isEmpty(authStateCookie)) return false;
+	if (isNullish(authStateCookie) || isWhitespace(authStateCookie)) return false;
 	const authState = verify(authStateCookie, ACCESS_TOKEN);
 	return isJWTPayloadState(authState);
 }

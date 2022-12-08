@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	import { capitalise } from "$lib/utils";
-	import { isAround } from "malachite-ui/predicate";
+	import { isAround } from "@boxinary/predicate-core";
 
 	function getCharCountColour(amount: number, total: number) {
 		const percentage = getPercentage(amount, total);
@@ -30,7 +30,7 @@
 <script lang="ts">
 	import type { Nullable } from "malachite-ui/types";
 	import { useListener } from "malachite-ui/hooks";
-	import { isObject, isString } from "malachite-ui/predicate";
+	import { isObject, isString } from "@boxinary/predicate-core";
 
 	let className =
 		"w-full py-2.5 px-3 | bg-raisin-12 outline-none text-white font-medium placeholder-rich-50";
