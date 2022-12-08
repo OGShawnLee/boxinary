@@ -99,6 +99,23 @@ describe("isBoolean", () => {
   });
 });
 
+describe("isEmpty", () => {
+  const { isEmpty } = core;
+  it("Should return true if the given array, map or set is empty", () => {
+    expect(isEmpty([])).toBe(true);
+    expect(isEmpty(new Set())).toBe(true);
+    expect(isEmpty(new Map())).toBe(true);
+  });
+
+  it("Should return false if the given array, map or set has values", () => {
+    expect(isEmpty(["First"])).toBe(false);
+    expect(isEmpty(new Set(["Second"]))).toBe(false);
+    const people = new Map<number, string>();
+    people.set(0, "James");
+    expect(isEmpty(people)).toBe(false);
+  });
+});
+
 describe("isFunction", () => {
   const { isFunction } = core;
   it("Should return true with functions", () => {

@@ -26,6 +26,11 @@ export function isBoolean(value: unknown): value is boolean {
   return typeof value === "boolean" || value instanceof Boolean;
 }
 
+export function isEmpty(value: Array<any> | Map<any, any> | Set<any>) {
+  if (isArray(value)) return value.length === 0;
+  return value.size == 0;
+}
+
 export function isFunction(value: unknown): value is Function {
   return typeof value === "function" || value instanceof Function;
 }
