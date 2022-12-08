@@ -81,6 +81,7 @@
 			<a
 				href="https://www.artstation.com/artwork/q8E2D"
 				target="_blank"
+				rel="noreferrer"
 				title="View Original Image"
 			>
 				<i class="bx bx-palette | text-xl hover:text-white" />
@@ -90,6 +91,7 @@
 				class="text-sm hover:text-aqua-50"
 				href="https://www.artstation.com/mchahin"
 				target="_blank"
+				rel="noreferrer"
 				title="View Image Author"
 			>
 				Mohamed Chahin
