@@ -40,9 +40,7 @@ export function isInterface<T>(
   for (const [key, predicate] of Object.entries(validation)) {
     if (!isFunction(predicate))
       throw new TypeError(`Expected Predicate Function for property: ${key}`);
-    const hasKey = isObject(value, [key]);
-    if (!hasKey) return false;
-    if (!predicate(value[key])) return false;
+    if (!isObject(value, [key]) || !predicate(value[key])) return false;
   }
   return true;
 }
