@@ -1,6 +1,6 @@
 import type { Actions } from "./$types";
 import { createDefinition, handleAuth } from "@server/services";
-import { error, invalid, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { isWhitespace } from "@boxinary/predicate-core";
 
 export const actions: Actions = {
@@ -14,21 +14,21 @@ export const actions: Actions = {
 		const summary = data.get("summary");
 		const source = data.get("source");
 
-		if (typeof name !== "string") return invalid(400, { name: { invalid: true } });
-		if (isWhitespace(name)) return invalid(400, { name: { missing: true } });
+		if (typeof name !== "string") return fail(400, { name: { invalid: true } });
+		if (isWhitespace(name)) return fail(400, { name: { missing: true } });
 
-		if (typeof definition !== "string") return invalid(400, { definition: { invalid: true } });
-		if (isWhitespace(definition)) return invalid(400, { definition: { missing: true } });
+		if (typeof definition !== "string") return fail(400, { definition: { invalid: true } });
+		if (isWhitespace(definition)) return fail(400, { definition: { missing: true } });
 
-		if (typeof description !== "string") return invalid(400, { description: { invalid: true } });
-		if (isWhitespace(description)) return invalid(400, { description: { missing: true } });
+		if (typeof description !== "string") return fail(400, { description: { invalid: true } });
+		if (isWhitespace(description)) return fail(400, { description: { missing: true } });
 
-		if (typeof summary !== "string") return invalid(400, { summary: { invalid: true } });
-		if (isWhitespace(summary)) return invalid(400, { summary: { missing: true } });
+		if (typeof summary !== "string") return fail(400, { summary: { invalid: true } });
+		if (isWhitespace(summary)) return fail(400, { summary: { missing: true } });
 
 		if (source) {
-			if (typeof source !== "string") return invalid(400, { source: { invalid: true } });
-			if (isWhitespace(source)) return invalid(400, { source: { missing: true } });
+			if (typeof source !== "string") return fail(400, { source: { invalid: true } });
+			if (isWhitespace(source)) return fail(400, { source: { missing: true } });
 		}
 
 		const [payload] = await createDefinition(id, {

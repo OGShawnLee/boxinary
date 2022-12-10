@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from "./$types";
 import type { SubDefinition } from "@prisma/client";
 import db from "$lib/db";
-import { error, invalid, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { isNullish, isWhitespace } from "@boxinary/predicate-core";
 import { findDefinitionId, handleAuth } from "@server/services";
 import { getDefinitionPath } from "$lib/utils";
@@ -20,13 +20,13 @@ export const actions: Actions = {
 		const definition = data.get("definition");
 
 		if (typeof definition !== "string" || definition.length > 180)
-			return invalid(400, { definition: { invalid: true }, example });
-		if (isWhitespace(definition)) return invalid(400, { definition: { missing: true }, example });
+			return fail(400, { definition: { invalid: true }, example });
+		if (isWhitespace(definition)) return fail(400, { definition: { missing: true }, example });
 
 		if (example) {
 			if (typeof example !== "string" || example.length > 80)
-				return invalid(400, { definition, example: { invalid: true } });
-			if (isWhitespace(example)) return invalid(400, { definition, example: { missing: true } });
+				return fail(400, { definition, example: { invalid: true } });
+			if (isWhitespace(example)) return fail(400, { definition, example: { missing: true } });
 		}
 
 		const [id] = await findDefinitionId(displayName, name);

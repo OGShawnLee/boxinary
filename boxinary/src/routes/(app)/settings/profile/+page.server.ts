@@ -1,5 +1,5 @@
 import type { Actions } from "@sveltejs/kit";
-import { error, invalid, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { handleAuthState, updateUser } from "@server/services";
 import { isWhitespace } from "@boxinary/predicate-core";
 
@@ -12,18 +12,17 @@ export const actions: Actions = {
 		const description = data.get("description");
 
 		if (typeof name !== "string")
-			return invalid(400, { description, displayName, name: { invalid: true } });
-		if (isWhitespace(name))
-			return invalid(400, { description, displayName, name: { missing: true } });
+			return fail(400, { description, displayName, name: { invalid: true } });
+		if (isWhitespace(name)) return fail(400, { description, displayName, name: { missing: true } });
 
 		if (typeof displayName !== "string")
-			return invalid(400, { description, displayName: { invalid: true }, name });
+			return fail(400, { description, displayName: { invalid: true }, name });
 		if (isWhitespace(displayName))
-			return invalid(400, { description, displayName: { missing: true }, name });
+			return fail(400, { description, displayName: { missing: true }, name });
 
 		if (description) {
 			if (typeof description !== "string" || isWhitespace(description))
-				return invalid(400, { description: { invalid: true }, displayName, name });
+				return fail(400, { description: { invalid: true }, displayName, name });
 		}
 
 		const [updatedUser] = await updateUser(id, { name, displayName, description });

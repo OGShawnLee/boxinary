@@ -1,7 +1,7 @@
 import type { Actions, ServerLoad } from "@sveltejs/kit";
 import db from "$lib/db";
 import { ACCESS_TOKEN, AUTH_COOKIE } from "$env/static/private";
-import { error, invalid, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { isWhitespace } from "@boxinary/predicate-core";
 import { genSalt, hash } from "bcrypt";
 import { useAwait, useAwaitError } from "$lib/hooks";
@@ -28,27 +28,26 @@ export const actions: Actions = {
 		const email = data.get("email");
 		const password = data.get("password");
 
-		if (typeof name !== "string")
-			return invalid(400, { name: { invalid: true }, displayName, email });
-		if (isWhitespace(name)) return invalid(400, { name: { missing: true }, displayName, email });
+		if (typeof name !== "string") return fail(400, { name: { invalid: true }, displayName, email });
+		if (isWhitespace(name)) return fail(400, { name: { missing: true }, displayName, email });
 
 		if (typeof displayName !== "string")
-			return invalid(400, { name, displayName: { invalid: true }, email });
+			return fail(400, { name, displayName: { invalid: true }, email });
 		if (isWhitespace(displayName))
-			return invalid(400, { name, displayName: { missing: true }, email });
+			return fail(400, { name, displayName: { missing: true }, email });
 
 		if (typeof email !== "string")
-			return invalid(400, { name, displayName, email: { invalid: true } });
-		if (isWhitespace(email)) return invalid(400, { name, displayName, email: { missing: true } });
-		if (isInvalidEmail(email)) return invalid(400, { name, displayName, email: { invalid: true } });
+			return fail(400, { name, displayName, email: { invalid: true } });
+		if (isWhitespace(email)) return fail(400, { name, displayName, email: { missing: true } });
+		if (isInvalidEmail(email)) return fail(400, { name, displayName, email: { invalid: true } });
 
 		if (typeof password !== "string")
-			return invalid(400, { name, displayName, email, password: { invalid: true } });
+			return fail(400, { name, displayName, email, password: { invalid: true } });
 		if (isWhitespace(password))
-			return invalid(400, { name, displayName, email, password: { missing: true } });
+			return fail(400, { name, displayName, email, password: { missing: true } });
 
 		const [isEmailTaken, err] = await useAwait(() => db.user.findFirst({ where: { email } }));
-		if (isEmailTaken) return invalid(400, { name, displayName, email: { duplicate: true } });
+		if (isEmailTaken) return fail(400, { name, displayName, email: { duplicate: true } });
 		if (err) throw error(500, { message: "Unable to Verify Credentials" });
 
 		const createError = await useAwaitError(async () => {

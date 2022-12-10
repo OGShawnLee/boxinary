@@ -1,5 +1,5 @@
 import type { Actions } from "./$types";
-import { error, invalid, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { findDefinitionId, handleAuth, updateDefinition } from "@server/services";
 import { isWhitespace } from "@boxinary/predicate-core";
 
@@ -15,30 +15,30 @@ export const actions: Actions = {
 		const source = data.get("source");
 
 		if (typeof name !== "string")
-			return invalid(400, { name: { invalid: true }, definition, description, summary });
+			return fail(400, { name: { invalid: true }, definition, description, summary });
 		if (isWhitespace(name))
-			return invalid(400, { name: { missing: true }, definition, description, summary });
+			return fail(400, { name: { missing: true }, definition, description, summary });
 
 		if (typeof definition !== "string")
-			return invalid(400, { definition: { invalid: true }, name, description, summary });
+			return fail(400, { definition: { invalid: true }, name, description, summary });
 		if (isWhitespace(definition))
-			return invalid(400, { definition: { missing: true }, name, description, summary });
+			return fail(400, { definition: { missing: true }, name, description, summary });
 
 		if (typeof description !== "string")
-			return invalid(400, { description: { invalid: true }, name, definition, summary });
+			return fail(400, { description: { invalid: true }, name, definition, summary });
 		if (isWhitespace(description))
-			return invalid(400, { description: { missing: true }, name, definition, summary });
+			return fail(400, { description: { missing: true }, name, definition, summary });
 
 		if (typeof summary !== "string")
-			return invalid(400, { summary: { invalid: true }, name, definition, description });
+			return fail(400, { summary: { invalid: true }, name, definition, description });
 		if (isWhitespace(summary))
-			return invalid(400, { summary: { missing: true }, name, definition, description });
+			return fail(400, { summary: { missing: true }, name, definition, description });
 
 		if (source) {
 			if (typeof source != "string")
-				return invalid(400, { summary, name, definition, description, source: { invalid: true } });
+				return fail(400, { summary, name, definition, description, source: { invalid: true } });
 			if (isWhitespace(source))
-				return invalid(400, { summary, name, definition, description, source: { missing: true } });
+				return fail(400, { summary, name, definition, description, source: { missing: true } });
 		}
 
 		const [id] = await findDefinitionId(params.displayName, params.name);

@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from "./$types";
-import { error, invalid, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { findExample, handleAuth, updateExample } from "@server/services";
 import { handleBigint } from "@server/utils";
 import { isWhitespace } from "@boxinary/predicate-core";
@@ -25,12 +25,12 @@ export const actions: Actions = {
 		const text = data.get("example");
 		const source = data.get("source");
 
-		if (typeof text !== "string") return invalid(400, { text: { invalid: true }, source });
-		if (isWhitespace(text)) return invalid(400, { text: { missing: true }, source });
+		if (typeof text !== "string") return fail(400, { text: { invalid: true }, source });
+		if (isWhitespace(text)) return fail(400, { text: { missing: true }, source });
 
 		if (source) {
-			if (typeof source !== "string") return invalid(400, { source: { invalid: true }, text });
-			if (isWhitespace(text)) return invalid(400, { source: { missing: true }, text });
+			if (typeof source !== "string") return fail(400, { source: { invalid: true }, text });
+			if (isWhitespace(text)) return fail(400, { source: { missing: true }, text });
 		}
 
 		const id = handleBigint(str_id, "example-id");
