@@ -3,7 +3,7 @@ import type { Writable, Readable } from "svelte/store";
 import { derived, get, writable } from "svelte/store";
 import { makeReadable } from "malachite-ui/utils";
 import { isFunction, isInterface } from "@boxinary/predicate-core";
-import { isStore, isWritable } from "malachite-ui/predicate";
+import { isStore, isWritable } from "@boxinary/predicate-svelte";
 import { useContext } from "malachite-ui/hooks";
 
 export type QuestionState = "COMPLETE" | "INCOMPLETE";
