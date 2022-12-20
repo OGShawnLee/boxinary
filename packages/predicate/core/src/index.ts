@@ -41,7 +41,7 @@ export function isInterface<T>(
     [P in keyof T]: T[P] extends Function ? Predicate<Function> : Predicate<T[P]>;
   }
 ) {
-  if (isArray(value) || !isObject(value)) return false;
+  if (Array.isArray(value) || !isObject(value)) return false;
   for (const [key, predicate] of Object.entries(validation)) {
     if (!isFunction(predicate))
       throw new TypeError(`Expected Predicate Function for property: ${key}`);
