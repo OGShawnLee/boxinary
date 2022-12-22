@@ -2,7 +2,11 @@ import type { Predicate } from "@boxinary/predicate-core";
 import { getContext, setContext } from "svelte";
 import { coolString } from "$lib/utils";
 
-export default function useContext<T>(config: { component: string; predicate: Predicate<T>, prefix?: string }) {
+export default function useContext<T>(config: {
+	component: string;
+	predicate: Predicate<T>;
+	prefix?: string;
+}) {
 	const { component, predicate, prefix = "boxinary" } = config;
 	const key = coolString(`${prefix}-${component}`);
 	return {

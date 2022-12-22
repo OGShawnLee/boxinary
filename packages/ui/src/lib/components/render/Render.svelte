@@ -23,7 +23,7 @@
 	}
 
 	function onInput(event: InputEvent) {
-		value = (event.currentTarget as HTMLInputElement)?.value 
+		value = (event.currentTarget as HTMLInputElement)?.value;
 	}
 </script>
 
