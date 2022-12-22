@@ -12,6 +12,7 @@
 	},
 	"devDependencies": {
 		"@boxinary/predicate-core": "workspace:*",
+		"@boxinary/predicate-svelte": "workspace:*",
 		"@sveltejs/adapter-auto": "^1.0.0",
 		"@sveltejs/kit": "^1.0.0",
 		"@sveltejs/package": "^1.0.0",
