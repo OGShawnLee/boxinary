@@ -18,7 +18,7 @@
 
 <Render
 	{as}
-	{className}
+	class={className}
 	{id}
 	{...$$restProps}
 	on:blur
