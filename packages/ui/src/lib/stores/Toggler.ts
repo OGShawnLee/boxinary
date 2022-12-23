@@ -68,7 +68,7 @@ export default class Toggler {
 	}
 
 	protected handleFocus(this: Toggler, event?: Event | HTMLElement) {
-		if (isNullish(event)) return;
+		if (isNullish(event)) return this.button.value?.focus();
 		if (event instanceof Event) {
 			const target = event.target;
 			if (isHTMLElement(target) && this.isValidFocusTarget(target)) target.focus();
