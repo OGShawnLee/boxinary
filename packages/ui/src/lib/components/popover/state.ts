@@ -1,13 +1,14 @@
-import type { ComponentInitialiser } from "$lib/types";
+import type { ComponentInitialiser, SToggler } from "$lib/types";
 import Context from "./context";
 import { Toggler } from "$lib/stores";
 import { ElementBinder, defineActionComponent } from "$lib/core";
 import { useComponentNaming } from "$lib/hooks";
+import { useCloseClickOutside, useCloseEscapeKey, useCloseFocusLeave } from "$lib/plugins";
 import { createReadableRef } from "$lib/utils";
 
-export function createDisclosureState(initialValue: boolean) {
-	const toggler = new Toggler({ isOpen: initialValue });
-	const { nameChild } = useComponentNaming({ component: "disclosure" });
+export function createPopoverState(configuration: SToggler.Configuration) {
+	const { nameChild } = useComponentNaming({ component: "popover" });
+	const toggler = new Toggler(configuration);
 	const button = new ElementBinder();
 	const panel = new ElementBinder();
 
@@ -30,31 +31,44 @@ export function createDisclosureState(initialValue: boolean) {
 			})
 		});
 
-	const createPanel: ComponentInitialiser = (id) => {
-		return defineActionComponent({
+	const createOverlay: ComponentInitialiser = (id) =>
+		defineActionComponent({
+			id: id,
+			name: nameChild("overlay"),
+			isShowing: false,
+			onMount: ({ element }) => ({
+				base: toggler.createOverlay(element)
+			})
+		});
+
+	const createPanel: ComponentInitialiser = (id) =>
+		defineActionComponent({
 			binder: panel,
 			id: id,
 			name: nameChild("panel"),
-			isShowing: initialValue,
+			isShowing: false,
 			onMount: ({ element }) => ({
-				base: toggler.createPanel(element)
+				base: toggler.createPanel(element, {
+					plugins: [useCloseClickOutside, useCloseEscapeKey, useCloseFocusLeave]
+				})
 			})
 		});
-	};
 
 	Context.setContext({
-		close: toggler.handleClose.bind(toggler),
 		isOpen: createReadableRef(toggler.isOpen),
+		close: toggler.handleClose.bind(toggler),
 		panel,
-		createDisclosureButton: createButton,
-		createDisclosurePanel: createPanel
+		createPopoverButton: createButton,
+		createPopoverOverlay: createOverlay,
+		createPopoverPanel: createPanel
 	});
 
 	return {
-		subscribe: toggler.subscribe,
 		isOpen: toggler.isOpen,
+		isFocusForced: toggler.isFocusForced,
 		close: toggler.handleClose.bind(toggler),
 		button: createButton().action,
-		panel: createPanel().action
+		panel: createPanel().action,
+		overlay: createOverlay().action
 	};
 }

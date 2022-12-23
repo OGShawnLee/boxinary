@@ -1,10 +1,10 @@
 import type { Collectable } from "$lib/types";
-import type { ElementBinder } from "./ElementBinder";
+import { ElementBinder } from "$lib/core";
 import { useGarbageCollector } from "$lib/hooks";
 import { isObject } from "@boxinary/predicate-core";
 
 export function defineActionComponent(config: {
-	binder: ElementBinder;
+	binder?: ElementBinder;
 	id: string | undefined;
 	name: string;
 	isShowing?: boolean;
@@ -14,7 +14,7 @@ export function defineActionComponent(config: {
 		name: string;
 	}) => { onActionComponent?: () => Collectable; base?: Collectable } | void;
 }) {
-	const { binder, name, onMount, id, isShowing = true } = config;
+	const { binder = new ElementBinder(), name, onMount, id, isShowing = true } = config;
 	if (isShowing) {
 		binder.name.value = name;
 		binder.id.value = id;

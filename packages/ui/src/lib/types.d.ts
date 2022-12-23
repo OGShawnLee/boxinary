@@ -33,6 +33,11 @@ interface ReadableRef<T> extends Readable<T> {
 }
 
 namespace SToggler {
+	export interface Configuration {
+		isOpen?: boolean;
+		isFocusForced?: boolean;
+	}
+
 	export interface Plugin {
 		(this: Toggler, element: HTMLElement): Unsubscriber;
 	}

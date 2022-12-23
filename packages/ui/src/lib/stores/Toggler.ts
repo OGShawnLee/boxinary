@@ -3,26 +3,25 @@ import { useGarbageCollector, useListener } from "$lib/hooks";
 import { ref } from "$lib/utils";
 import { isNullish } from "@boxinary/predicate-core";
 import { isFocusable, isHTMLElement, isWithinContainer } from "$lib/predicate";
+import { focusFirstChildElement } from "$lib/utils/dom";
 
 export default class Toggler {
-	readonly open = ref(false);
+	readonly isOpen = ref(false);
+	readonly isFocusForced = ref(false);
 	protected readonly button = ref<HTMLElement | undefined>(undefined);
 	protected readonly panel = ref<HTMLElement | undefined>(undefined);
 
-	constructor(initialValue: boolean) {
-		this.open.value = initialValue;
+	constructor({ isFocusForced = false, isOpen = false }: SToggler.Configuration = {}) {
+		this.isFocusForced.value = isFocusForced;
+		this.isOpen.value = isOpen;
 	}
 
 	get subscribe() {
-		return this.open.subscribe;
+		return this.isOpen.subscribe;
 	}
 
 	get isClosed() {
-		return this.open.value === false;
-	}
-
-	get isOpen() {
-		return this.open.value;
+		return this.isOpen.value === false;
 	}
 
 	protected isValidFocusTarget(this: Toggler, target: HTMLElement) {
@@ -44,8 +43,18 @@ export default class Toggler {
 		});
 	}
 
+	createOverlay(this: Toggler, element: HTMLElement) {
+		return useListener(element, "click", () => this.handleClose());
+	}
+
 	createPanel(this: Toggler, element: HTMLElement, config?: SToggler.PanelOptions) {
 		this.panel.value = element;
+
+		if (this.isFocusForced.value)
+			focusFirstChildElement(element, {
+				fallback: this.button.value
+			});
+
 		return useGarbageCollector({
 			beforeCollection: () => {
 				this.panel.value = undefined;
@@ -55,16 +64,16 @@ export default class Toggler {
 	}
 
 	handleOpen(this: Toggler) {
-		this.open.value = true;
+		this.isOpen.value = true;
 	}
 
 	handleClose(this: Toggler, event?: Event | HTMLElement) {
-		this.open.value = false;
+		this.isOpen.value = false;
 		this.handleFocus(event);
 	}
 
 	handleToggle(this: Toggler) {
-		this.open.value = !this.open.value;
+		this.isOpen.value = !this.isOpen.value;
 	}
 
 	protected handleFocus(this: Toggler, event?: Event | HTMLElement) {
@@ -85,6 +94,14 @@ export default class Toggler {
 		plugins: SToggler.Plugin[] = []
 	) {
 		return plugins.map((plugin) => plugin.bind(this)(element));
+	}
+
+	isWithinElements(this: Toggler, element: HTMLElement) {
+		const button = this.button.value;
+		const panel = this.panel.value;
+		return (
+			(button && isWithinContainer(button, element)) || (panel && isWithinContainer(panel, element))
+		);
 	}
 }
 
