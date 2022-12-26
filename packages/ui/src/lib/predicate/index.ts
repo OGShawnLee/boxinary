@@ -3,6 +3,7 @@ export {
 	isDisabled,
 	isFocusable,
 	isHTMLElement,
+	isNavigationKey,
 	isVoidElement,
 	isWithinContainer
 } from "./browser";

@@ -2,7 +2,7 @@ import { createReadableRef, ref } from "$lib/utils";
 import { isString } from "@boxinary/predicate-core";
 import { useGarbageCollector, usePair } from "$lib/hooks";
 import { derived } from "svelte/store";
-import { isValidHTMLElementID } from "$lib/predicate";
+import { isDisabled, isValidHTMLElementID } from "$lib/predicate";
 
 /*
 	id: id provided by the user
@@ -11,6 +11,7 @@ import { isValidHTMLElementID } from "$lib/predicate";
 */
 
 export default class ElementBinder {
+	readonly disabled = ref(false);
 	protected readonly node = ref<HTMLElement | undefined>(undefined);
 	readonly name = ref<string | undefined>(undefined);
 	readonly id = ref<string | undefined>(undefined);
@@ -25,6 +26,7 @@ export default class ElementBinder {
 
 	onMount(this: ElementBinder, element: HTMLElement, name: string) {
 		this.node.value = element;
+		this.disabled.value = isDisabled(element);
 		this.name.value = name;
 		this.id.value = element.id;
 		return useGarbageCollector({

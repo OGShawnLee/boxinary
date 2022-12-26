@@ -1,3 +1,14 @@
+import type { NavigationKey } from "$lib/types";
+
+const NAVIGATION_KEY: Record<NavigationKey, boolean> = {
+	ArrowDown: true,
+	ArrowLeft: true,
+	ArrowRight: true,
+	ArrowUp: true,
+	End: true,
+	Home: true
+};
+
 const VOID_TAGS = Object.freeze({
 	area: true,
 	base: true,
@@ -27,6 +38,10 @@ export function isFocusable(element: HTMLElement | EventTarget) {
 
 export function isHTMLElement(value: unknown): value is HTMLElement {
 	return value instanceof HTMLElement;
+}
+
+export function isNavigationKey(code: string): code is NavigationKey {
+	return code in NAVIGATION_KEY;
 }
 
 export function isVoidElement(tagName: string) {

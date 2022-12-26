@@ -8,6 +8,7 @@
 	export let actions: Array<Action> = [];
 	export let as: keyof HTMLElementTagNameMap | "fragment";
 	export let binder = new ElementBinder();
+	export let disabled = false;
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let value: any = undefined;
@@ -16,6 +17,7 @@
 	const { finalName } = binder;
 
 	$: binder.id.value = id;
+	$: binder.disabled.value = disabled;
 	$: isUsingFragment = as === "fragment";
 	$: binder.isUsingFragment.value = isUsingFragment;
 	$: if (isUsingFragment && element && className) {
@@ -35,6 +37,7 @@
 		bind:this={element}
 		class={className}
 		id={$finalName}
+		{disabled}
 		{value}
 		use:forward={actions}
 		on:blur
@@ -66,6 +69,7 @@
 		bind:this={element}
 		class={className}
 		id={$finalName}
+		{disabled}
 		use:forward={actions}
 		on:blur
 		on:click

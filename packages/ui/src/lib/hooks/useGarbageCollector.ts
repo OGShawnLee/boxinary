@@ -2,13 +2,17 @@ import type { Collectable } from "$lib/types";
 import type { Unsubscriber } from "svelte/store";
 import { isArray, isFunction, isObject } from "@boxinary/predicate-core";
 
-function destroy(collectable: Collectable) {
-	if (isArray(collectable)) collectable.forEach(destroy);
+function free(collectable: Collectable) {
+	if (isArray(collectable)) collectable.forEach(free);
 	else if (isFunction(collectable)) collectable();
-	else if (isObject(collectable, ["destroy"])) destroy(collectable);
+	else if (isObject(collectable, ["destroy"])) free(collectable);
 }
 
-export default function useGarbageCollector(options: {
+export function useCleanup(...items: Collectable[]): Unsubscriber {
+	return () => free(items);
+}
+
+export function useGarbageCollector(options: {
 	afterInit?: () => Collectable | void;
 	beforeInit?: () => Collectable | void;
 	init: () => Collectable;
@@ -24,6 +28,6 @@ export default function useGarbageCollector(options: {
 	collectable.push(before, toCollect, after);
 	return () => {
 		beforeCollection?.();
-		destroy(collectable);
+		free(collectable);
 	};
 }

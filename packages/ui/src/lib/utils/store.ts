@@ -1,4 +1,4 @@
-import type { ReadableRef, Ref } from "$lib/types";
+import type { Plugin, ReadableRef, Ref } from "$lib/types";
 import type { StartStopNotifier } from "svelte/store";
 import { writable } from "svelte/store";
 

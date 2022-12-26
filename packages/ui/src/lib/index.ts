@@ -2,6 +2,8 @@ export {
 	Disclosure,
 	DisclosureButton,
 	DisclosurePanel,
+	Navigable,
+	NavigableItem,
 	Popover,
 	PopoverButton,
 	PopoverOverlay,
