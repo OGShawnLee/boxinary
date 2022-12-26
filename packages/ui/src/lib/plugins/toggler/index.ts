@@ -2,7 +2,7 @@ import type { SToggler } from "$lib/types";
 import { useWindowListener } from "$lib/hooks";
 import { isHTMLElement, isWithinContainer } from "$lib/predicate";
 
-export const useCloseClickOutside: SToggler.Plugin = function (panel) {
+export const useCloseClickOutside: SToggler.Plugin = function () {
 	return useWindowListener("click", ({ target }) => {
 		if (this.isClosed || !isHTMLElement(target) || this.isWithinElements(target)) return;
 		this.handleClose(target);
@@ -10,7 +10,7 @@ export const useCloseClickOutside: SToggler.Plugin = function (panel) {
 };
 
 export const useCloseEscapeKey: SToggler.Plugin = function () {
-	return useWindowListener("keydown", ({ code, target }) => {
+	return useWindowListener("keydown", ({ code }) => {
 		if (this.isClosed || code !== "Escape") return;
 		this.handleClose();
 	});
