@@ -9,7 +9,7 @@
 	export let id: string | undefined = undefined;
 	export { className as class };
 
-	const { isOpen, createPopoverOverlay } = Context.getContext(true);
+	const { isOpen, createPopoverOverlay } = Context.getContext();
 	const { action, binder } = createPopoverOverlay(id);
 </script>
 

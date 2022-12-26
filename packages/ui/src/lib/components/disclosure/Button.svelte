@@ -9,7 +9,7 @@
 	export let id: string | undefined = undefined;
 	export { className as class };
 
-	const { isOpen, createDisclosureButton, panel } = Context.getContext(true);
+	const { isOpen, createDisclosureButton, panel } = Context.getContext();
 	const { action, binder } = createDisclosureButton(id);
 	const panelName = panel.finalName;
 </script>

@@ -10,7 +10,9 @@ export default function useContext<T>(config: {
 	const { component, predicate, prefix = "boxinary" } = config;
 	const key = coolString(`${prefix}-${component}`);
 	return {
-		getContext<S extends boolean>(isStrict = true as S): [S] extends [true] ? T : T | undefined {
+		getContext<S extends boolean = true>(
+			isStrict = true as S
+		): [S] extends [true] ? T : T | undefined {
 			const context = getContext(key);
 			if (context) {
 				if (predicate(context)) return context;

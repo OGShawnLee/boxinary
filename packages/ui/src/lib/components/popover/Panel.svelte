@@ -9,7 +9,7 @@
 	export let id: string | undefined = undefined;
 	export { className as class };
 
-	const { isOpen, close, createPopoverPanel } = Context.getContext(true);
+	const { isOpen, close, createPopoverPanel } = Context.getContext();
 	const { action, binder } = createPopoverPanel(id);
 </script>
 
