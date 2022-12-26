@@ -16,7 +16,7 @@
 
 <Render
 	{as}
-	{className}
+	class={className}
 	{id}
 	{...$$restProps}
 	{binder}

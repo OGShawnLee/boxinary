@@ -16,7 +16,7 @@
 {#if $isOpen}
 	<Render
 		{as}
-		{className}
+		class={className}
 		{id}
 		{...$$restProps}
 		{binder}
