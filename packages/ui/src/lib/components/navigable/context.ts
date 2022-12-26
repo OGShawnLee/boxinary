@@ -1,5 +1,5 @@
-import { useContext } from "$lib/hooks";
 import type { ComponentInitialiser } from "$lib/types";
+import { useContext } from "$lib/hooks";
 import { isFunction, isInterface } from "@boxinary/predicate-core";
 
 interface Context {
