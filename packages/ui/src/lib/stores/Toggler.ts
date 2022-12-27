@@ -104,7 +104,3 @@ export default class Toggler {
 		);
 	}
 }
-
-type Bound<T extends Object> = {
-	[K in keyof T]: OmitThisParameter<T[K]>;
-};
