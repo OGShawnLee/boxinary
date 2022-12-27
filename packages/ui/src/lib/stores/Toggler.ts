@@ -1,9 +1,8 @@
 import type { SToggler } from "$lib/types";
 import { useGarbageCollector, useListener } from "$lib/hooks";
-import { ref } from "$lib/utils";
+import { focusFirstChildElement, ref } from "$lib/utils";
 import { isNullish } from "@boxinary/predicate-core";
 import { isFocusable, isHTMLElement, isWithinContainer } from "$lib/predicate";
-import { focusFirstChildElement } from "$lib/utils/dom";
 
 export default class Toggler {
 	readonly isOpen = ref(false);
