@@ -3,6 +3,7 @@ import { useGarbageCollector, useListener } from "$lib/hooks";
 import { focusFirstChildElement, ref } from "$lib/utils";
 import { isNullish } from "@boxinary/predicate-core";
 import { isFocusable, isHTMLElement, isWithinContainer } from "$lib/predicate";
+import { onMount, tick } from "svelte";
 
 export default class Toggler {
 	readonly isOpen = ref(false);
@@ -13,6 +14,11 @@ export default class Toggler {
 	constructor({ isFocusForced = false, isOpen = false }: SToggler.Configuration = {}) {
 		this.isFocusForced.value = isFocusForced;
 		this.isOpen.value = isOpen;
+		onMount(() => {
+			return this.isOpen.subscribe((isOpen) => {
+				this.handleFocusForce(isOpen);
+			});
+		});
 	}
 
 	get subscribe() {
@@ -48,18 +54,21 @@ export default class Toggler {
 
 	createPanel(this: Toggler, element: HTMLElement, config?: SToggler.PanelOptions) {
 		this.panel.value = element;
-
-		if (this.isFocusForced.value)
-			focusFirstChildElement(element, {
-				fallback: this.button.value
-			});
-
 		return useGarbageCollector({
 			beforeCollection: () => {
 				this.panel.value = undefined;
 			},
 			init: () => this.initialisePlugins(element, config?.plugins)
 		});
+	}
+
+	protected async handleFocusForce(this: Toggler, isOpen: boolean) {
+		await tick();
+		if (this.isFocusForced.value && isOpen && this.panel.value) {
+			focusFirstChildElement(this.panel.value, {
+				fallback: this.button.value
+			});
+		}
 	}
 
 	handleOpen(this: Toggler) {
