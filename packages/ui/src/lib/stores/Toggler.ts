@@ -1,4 +1,4 @@
-import type { SToggler } from "$lib/types";
+import type { Toggleable } from "$lib/types";
 import { useGarbageCollector, useListener } from "$lib/hooks";
 import { focusFirstChildElement, ref } from "$lib/utils";
 import { isNullish } from "@boxinary/predicate-core";
@@ -11,7 +11,7 @@ export default class Toggler {
 	protected readonly button = ref<HTMLElement | undefined>(undefined);
 	protected readonly panel = ref<HTMLElement | undefined>(undefined);
 
-	constructor({ isFocusForced = false, isOpen = false }: SToggler.Configuration = {}) {
+	constructor({ isFocusForced = false, isOpen = false }: Toggleable.Configuration = {}) {
 		this.isFocusForced.value = isFocusForced;
 		this.isOpen.value = isOpen;
 		onMount(() => {
@@ -35,7 +35,7 @@ export default class Toggler {
 		return panel ? !isWithinContainer(panel, target) : true;
 	}
 
-	createButton(this: Toggler, element: HTMLElement, config?: SToggler.ButtonOptions) {
+	createButton(this: Toggler, element: HTMLElement, config?: Toggleable.ButtonOptions) {
 		this.button.value = element;
 		return useGarbageCollector({
 			beforeCollection: () => {
@@ -52,7 +52,7 @@ export default class Toggler {
 		return useListener(element, "click", () => this.handleClose());
 	}
 
-	createPanel(this: Toggler, element: HTMLElement, config?: SToggler.PanelOptions) {
+	createPanel(this: Toggler, element: HTMLElement, config?: Toggleable.PanelOptions) {
 		this.panel.value = element;
 		return useGarbageCollector({
 			beforeCollection: () => {
@@ -99,7 +99,7 @@ export default class Toggler {
 	protected initialisePlugins(
 		this: Toggler,
 		element: HTMLElement,
-		plugins: SToggler.Plugin[] = []
+		plugins: Toggleable.Plugin[] = []
 	) {
 		return plugins.map((plugin) => plugin.bind(this)(element));
 	}

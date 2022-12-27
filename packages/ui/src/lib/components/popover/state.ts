@@ -1,4 +1,4 @@
-import type { ComponentInitialiser, SToggler } from "$lib/types";
+import type { ComponentInitialiser, Toggleable } from "$lib/types";
 import Context from "./context";
 import { Toggler } from "$lib/stores";
 import { ElementBinder, defineActionComponent } from "$lib/core";
@@ -6,7 +6,7 @@ import { useComponentNaming } from "$lib/hooks";
 import { useCloseClickOutside, useCloseEscapeKey, useCloseFocusLeave } from "$lib/plugins";
 import { createReadableRef } from "$lib/utils";
 
-export function createPopoverState(configuration: SToggler.Configuration) {
+export function createPopoverState(configuration: Toggleable.Configuration) {
 	const { nameChild } = useComponentNaming({ component: "popover" });
 	const toggler = new Toggler(configuration);
 	const button = new ElementBinder();

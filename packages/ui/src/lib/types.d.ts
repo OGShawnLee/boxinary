@@ -70,7 +70,7 @@ namespace Navigable {
 	}
 }
 
-namespace SToggler {
+namespace Toggleable {
 	export interface Configuration {
 		isOpen?: boolean;
 		isFocusForced?: boolean;
