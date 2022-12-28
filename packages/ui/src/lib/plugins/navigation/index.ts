@@ -1,8 +1,7 @@
 import type { Navigation } from "$lib/stores";
 import type { Navigable, Plugin } from "$lib/types";
-import { useCleanup, useListener, useWindowListener } from "$lib/hooks";
-import { isDisabled, isHTMLElement, isNavigationKey } from "$lib/predicate";
-import { isString, isWhitespace } from "@boxinary/predicate-core";
+import { useCleanup, useWindowListener } from "$lib/hooks";
+import { isHTMLElement, isNavigationKey } from "$lib/predicate";
 
 export const handleNavigation: Navigable.Handler = function (event) {
 	if (!isNavigationKey(event.code)) return;
