@@ -1,6 +1,8 @@
-import type { Plugin, ReadableRef, Ref } from "$lib/types";
+import type { ReadableRef, Ref, Refs, StoresValues } from "$lib/types";
 import type { StartStopNotifier } from "svelte/store";
-import { writable } from "svelte/store";
+import { isReadableRef } from "$lib/predicate";
+import { onDestroy } from "svelte";
+import { derived, writable } from "svelte/store";
 
 export function createReadableRef<T>(ref: Ref<T>): ReadableRef<T> {
 	return {
@@ -9,6 +11,31 @@ export function createReadableRef<T>(ref: Ref<T>): ReadableRef<T> {
 			return ref.value;
 		}
 	};
+}
+
+export function createDerivedRef<R extends Refs, T>(
+	ref: R,
+	fn: (ref: StoresValues<R>) => T,
+	watch = true
+): ReadableRef<T> {
+	const store = derived(ref, fn);
+	let value = fn(getRefValue(ref));
+	if (watch) {
+		const free = store.subscribe((val) => (value = val));
+		onDestroy(free);
+	}
+	return {
+		subscribe: store.subscribe,
+		get value() {
+			if (watch) return value;
+			return fn(getRefValue(ref));
+		}
+	};
+}
+
+function getRefValue<R extends Refs>(refs: R): StoresValues<R> {
+	if (isReadableRef(refs)) return refs.value;
+	return refs.map((ref) => ref.value) as StoresValues<R>;
 }
 
 export function ref<T>(initialValue: T, start?: StartStopNotifier<T>): Ref<T> {

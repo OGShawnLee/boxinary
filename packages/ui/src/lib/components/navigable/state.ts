@@ -25,7 +25,9 @@ export function createNavigableState(settings: Navigable.Settings) {
 			binder: binder,
 			id: id,
 			name: nameChild("item"),
-			onInit: ({ binder, name }) => navigation.onInit(name, binder),
+			onInit: ({ binder, name }) => {
+				navigation.onInitItem(name, binder, {});
+			},
 			onMount: ({ element, name }) => navigation.initItem(element, name)
 		});
 

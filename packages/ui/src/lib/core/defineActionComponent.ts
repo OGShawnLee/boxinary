@@ -4,12 +4,12 @@ import { ElementBinder } from "$lib/core";
 import { useGarbageCollector } from "$lib/hooks";
 import { isFunction, isObject } from "@boxinary/predicate-core";
 
-export function defineActionComponent(config: {
+export function defineActionComponent<T = void>(config: {
 	binder?: ElementBinder;
 	id: string | undefined;
 	name: string;
 	isShowing?: boolean;
-	onInit?: (context: { binder: ElementBinder; name: string }) => void;
+	onInit?: (context: { binder: ElementBinder; name: string }) => T;
 	onMount: (context: {
 		binder: ElementBinder;
 		element: HTMLElement;
@@ -19,14 +19,15 @@ export function defineActionComponent(config: {
 		| Unsubscriber[]
 		| Unsubscriber
 		| void;
-}): ActionComponent {
+}): ActionComponent<T> {
 	const { binder = new ElementBinder(), name, onMount, id, isShowing = true } = config;
 	if (isShowing) {
 		binder.name.value = name;
 		binder.id.value = id;
 	}
-	config.onInit?.({ binder, name });
+	const context = config.onInit?.({ binder, name }) as T;
 	return {
+		context,
 		binder: binder,
 		action: (element: HTMLElement) => {
 			const destroy = onMount?.({ binder, element, name });

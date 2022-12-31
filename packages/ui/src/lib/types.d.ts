@@ -2,11 +2,12 @@ import type { Readable, Unsubscriber, Writable } from "svelte/store";
 import type { ElementBinder } from "$lib/core";
 import { Navigation, Toggler } from "$lib/stores";
 
-interface ActionComponent {
+interface ActionComponent<T = void> {
 	action: (element: HTMLElement) => {
 		destroy: Unsubscriber;
 	};
 	binder: ElementBinder;
+	context: T;
 }
 
 type Collectable =
@@ -16,8 +17,8 @@ type Collectable =
 	| Nullable<boolean>
 	| void;
 
-interface ComponentInitialiser {
-	(id?: string, binder?: ElementBinder): ActionComponent;
+interface ComponentInitialiser<T = void> {
+	(id?: string, binder?: ElementBinder): ActionComponent<T>;
 }
 
 type ComponentTagName = keyof HTMLElementTagNameMap | "fragment";
@@ -33,6 +34,11 @@ type Nullable<T> = T | null | undefined;
 interface Ref<T> extends Writable<T> {
 	value: T;
 }
+
+declare type Refs =
+	| ReadableRef<any>
+	| [ReadableRef<any>, ...Array<ReadableRef<any>>]
+	| Array<ReadableRef<any>>;
 
 interface ReadableRef<T> extends Readable<T> {
 	readonly value: T;
@@ -55,6 +61,7 @@ namespace Navigable {
 		binder: ElementBinder;
 		element?: HTMLElement;
 		index: number;
+		disabled: Nullable<boolean>;
 	}
 
 	interface RootSettings {
@@ -65,10 +72,17 @@ namespace Navigable {
 	interface Settings {
 		initialIndex?: number;
 		isFinite?: boolean;
-		isVertical?: boolean;
 		isGlobal?: boolean;
+		isManual?: boolean;
+		isVertical?: boolean;
 	}
 }
+
+declare type StoresValues<T> = T extends Readable<infer U>
+	? U
+	: {
+			[K in keyof T]: T[K] extends Readable<infer U> ? U : never;
+	  };
 
 namespace Toggleable {
 	export interface Configuration {

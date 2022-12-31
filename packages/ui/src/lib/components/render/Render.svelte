@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Action } from "svelte/action";
+	import type { Nullable } from "$lib/types";
 	import { ElementBinder, forward } from "$lib/core";
 	import { isVoidElement } from "$lib/predicate";
 
@@ -8,7 +9,7 @@
 	export let actions: Array<Action> = [];
 	export let as: keyof HTMLElementTagNameMap | "fragment";
 	export let binder = new ElementBinder();
-	export let disabled = false;
+	export let disabled: Nullable<boolean> = undefined;
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let value: any = undefined;

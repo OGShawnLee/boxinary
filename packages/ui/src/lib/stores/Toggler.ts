@@ -29,12 +29,6 @@ export default class Toggler {
 		return this.isOpen.value === false;
 	}
 
-	protected isValidFocusTarget(this: Toggler, target: HTMLElement) {
-		if (!isFocusable(target)) return false;
-		const panel = this.panel.value;
-		return panel ? !isWithinContainer(panel, target) : true;
-	}
-
 	createButton(this: Toggler, element: HTMLElement, config?: Toggleable.ButtonOptions) {
 		this.button.value = element;
 		return useGarbageCollector({
@@ -102,6 +96,12 @@ export default class Toggler {
 		plugins: Toggleable.Plugin[] = []
 	) {
 		return plugins.map((plugin) => plugin.bind(this)(element));
+	}
+
+	protected isValidFocusTarget(this: Toggler, target: HTMLElement) {
+		if (!isFocusable(target)) return false;
+		const panel = this.panel.value;
+		return panel ? !isWithinContainer(panel, target) : true;
 	}
 
 	isWithinElements(this: Toggler, element: HTMLElement) {

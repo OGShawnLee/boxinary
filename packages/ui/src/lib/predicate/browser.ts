@@ -33,7 +33,7 @@ export function isDisabled(element: HTMLElement) {
 }
 
 export function isFocusable(element: HTMLElement | EventTarget) {
-	return isHTMLElement(element) && !isDisabled(element) && element.tabIndex >= 0;
+	return isHTMLElement(element) && !isDisabled(element) && element.tabIndex >= -1;
 }
 
 export function isHTMLElement(value: unknown): value is HTMLElement {

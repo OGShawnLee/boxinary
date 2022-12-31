@@ -8,5 +8,10 @@ export {
 	PopoverButton,
 	PopoverOverlay,
 	PopoverPanel,
-	Render
+	Render,
+	Tab,
+	TabGroup,
+	TabList,
+	TabPanel,
+	TabPanels
 } from "./components";

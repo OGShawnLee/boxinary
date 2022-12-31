@@ -3,6 +3,7 @@ import { isString } from "@boxinary/predicate-core";
 import { useGarbageCollector, usePair } from "$lib/hooks";
 import { derived } from "svelte/store";
 import { isDisabled, isValidHTMLElementID } from "$lib/predicate";
+import type { Nullable } from "$lib/types";
 
 /*
 	id: id provided by the user
@@ -11,13 +12,14 @@ import { isDisabled, isValidHTMLElementID } from "$lib/predicate";
 */
 
 export default class ElementBinder {
-	readonly disabled = ref(false);
+	readonly disabled = ref<Nullable<boolean>>(undefined);
 	protected readonly node = ref<HTMLElement | undefined>(undefined);
 	readonly name = ref<string | undefined>(undefined);
 	readonly id = ref<string | undefined>(undefined);
+	readonly isSelected = ref(false);
 	readonly isUsingFragment = ref(true);
 	readonly finalName = derived([this.id, this.name], ([id, name]) => {
-		return ElementBinder.getFinalName(id, name);
+		return isString(id) && isValidHTMLElementID(id) ? id : name;
 	});
 
 	get element() {
@@ -42,9 +44,5 @@ export default class ElementBinder {
 					})
 			]
 		});
-	}
-
-	static getFinalName(id: string | undefined, name: string | undefined) {
-		return isString(id) && isValidHTMLElementID(id) ? id : name;
 	}
 }

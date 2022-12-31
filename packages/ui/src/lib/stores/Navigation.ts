@@ -1,31 +1,58 @@
 import type { ElementBinder } from "$lib/core";
-import type { KeyBack, KeyNext, Navigable, Plugin, Ref } from "$lib/types";
+import type { KeyBack, KeyNext, Navigable, Nullable, Plugin, ReadableRef, Ref } from "$lib/types";
 import type { Updater } from "svelte/store";
 import Hash from "./Hash";
 import { findIndex, findLastIndex, ref } from "$lib/utils";
 import { handleNavigation } from "$lib/plugins";
-import { isAround, isNumber } from "@boxinary/predicate-core";
+import { isAround, isNullish, isNumber, isString } from "@boxinary/predicate-core";
 import { isFocusable, isWithinContainer } from "$lib/predicate";
 import { onDestroy } from "svelte";
-import { useCleanup, useGarbageCollector, useListener, useWindowListener } from "$lib/hooks";
+import { useCleanup, useListener, usePair, useWindowListener } from "$lib/hooks";
+import { createDerivedRef } from "$lib/utils";
 
-export default class Navigation {
+export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	readonly index: Ref<number>;
+	readonly manualIndex: Ref<number>;
+	readonly targetIndexRef: ReadableRef<Ref<number>>;
 	readonly isFinite: Ref<boolean>;
 	readonly isGlobal: Ref<boolean>;
+	readonly isManual: Ref<boolean>;
 	readonly isVertical: Ref<boolean>;
-	protected readonly items = new Hash<string, Navigable.Item>();
+	protected readonly items = new Hash<string, T>({ entries: false, keys: false });
 	protected readonly elements: HTMLElement[] = [];
+	readonly selected: ReadableRef<T | undefined>;
 
 	constructor(settings: Navigable.Settings = {}) {
 		this.index = ref(settings.initialIndex ?? 0);
+		this.manualIndex = ref(settings.initialIndex ?? 0, this.index.subscribe);
 		this.isFinite = ref(settings.isFinite ?? false);
 		this.isGlobal = ref(settings.isGlobal ?? false);
+		this.isManual = ref(settings.isManual ?? false);
 		this.isVertical = ref(settings.isVertical ?? false);
+		this.targetIndexRef = createDerivedRef(this.isManual, (isManual) => {
+			return isManual ? this.manualIndex : this.index;
+		});
+		this.selected = createDerivedRef([this.index, this.items.values], ([index, items]) => {
+			const item = items.at(index);
+			if (isNullish(item) || item.disabled) return;
+			return item;
+		});
 	}
 
 	get isHorizontal() {
 		return !this.isVertical.value;
+	}
+
+	get targetIndex() {
+		return this.targetIndexRef.value;
+	}
+
+	get size() {
+		return this.items.size;
+	}
+
+	onInit(this: Navigation<T>, fn?: (previous: Nullable<T>, current: Nullable<T>) => void) {
+		onDestroy(this.onSelectedChange(fn));
 	}
 
 	initNavigation(this: Navigation, element: HTMLElement, settings: Navigable.RootSettings = {}) {
@@ -44,9 +71,16 @@ export default class Navigation {
 	}
 
 	// RUNS WHEN COMPONENT IS INITIALISED
-	onInit(this: Navigation, name: string, binder: ElementBinder) {
+	onInitItem(
+		this: Navigation<T>,
+		name: string,
+		binder: ElementBinder,
+		item: Omit<T, keyof Navigable.Item>
+	) {
 		const index = this.items.size;
-		this.items.set(name, { binder, index });
+		const finalItem = { ...item, binder, disabled: binder.disabled.value, index };
+		this.items.set(name, finalItem as T);
+		binder.isSelected.value = this.isSelected(name);
 		onDestroy(() => {
 			this.elements.splice(index, 1);
 			this.items.delete(name);
@@ -62,20 +96,46 @@ export default class Navigation {
 			item.element = element;
 			return item;
 		});
-		return useGarbageCollector({
-			init: () => [
-				useListener(element, "click", () => this.index.set(index)),
-				useListener(element, "focus", () => {
-					if (isFocusable(element)) this.index.set(index);
-				})
-			]
-		});
+		return useCleanup([
+			useListener(element, "click", () => this.index.set(index)),
+			useListener(element, "focus", () => {
+				if (this.targetIndex.value !== index && isFocusable(element)) this.targetIndex.set(index);
+			})
+		]);
+	}
+
+	protected onSelectedChange(
+		this: Navigation<T>,
+		fn?: (previous: Nullable<T>, current: Nullable<T>) => void
+	) {
+		let previous: Nullable<T> = null;
+		return useCleanup(
+			usePair(this.index, this.items.values, (index, values) => {
+				if (previous) previous.binder.isSelected.value = false;
+				const item = values.at(index);
+				if (item !== previous) previous = item;
+				if (item && !item.disabled) item.binder.isSelected.value = true;
+				fn?.(previous, item);
+			})
+		);
+	}
+
+	get(this: Navigation<T>, fn: (entry: { name: string; item: T }) => unknown) {
+		for (const entry of this.items.hash.value) {
+			const item = { name: entry[0], item: entry[1] };
+			if (fn(item)) return item;
+		}
+		throw Error("Unable to Get Navigation Item");
+	}
+
+	update(this: Navigation<T>, name: string, callback: (item: T) => T) {
+		this.items.update(name, callback);
 	}
 
 	interact(this: Navigation, index: number | Updater<number>) {
-		index = isNumber(index) ? index : index(this.index.value);
-		if (this.isValidIndex(index)) this.index.value = index;
-		this.elements.at(this.index.value)?.focus();
+		index = isNumber(index) ? index : index(this.targetIndex.value);
+		if (this.isValidIndex(index)) this.targetIndex.value = index;
+		this.elements.at(this.targetIndex.value)?.focus();
 	}
 
 	go(
@@ -118,9 +178,9 @@ export default class Navigation {
 
 	findValidIndex(
 		this: Navigation,
-		{ edge, direction, index = this.index.value }: Navigable.FinderSettings
+		{ edge, direction, index = this.targetIndex.value }: Navigable.FinderSettings
 	) {
-		const defaultIndex = this.index.value;
+		const defaultIndex = this.targetIndex.value;
 		switch (direction) {
 			case "BACK":
 				if (edge) return findIndex(this.elements, isFocusable);
@@ -161,8 +221,13 @@ export default class Navigation {
 	}
 
 	isOverflowed(this: Navigation, direction: Navigable.Directions) {
-		if (direction === "BACK") return this.index.value - 1 < 0;
-		return this.index.value + 1 === this.elements.length;
+		if (direction === "BACK") return this.targetIndex.value - 1 < 0;
+		return this.targetIndex.value + 1 === this.elements.length;
+	}
+
+	isSelected(this: Navigation, name: string) {
+		const { index, binder } = this.items.getSafe(name);
+		return !binder.disabled.value && index === this.index.value;
 	}
 
 	isValidIndex(this: Navigation, index: number) {
