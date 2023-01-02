@@ -1,4 +1,4 @@
-import type { ComponentInitialiser, Navigable, ReadableRef, Ref } from "$lib/types";
+import type { ComponentInitialiser, Navigable, ReadableRef } from "$lib/types";
 import { useContext } from "$lib/hooks";
 import { isFunction, isInterface } from "@boxinary/predicate-core";
 import { isReadableRef } from "$lib/predicate";

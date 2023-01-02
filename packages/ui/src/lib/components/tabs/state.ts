@@ -3,10 +3,9 @@ import type { Tab, TabsContext } from "./context";
 import Context from "./context";
 import { Navigation } from "$lib/stores";
 import { defineActionComponent } from "$lib/core";
-import { useCleanup, useComponentNaming, useGarbageCollector, usePair } from "$lib/hooks";
-import { createReadableRef, ref } from "$lib/utils";
+import { useComponentNaming, useGarbageCollector } from "$lib/hooks";
+import { createReadableRef } from "$lib/utils";
 import { isNullish } from "@boxinary/predicate-core";
-import { onDestroy } from "svelte";
 
 export function createTabGroupState(settings: Navigable.Settings) {
 	const navigation = new Navigation<Tab>(settings);
