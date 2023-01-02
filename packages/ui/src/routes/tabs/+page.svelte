@@ -1,6 +1,6 @@
 <script>
 	import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "$lib/components";
-	import { Options } from "@app/components";
+	import { Page } from "@app/components";
 
 	let disabled = false;
 	let manual = false;
@@ -9,8 +9,8 @@
 	let showing = true;
 </script>
 
-<main class="grid gap-16">
-	<Options>
+<Page title="Tabs">
+	<svelte:fragment slot="options">
 		<button
 			class="button focus:border-zinc-400"
 			class:border-purple-500={finite}
@@ -46,7 +46,7 @@
 		>
 			Press D to Toggle Disabled Item
 		</button>
-	</Options>
+	</svelte:fragment>
 	<div class="grid gap-12">
 		<TabGroup {finite} {manual} {vertical}>
 			<TabList class="flex gap-12">
@@ -79,4 +79,4 @@
 			</TabGroup>
 		{/if}
 	</div>
-</main>
+</Page>
