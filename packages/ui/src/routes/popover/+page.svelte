@@ -4,10 +4,10 @@
 </script>
 
 <section class="grid gap-6">
-	<button class="button"> External Element </button>
+	<button class="button-focus"> External Element </button>
 	<div class="grid grid-cols-4 gap-12">
 		<Popover class="flex flex-col gap-9" let:isOpen let:button let:panel>
-			<button class="button" use:button>
+			<button class="button-focus" use:button>
 				Toggle {isOpen}
 			</button>
 			<div class="grid gap-4.5" slot="panel" use:panel let:close transition:fade|local>
@@ -15,11 +15,11 @@
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 					tenetur. Molestiae quo pariatur dolore distinctio dolores.
 				</p>
-				<button class="button" on:click={close}> Close </button>
+				<button class="button-focus" on:click={close}> Close </button>
 			</div>
 		</Popover>
 		<Popover class="flex flex-col gap-9" forceFocus let:isOpen let:button let:overlay let:panel>
-			<button class="button" use:button>
+			<button class="button-focus" use:button>
 				Toggle {isOpen}
 			</button>
 			<div class="fixed inset-0 bg-zinc-900/90" slot="overlay" use:overlay />
@@ -34,11 +34,11 @@
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 					tenetur. Molestiae quo pariatur dolore distinctio dolores.
 				</p>
-				<button class="button" on:click={close}> Close </button>
+				<button class="button-focus" on:click={close}> Close </button>
 			</div>
 		</Popover>
 		<Popover class="flex flex-col gap-9" forceFocus let:isOpen let:close>
-			<PopoverButton class="button">
+			<PopoverButton class="button-focus">
 				Toggle {isOpen}
 			</PopoverButton>
 			<PopoverOverlay class="fixed inset-0 bg-zinc-900/90" />
@@ -49,11 +49,11 @@
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 					tenetur. Molestiae quo pariatur dolore distinctio dolores.
 				</p>
-				<button class="button" on:click={close}> Close </button>
+				<button class="button-focus" on:click={close}> Close </button>
 			</PopoverPanel>
 		</Popover>
 		<Popover class="flex flex-col gap-9" let:isOpen let:button let:panel>
-			<button class="button" use:button>
+			<button class="button-focus" use:button>
 				Toggle {isOpen}
 			</button>
 			<div class="grid gap-4.5" slot="panel" use:panel let:close transition:slide>
@@ -61,7 +61,7 @@
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 					tenetur. Molestiae quo pariatur dolore distinctio dolores.
 				</p>
-				<button class="button" on:click={close}> Close </button>
+				<button class="button-focus" on:click={close}> Close </button>
 			</div>
 		</Popover>
 	</div>
