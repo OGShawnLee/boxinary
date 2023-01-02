@@ -41,8 +41,9 @@ export function isDisabled(element: HTMLElement) {
 	return element.hasAttribute("disabled");
 }
 
-export function isFocusable(element: HTMLElement | EventTarget) {
-	return isHTMLElement(element) && !isDisabled(element) && element.tabIndex >= -1;
+export function isFocusable(element: HTMLElement | EventTarget, strict = true) {
+	if (!isHTMLElement(element) || isDisabled(element)) return false;
+	return element.tabIndex >= (strict ? 0 : -1);
 }
 
 export function isHeading(element: HTMLElement) {

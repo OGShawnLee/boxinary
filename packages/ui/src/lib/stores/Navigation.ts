@@ -185,6 +185,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		{ edge, direction, index = this.targetIndex.value }: Navigable.FinderSettings
 	) {
 		const defaultIndex = this.targetIndex.value;
+		const isFocusable = Navigation.isFocusable;
 		switch (direction) {
 			case "BACK":
 				if (edge) return findIndex(this.elements, isFocusable);
@@ -224,6 +225,10 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		return plugins.map((plugin) => plugin.bind(this)(element));
 	}
 
+	static isFocusable(element: HTMLElement | EventTarget) {
+		return isFocusable(element, false);
+	}
+
 	isNavigationElement(this: Navigation, element: HTMLElement) {
 		return this.elements.includes(element);
 	}
@@ -241,7 +246,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	isValidIndex(this: Navigation, index: number) {
 		if (!isAround(index, { min: 0, max: this.elements.length })) return;
 		const element = this.elements.at(index);
-		return element ? isFocusable(element) : false;
+		return element ? Navigation.isFocusable(element) : false;
 	}
 
 	isWithin(this: Navigation, element: HTMLElement) {
