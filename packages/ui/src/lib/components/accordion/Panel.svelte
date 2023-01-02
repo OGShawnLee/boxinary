@@ -1,0 +1,55 @@
+<script lang="ts">
+	import type { ComponentTagName } from "$lib/types";
+	import { ItemContext } from "./context";
+	import { Render } from "$lib/components";
+	import { ElementBinder } from "$lib/core";
+
+	let className: string | undefined = undefined;
+
+	export let as: ComponentTagName = "div";
+	export let id: string | undefined = undefined;
+	export { className as class };
+
+	const {
+		isOpen,
+		close,
+		button: { finalName: buttonName },
+		createAccordionPanel
+	} = ItemContext.getContext();
+	const { action, binder } = createAccordionPanel(id);
+</script>
+
+{#if $isOpen}
+	<Render
+		{as}
+		class={className}
+		{id}
+		{...$$restProps}
+		{binder}
+		actions={[action]}
+		aria-labelledby={$buttonName}
+		role="region"
+		on:blur
+		on:change
+		on:click
+		on:contextmenu
+		on:dblclick
+		on:focus
+		on:focusin
+		on:focusout
+		on:input
+		on:keydown
+		on:keypress
+		on:keyup
+		on:mousedown
+		on:mouseenter
+		on:mouseleave
+		on:mousemove
+		on:mouseout
+		on:mouseover
+		on:mouseup
+		on:mousewheel
+	>
+		<slot panel={action} {close} />
+	</Render>
+{/if}

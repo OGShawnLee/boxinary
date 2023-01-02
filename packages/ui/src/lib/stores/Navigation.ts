@@ -4,7 +4,7 @@ import type { Updater } from "svelte/store";
 import Hash from "./Hash";
 import { findIndex, findLastIndex, ref } from "$lib/utils";
 import { handleNavigation } from "$lib/plugins";
-import { isAround, isNullish, isNumber, isString } from "@boxinary/predicate-core";
+import { isAround, isNullish, isNumber } from "@boxinary/predicate-core";
 import { isFocusable, isWithinContainer } from "$lib/predicate";
 import { onDestroy } from "svelte";
 import { useCleanup, useListener, usePair, useWindowListener } from "$lib/hooks";
@@ -14,6 +14,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	readonly index: Ref<number>;
 	readonly manualIndex: Ref<number>;
 	readonly targetIndexRef: ReadableRef<Ref<number>>;
+	readonly isDisabled: Ref<boolean>;
 	readonly isFinite: Ref<boolean>;
 	readonly isGlobal: Ref<boolean>;
 	readonly isManual: Ref<boolean>;
@@ -25,6 +26,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	constructor(settings: Navigable.Settings = {}) {
 		this.index = ref(settings.initialIndex ?? 0);
 		this.manualIndex = ref(settings.initialIndex ?? 0, this.index.subscribe);
+		this.isDisabled = ref(settings.isDisabled ?? false);
 		this.isFinite = ref(settings.isFinite ?? false);
 		this.isGlobal = ref(settings.isGlobal ?? false);
 		this.isManual = ref(settings.isManual ?? false);
@@ -60,10 +62,11 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		const onKeydown = handler.bind(this);
 		return useCleanup(
 			useListener(element, "keydown", (event) => {
-				if (this.isGlobal.value) return;
+				if (this.isDisabled.value || this.isGlobal.value) return;
 				onKeydown(event);
 			}),
 			useWindowListener("keydown", (event) => {
+				if (this.isDisabled.value) return;
 				if (this.isGlobal.value) onKeydown(event);
 			}),
 			this.initialisePlugins(element, plugins)
@@ -78,6 +81,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		item: Omit<T, keyof Navigable.Item>
 	) {
 		const index = this.items.size;
+		if (this.items.has(name)) return index;
 		const finalItem = { ...item, binder, disabled: binder.disabled.value, index };
 		this.items.set(name, finalItem as T);
 		binder.isSelected.value = this.isSelected(name);
@@ -218,6 +222,10 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		plugins: Plugin<Navigation>[]
 	) {
 		return plugins.map((plugin) => plugin.bind(this)(element));
+	}
+
+	isNavigationElement(this: Navigation, element: HTMLElement) {
+		return this.elements.includes(element);
 	}
 
 	isOverflowed(this: Navigation, direction: Navigable.Directions) {

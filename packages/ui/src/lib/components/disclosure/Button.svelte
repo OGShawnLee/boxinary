@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { ComponentTagName, Nullable } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 
@@ -7,6 +7,7 @@
 
 	export let as: ComponentTagName = "button";
 	export let id: string | undefined = undefined;
+	export let disabled: Nullable<boolean> = undefined;
 	export { className as class };
 
 	const { isOpen, createDisclosureButton, panel } = Context.getContext();
@@ -23,6 +24,7 @@
 	actions={[action]}
 	aria-expanded={$isOpen}
 	aria-controls={$panelName}
+	{disabled}
 	on:blur
 	on:change
 	on:click

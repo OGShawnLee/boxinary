@@ -1,5 +1,6 @@
 import type { Nullable } from "$lib/types";
 import { isFocusable, isHTMLElement } from "$lib/predicate";
+import { isHeading } from "$lib/predicate/browser";
 
 function findElement(
 	container: HTMLElement,

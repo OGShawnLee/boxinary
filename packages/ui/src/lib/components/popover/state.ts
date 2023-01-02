@@ -27,7 +27,7 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 						else element.removeAttribute("aria-controls");
 					})
 				],
-				base: toggler.createButton(element)
+				base: toggler.initButton(element)
 			})
 		});
 
@@ -37,7 +37,7 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 			name: nameChild("overlay"),
 			isShowing: false,
 			onMount: ({ element }) => ({
-				base: toggler.createOverlay(element)
+				base: toggler.initOverlay(element)
 			})
 		});
 
@@ -48,7 +48,7 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 			name: nameChild("panel"),
 			isShowing: false,
 			onMount: ({ element }) => ({
-				base: toggler.createPanel(element, {
+				base: toggler.initPanel(element, {
 					plugins: [useCloseClickOutside, useCloseEscapeKey, useCloseFocusLeave]
 				})
 			})

@@ -9,6 +9,15 @@ const NAVIGATION_KEY: Record<NavigationKey, boolean> = {
 	Home: true
 };
 
+const HEADING_TAGS = {
+	H1: true,
+	H2: true,
+	H3: true,
+	H4: true,
+	H5: true,
+	H6: true
+};
+
 const VOID_TAGS = Object.freeze({
 	area: true,
 	base: true,
@@ -34,6 +43,11 @@ export function isDisabled(element: HTMLElement) {
 
 export function isFocusable(element: HTMLElement | EventTarget) {
 	return isHTMLElement(element) && !isDisabled(element) && element.tabIndex >= -1;
+}
+
+export function isHeading(element: HTMLElement) {
+	const tagName = element.tagName;
+	return tagName in HEADING_TAGS;
 }
 
 export function isHTMLElement(value: unknown): value is HTMLElement {

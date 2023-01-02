@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ComponentTagName, Nullable } from "$lib/types";
-	import Context from "./context";
+	import { ItemContext } from "./context";
 	import { Render } from "$lib/components";
 
 	let className: string | undefined = undefined;
@@ -10,9 +10,12 @@
 	export let disabled: Nullable<boolean> = undefined;
 	export { className as class };
 
-	const { isOpen, createPopoverButton, panel } = Context.getContext();
-	const { action, binder } = createPopoverButton(id);
-	const panelName = panel.finalName;
+	const {
+		isOpen,
+		createAccordionButton,
+		panel: { finalName: panelName }
+	} = ItemContext.getContext();
+	const { action, binder } = createAccordionButton(id);
 </script>
 
 <Render
@@ -24,6 +27,7 @@
 	actions={[action]}
 	aria-expanded={$isOpen}
 	aria-controls={$panelName}
+	aria-disabled={disabled}
 	{disabled}
 	on:blur
 	on:change

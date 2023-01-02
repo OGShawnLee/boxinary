@@ -4,7 +4,8 @@ import { useCleanup, useWindowListener } from "$lib/hooks";
 import { isHTMLElement, isNavigationKey } from "$lib/predicate";
 
 export const handleNavigation: Navigable.Handler = function (event) {
-	if (!isNavigationKey(event.code)) return;
+	const isNavigationElement = isHTMLElement(event.target) && this.isNavigationElement(event.target);
+	if (!isNavigationKey(event.code) || !isNavigationElement) return;
 	switch (event.code) {
 		case "ArrowDown":
 		case "ArrowRight":

@@ -2,6 +2,10 @@ import type { Readable, Unsubscriber, Writable } from "svelte/store";
 import type { ElementBinder } from "$lib/core";
 import { Navigation, Toggler } from "$lib/stores";
 
+interface Action {
+	(element: HTMLElement): void | { destroy?: Unsubscriber };
+}
+
 interface ActionComponent<T = void> {
 	action: (element: HTMLElement) => {
 		destroy: Unsubscriber;
@@ -71,6 +75,7 @@ namespace Navigable {
 
 	interface Settings {
 		initialIndex?: number;
+		isDisabled?: boolean;
 		isFinite?: boolean;
 		isGlobal?: boolean;
 		isManual?: boolean;
@@ -95,10 +100,10 @@ namespace Toggleable {
 	}
 
 	export interface ButtonOptions {
-		plugins: Array<Plugin>;
+		plugins?: Array<Plugin>;
 	}
 
 	export interface PanelOptions {
-		plugins: Array<Plugin>;
+		plugins?: Array<Plugin>;
 	}
 }

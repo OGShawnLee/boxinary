@@ -1,3 +1,10 @@
+export {
+	Accordion,
+	AccordionButton,
+	AccordionHeading,
+	AccordionItem,
+	AccordionPanel
+} from "./accordion";
 export { Disclosure, DisclosureButton, DisclosurePanel } from "./disclosure";
 export { Navigable, NavigableItem } from "./navigable";
 export { Popover, PopoverButton, PopoverOverlay, PopoverPanel } from "./popover";

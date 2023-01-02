@@ -1,4 +1,9 @@
 export {
+	Accordion,
+	AccordionButton,
+	AccordionHeading,
+	AccordionPanel,
+	AccordionItem,
 	Disclosure,
 	DisclosureButton,
 	DisclosurePanel,

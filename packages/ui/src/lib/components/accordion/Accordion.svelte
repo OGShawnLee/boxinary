@@ -1,18 +1,25 @@
 <script lang="ts">
-	import type { ComponentTagName, Nullable } from "$lib/types";
-	import Context from "./context";
+	import type { ComponentTagName } from "$lib/types";
+	import { createAccordionState } from "./state";
 	import { Render } from "$lib/components";
 
 	let className: string | undefined = undefined;
 
-	export let as: ComponentTagName = "button";
+	export let as: ComponentTagName = "div";
+	export let disabled = false;
+	export let finite = false;
 	export let id: string | undefined = undefined;
-	export let disabled: Nullable<boolean> = undefined;
 	export { className as class };
 
-	const { isOpen, createPopoverButton, panel } = Context.getContext();
-	const { action, binder } = createPopoverButton(id);
-	const panelName = panel.finalName;
+	const { createAccordion, navigation } = createAccordionState({
+		isDisabled: disabled,
+		isFinite: finite,
+		isVertical: true
+	});
+	const { action, binder } = createAccordion(id);
+
+	$: navigation.isDisabled.value = disabled;
+	$: navigation.isFinite.value = finite;
 </script>
 
 <Render
@@ -22,9 +29,6 @@
 	{...$$restProps}
 	{binder}
 	actions={[action]}
-	aria-expanded={$isOpen}
-	aria-controls={$panelName}
-	{disabled}
 	on:blur
 	on:change
 	on:click
@@ -46,5 +50,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot isOpen={$isOpen} button={action} />
+	<slot accordion={action} isDisabled={disabled} />
 </Render>

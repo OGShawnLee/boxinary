@@ -1,18 +1,17 @@
 <script lang="ts">
-	import type { ComponentTagName, Nullable } from "$lib/types";
-	import Context from "./context";
+	import type { ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
+	import { GroupContext } from "./context";
+	import { Toggler } from "$lib/stores";
 
 	let className: string | undefined = undefined;
 
-	export let as: ComponentTagName = "button";
+	export let as: ComponentTagName = "div";
 	export let id: string | undefined = undefined;
-	export let disabled: Nullable<boolean> = undefined;
 	export { className as class };
 
-	const { isOpen, createPopoverButton, panel } = Context.getContext();
-	const { action, binder } = createPopoverButton(id);
-	const panelName = panel.finalName;
+	const { createAccordionItemState } = GroupContext.getContext();
+	const { isOpen, close, button, heading, panel } = createAccordionItemState(new Toggler());
 </script>
 
 <Render
@@ -20,11 +19,6 @@
 	class={className}
 	{id}
 	{...$$restProps}
-	{binder}
-	actions={[action]}
-	aria-expanded={$isOpen}
-	aria-controls={$panelName}
-	{disabled}
 	on:blur
 	on:change
 	on:click
@@ -46,5 +40,11 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot isOpen={$isOpen} button={action} />
+	{#if $isOpen}
+		<slot name="up-panel" {panel} {close} />
+	{/if}
+	<slot isOpen={$isOpen} {button} {heading} {panel} {close} />
+	{#if $isOpen}
+		<slot name="panel" {panel} {close} />
+	{/if}
 </Render>

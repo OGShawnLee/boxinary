@@ -1,2 +1,10 @@
 export { handleNavigation, useResetOnLeave } from "./navigation";
-export { useCloseClickOutside, useCloseEscapeKey, useCloseFocusLeave } from "./toggler";
+export {
+	handleAriaControls,
+	handleAriaDisabled,
+	handleAriaExpanded,
+	handleAriaLabelledby,
+	useCloseClickOutside,
+	useCloseEscapeKey,
+	useCloseFocusLeave
+} from "./toggler";

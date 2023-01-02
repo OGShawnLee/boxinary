@@ -29,7 +29,7 @@ export default class Toggler {
 		return this.isOpen.value === false;
 	}
 
-	createButton(this: Toggler, element: HTMLElement, config?: Toggleable.ButtonOptions) {
+	initButton(this: Toggler, element: HTMLElement, settings?: Toggleable.ButtonOptions) {
 		this.button.value = element;
 		return useGarbageCollector({
 			beforeCollection: () => {
@@ -37,16 +37,16 @@ export default class Toggler {
 			},
 			init: () => [
 				useListener(element, "click", () => this.handleToggle()),
-				this.initialisePlugins(element, config?.plugins)
+				this.initialisePlugins(element, settings?.plugins)
 			]
 		});
 	}
 
-	createOverlay(this: Toggler, element: HTMLElement) {
+	initOverlay(this: Toggler, element: HTMLElement) {
 		return useListener(element, "click", () => this.handleClose());
 	}
 
-	createPanel(this: Toggler, element: HTMLElement, config?: Toggleable.PanelOptions) {
+	initPanel(this: Toggler, element: HTMLElement, config?: Toggleable.PanelOptions) {
 		this.panel.value = element;
 		return useGarbageCollector({
 			beforeCollection: () => {

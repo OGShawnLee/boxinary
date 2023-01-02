@@ -26,7 +26,7 @@ export function createDisclosureState(initialValue: boolean) {
 						else element.removeAttribute("aria-controls");
 					})
 				],
-				base: toggler.createButton(element)
+				base: toggler.initButton(element)
 			})
 		});
 
@@ -37,7 +37,7 @@ export function createDisclosureState(initialValue: boolean) {
 			name: nameChild("panel"),
 			isShowing: initialValue,
 			onMount: ({ element }) => ({
-				base: toggler.createPanel(element)
+				base: toggler.initPanel(element)
 			})
 		});
 	};
