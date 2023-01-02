@@ -3,7 +3,13 @@ import Context from "./context";
 import { Toggler } from "$lib/stores";
 import { ElementBinder, defineActionComponent } from "$lib/core";
 import { useComponentNaming } from "$lib/hooks";
-import { useCloseClickOutside, useCloseEscapeKey, useCloseFocusLeave } from "$lib/plugins";
+import {
+	handleAriaControls,
+	handleAriaExpanded,
+	useCloseClickOutside,
+	useCloseEscapeKey,
+	useCloseFocusLeave
+} from "$lib/plugins";
 import { createReadableRef } from "$lib/utils";
 
 export function createPopoverState(configuration: Toggleable.Configuration) {
@@ -17,18 +23,10 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 			binder: button,
 			id: id,
 			name: nameChild("button"),
-			onMount: ({ element }) => ({
-				onActionComponent: () => [
-					toggler.subscribe((isOpen) => {
-						element.ariaExpanded = String(isOpen);
-					}),
-					panel.finalName.subscribe((name) => {
-						if (name) element.setAttribute("aria-controls", name);
-						else element.removeAttribute("aria-controls");
-					})
-				],
-				base: toggler.initButton(element)
-			})
+			onMount: ({ element }) =>
+				toggler.initButton(element, {
+					plugins: [handleAriaControls(panel), handleAriaExpanded]
+				})
 		});
 
 	const createOverlay: ComponentInitialiser = (id) =>

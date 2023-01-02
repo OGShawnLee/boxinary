@@ -4,6 +4,7 @@ import { Toggler } from "$lib/stores";
 import { ElementBinder, defineActionComponent } from "$lib/core";
 import { useComponentNaming } from "$lib/hooks";
 import { createReadableRef } from "$lib/utils";
+import { handleAriaControls, handleAriaExpanded } from "$lib/plugins";
 
 export function createDisclosureState(initialValue: boolean) {
 	const toggler = new Toggler({ isOpen: initialValue });
@@ -16,18 +17,10 @@ export function createDisclosureState(initialValue: boolean) {
 			binder: button,
 			id: id,
 			name: nameChild("button"),
-			onMount: ({ element }) => ({
-				onActionComponent: () => [
-					toggler.subscribe((isOpen) => {
-						element.ariaExpanded = String(isOpen);
-					}),
-					panel.finalName.subscribe((name) => {
-						if (name) element.setAttribute("aria-controls", name);
-						else element.removeAttribute("aria-controls");
-					})
-				],
-				base: toggler.initButton(element)
-			})
+			onMount: ({ element }) =>
+				toggler.initButton(element, {
+					plugins: [handleAriaControls(panel), handleAriaExpanded]
+				})
 		});
 
 	const createPanel: ComponentInitialiser = (id) => {
