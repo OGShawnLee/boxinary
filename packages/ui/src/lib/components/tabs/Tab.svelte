@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { ComponentTagName, Nullable } from "$lib/types";
+	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 	import { ElementBinder } from "$lib/core";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"DISABLED" | "SELECTED"> = undefined;
 
 	export let as: ComponentTagName = "button";
 	export let disabled: Nullable<boolean> = undefined;
@@ -16,11 +17,14 @@
 	const { createTab } = Context.getContext();
 	const { action, binder } = createTab(id, new ElementBinder());
 	const { isSelected } = binder;
+
+	$: isDisabled = disabled ?? false;
+	$: finalClassName = useClassNameResolver(className)({ isDisabled, isSelected: $isSelected });
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	bind:element
@@ -51,5 +55,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot isSelected={$isSelected} tab={action} />
+	<slot {isDisabled} isSelected={$isSelected} tab={action} />
 </Render>
