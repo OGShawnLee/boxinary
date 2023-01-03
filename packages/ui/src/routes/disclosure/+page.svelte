@@ -1,7 +1,17 @@
-<script>
+<script lang="ts">
 	import { Disclosure, DisclosureButton, DisclosurePanel } from "$lib";
 	import { Page } from "@app/components";
 	import { fade, scale, slide } from "svelte/transition";
+	import { useClassNameResolver } from "$lib/hooks";
+
+	const className = useClassNameResolver<"DISABLED" | "OPEN">({
+		base: "px-6 py-1.75 | border-2 rounded-lg font-medium outline-none hover:text-white",
+		disabled: "border-zinc-800 opacity-50",
+		open: {
+			off: "border-zinc-600 focus:border-zinc-300",
+			on: "bg-zinc-800 text-white border-zinc-800 focus:border-zinc-300"
+		}
+	});
 
 	let open = false;
 	let disabled = false;
@@ -26,17 +36,7 @@
 	</div>
 	<div class="grid grid-cols-4 gap-6">
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close>
-			<DisclosureButton
-				class={{
-					base: "px-6 py-1.75 | border-2 font-medium rounded-lg outline-none hover:text-white",
-					open: {
-						off: "border-zinc-600 focus:border-zinc-300",
-						on: "bg-zinc-800 text-white border-zinc-800 focus:border-zinc-300"
-					}
-				}}
-			>
-				Disclosure Button
-			</DisclosureButton>
+			<DisclosureButton class={className}>Disclosure Button</DisclosureButton>
 			<DisclosurePanel class="p-6 | grid gap-3 | border-2 border-zinc-800 rounded-xl">
 				<p>
 					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, et voluptatum eos nemo
@@ -51,17 +51,7 @@
 			</DisclosurePanel>
 		</Disclosure>
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close let:panel>
-			<DisclosureButton
-				class={{
-					base: "px-6 py-1.75 | border-2 font-medium rounded-lg outline-none hover:text-white",
-					open: {
-						off: "border-zinc-600 focus:border-zinc-300",
-						on: "bg-zinc-800 text-white border-zinc-800 focus:border-zinc-300"
-					}
-				}}
-			>
-				Disclosure Button
-			</DisclosureButton>
+			<DisclosureButton class={className}>Disclosure Button</DisclosureButton>
 			<div
 				class="p-6 | grid gap-3 | border-2 border-zinc-800 rounded-xl"
 				slot="panel"
@@ -81,17 +71,7 @@
 			</div>
 		</Disclosure>
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close let:panel>
-			<DisclosureButton
-				class={{
-					base: "px-6 py-1.75 | border-2 font-medium rounded-lg outline-none hover:text-white",
-					open: {
-						off: "border-zinc-600 focus:border-zinc-300",
-						on: "bg-zinc-800 text-white border-zinc-800 focus:border-zinc-300"
-					}
-				}}
-			>
-				Disclosure Button
-			</DisclosureButton>
+			<DisclosureButton class={className}>Disclosure Button</DisclosureButton>
 			<div
 				class="p-6 | grid gap-3 | border-2 border-zinc-800 rounded-xl"
 				slot="panel"
@@ -111,19 +91,7 @@
 			</div>
 		</Disclosure>
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close let:panel>
-			<DisclosureButton
-				{disabled}
-				class={{
-					base: "px-6 py-1.75 | border-2 font-medium rounded-lg outline-none hover:text-white",
-					disabled: "border-zinc-800 opacity-50",
-					open: {
-						off: "border-zinc-600 focus:border-zinc-300",
-						on: "bg-zinc-800 text-white border-zinc-800 focus:border-zinc-300"
-					}
-				}}
-			>
-				Disclosure Button
-			</DisclosureButton>
+			<DisclosureButton class={className} {disabled}>Disclosure Button</DisclosureButton>
 			<div
 				class="p-6 | grid gap-3 | border-2 border-zinc-800 rounded-xl"
 				slot="panel"
