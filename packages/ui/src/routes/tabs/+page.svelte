@@ -4,11 +4,11 @@
 	import { Page } from "@app/components";
 
 	const className = useClassNameResolver<"DISABLED" | "SELECTED">({
-		base: "px-6 py-1.75 | border-2 rounded-lg font-medium outline-none",
-		disabled: "border-neutral-800 opacity-50",
+		base: "px-6 py-1.75 | border-2 rounded-lg font-semibold outline-none",
+		disabled: "border-slate-800 opacity-50",
 		selected: {
-			off: "border-neutral-600 focus:border-neutral-300 hover:text-white",
-			on: "bg-neutral-800 text-white border-neutral-800 focus:border-neutral-300"
+			off: "border-slate-600 focus:border-slate-300 hover:text-white",
+			on: "bg-slate-800 text-white border-slate-800 focus:border-slate-300"
 		}
 	});
 
@@ -22,35 +22,35 @@
 <Page title="Tabs">
 	<svelte:fragment slot="options">
 		<button
-			class="button focus:border-neutral-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={finite}
 			on:click={() => (finite = !finite)}
 		>
 			Toggle Finite
 		</button>
 		<button
-			class="button focus:border-neutral-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={manual}
 			on:click={() => (manual = !manual)}
 		>
 			Toggle Manual
 		</button>
 		<button
-			class="button focus:border-neutral-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={vertical}
 			on:click={() => (vertical = !vertical)}
 		>
 			Toggle Vertical
 		</button>
 		<button
-			class="button focus:border-neutral-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={showing}
 			on:click={() => (showing = !showing)}
 		>
 			Toggle Show
 		</button>
 		<button
-			class="button focus:border-neutral-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={disabled}
 			on:click={() => (disabled = !disabled)}
 		>

@@ -12,28 +12,28 @@
 		<h2 class="text-2xl text-white font-semibold">Options</h2>
 		<div class="flex justify-between gap-3">
 			<button
-				class="button focus:border-zinc-400"
+				class="button focus:border-slate-400"
 				class:border-purple-500={finite}
 				on:click={() => (finite = !finite)}
 			>
 				Toggle Finite
 			</button>
 			<button
-				class="button focus:border-zinc-400"
+				class="button focus:border-slate-400"
 				class:border-purple-500={global}
 				on:click={() => (global = !global)}
 			>
 				Toggle Global
 			</button>
 			<button
-				class="button focus:border-zinc-400"
+				class="button focus:border-slate-400"
 				class:border-purple-500={vertical}
 				on:click={() => (vertical = !vertical)}
 			>
 				Toggle Vertical
 			</button>
 			<button
-				class="button focus:border-zinc-400"
+				class="button focus:border-slate-400"
 				class:border-purple-500={disabled}
 				on:click={() => (disabled = !disabled)}
 			>

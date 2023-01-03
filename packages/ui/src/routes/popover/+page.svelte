@@ -9,7 +9,7 @@
 <Page title="Popover">
 	<div class="flex items-center gap-3" slot="options">
 		<button
-			class="button focus:border-zinc-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={forceFocus}
 			on:click={() => (forceFocus = !forceFocus)}
 		>
@@ -35,7 +35,7 @@
 				<button class="button-focus" use:button>
 					Toggle {isOpen}
 				</button>
-				<div class="fixed inset-0 bg-zinc-900/90" slot="overlay" use:overlay />
+				<div class="fixed inset-0 bg-slate-900/90" slot="overlay" use:overlay />
 				<div
 					class="fixed | transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 | grid gap-4.5"
 					slot="panel"
@@ -54,7 +54,7 @@
 				<PopoverButton class="button-focus">
 					Toggle {isOpen}
 				</PopoverButton>
-				<PopoverOverlay class="fixed inset-0 bg-zinc-900/90" />
+				<PopoverOverlay class="fixed inset-0 bg-slate-900/90" />
 				<PopoverPanel
 					class="fixed | transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 | grid gap-4.5"
 				>

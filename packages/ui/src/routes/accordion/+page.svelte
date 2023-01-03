@@ -16,14 +16,14 @@
 <Page title="Accordion">
 	<div class="flex items-center gap-3" slot="options">
 		<button
-			class="button focus:border-zinc-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={disabled}
 			on:click={() => (disabled = !disabled)}
 		>
 			Toggle Disabled Navigation
 		</button>
 		<button
-			class="button focus:border-zinc-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={finite}
 			on:click={() => (finite = !finite)}
 		>

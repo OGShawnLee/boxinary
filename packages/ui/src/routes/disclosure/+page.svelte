@@ -6,10 +6,10 @@
 
 	const className = useClassNameResolver<"DISABLED" | "OPEN">({
 		base: "px-6 py-1.75 | border-2 rounded-lg font-medium outline-none hover:text-white",
-		disabled: "border-zinc-800 opacity-50",
+		disabled: "border-slate-800 opacity-50",
 		open: {
-			off: "border-zinc-600 focus:border-zinc-300",
-			on: "bg-zinc-800 text-white border-zinc-800 focus:border-zinc-300"
+			off: "border-slate-600 focus:border-slate-300",
+			on: "bg-slate-800 text-white border-slate-800 focus:border-slate-300"
 		}
 	});
 
@@ -20,14 +20,14 @@
 <Page title="Disclosure">
 	<div class="flex items-center gap-3" slot="options">
 		<button
-			class="button focus:border-zinc-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={open}
 			on:click={() => (open = !open)}
 		>
 			Toggle
 		</button>
 		<button
-			class="button focus:border-zinc-400"
+			class="button focus:border-slate-400"
 			class:border-purple-500={disabled}
 			on:click={() => (disabled = !disabled)}
 		>
@@ -37,13 +37,13 @@
 	<div class="grid grid-cols-4 gap-6">
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close>
 			<DisclosureButton class={className}>Disclosure Button</DisclosureButton>
-			<DisclosurePanel class="p-6 | grid gap-3 | border-2 border-zinc-800 rounded-xl">
+			<DisclosurePanel class="p-6 | grid gap-3 | border-2 border-slate-800 rounded-xl">
 				<p>
 					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, et voluptatum eos nemo
 					recusandae dicta corporis totam exercitationem odio deserunt.
 				</p>
 				<button
-					class="max-w-[fit-content] px-4 py-1.25 border-2 border-zinc-600 outline-none focus:border-zinc-300 rounded-lg"
+					class="max-w-[fit-content] px-4 py-1.25 border-2 border-slate-600 outline-none focus:border-slate-300 rounded-lg"
 					on:click={close}
 				>
 					Close
@@ -53,7 +53,7 @@
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close let:panel>
 			<DisclosureButton class={className}>Disclosure Button</DisclosureButton>
 			<div
-				class="p-6 | grid gap-3 | border-2 border-zinc-800 rounded-xl"
+				class="p-6 | grid gap-3 | border-2 border-slate-800 rounded-xl"
 				slot="panel"
 				use:panel
 				transition:fade|local
@@ -63,7 +63,7 @@
 					recusandae dicta corporis totam exercitationem odio deserunt.
 				</p>
 				<button
-					class="max-w-[fit-content] px-4 py-1.25 border-2 border-zinc-600 outline-none focus:border-zinc-300 rounded-lg"
+					class="max-w-[fit-content] px-4 py-1.25 border-2 border-slate-600 outline-none focus:border-slate-300 rounded-lg"
 					on:click={close}
 				>
 					Close
@@ -73,7 +73,7 @@
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close let:panel>
 			<DisclosureButton class={className}>Disclosure Button</DisclosureButton>
 			<div
-				class="p-6 | grid gap-3 | border-2 border-zinc-800 rounded-xl"
+				class="p-6 | grid gap-3 | border-2 border-slate-800 rounded-xl"
 				slot="panel"
 				use:panel
 				transition:slide|local
@@ -83,7 +83,7 @@
 					recusandae dicta corporis totam exercitationem odio deserunt.
 				</p>
 				<button
-					class="max-w-[fit-content] px-4 py-1.25 border-2 border-zinc-600 outline-none focus:border-zinc-300 rounded-lg"
+					class="max-w-[fit-content] px-4 py-1.25 border-2 border-slate-600 outline-none focus:border-slate-300 rounded-lg"
 					on:click={close}
 				>
 					Close
@@ -93,7 +93,7 @@
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close let:panel>
 			<DisclosureButton class={className} {disabled}>Disclosure Button</DisclosureButton>
 			<div
-				class="p-6 | grid gap-3 | border-2 border-zinc-800 rounded-xl"
+				class="p-6 | grid gap-3 | border-2 border-slate-800 rounded-xl"
 				slot="panel"
 				use:panel
 				transition:scale|local={{ start: 0.25 }}
@@ -103,7 +103,7 @@
 					recusandae dicta corporis totam exercitationem odio deserunt.
 				</p>
 				<button
-					class="max-w-[fit-content] px-4 py-1.25 border-2 border-zinc-600 outline-none focus:border-zinc-300 rounded-lg"
+					class="max-w-[fit-content] px-4 py-1.25 border-2 border-slate-600 outline-none focus:border-slate-300 rounded-lg"
 					on:click={close}
 				>
 					Close
