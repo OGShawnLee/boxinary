@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { ComponentTagName, Nullable } from "$lib/types";
+	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"DISABLED" | "OPEN"> = undefined;
 
 	export let as: ComponentTagName = "button";
 	export let id: string | undefined = undefined;
@@ -13,11 +14,16 @@
 	const { isOpen, createDisclosureButton, panel } = Context.getContext();
 	const { action, binder } = createDisclosureButton(id);
 	const panelName = panel.finalName;
+
+	$: finalClassName = useClassNameResolver(className)({
+		isOpen: $isOpen,
+		isDisabled: disabled ?? false
+	});
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	{binder}
@@ -46,5 +52,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot isOpen={$isOpen} button={action} />
+	<slot isOpen={$isOpen} isDisabled={disabled ?? false} button={action} />
 </Render>

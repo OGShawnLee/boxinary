@@ -27,6 +27,34 @@ interface ComponentInitialiser<T = void> {
 
 type ComponentTagName = keyof HTMLElementTagNameMap | "fragment";
 
+// --> ClassName Resolver
+type ClassName<S extends ComponentState> = Nullable<
+	| FunctionClassName<S>
+	| string
+	| ({
+			base?: Nullable<string>;
+	  } & {
+			[P in S as Lowercase<P>]?: Nullable<string | SwitchClassName>;
+	  })
+>;
+
+type ComponentState = "DISABLED" | "OPEN" | "SELECTED";
+
+interface FunctionClassName<S extends ComponentState> {
+	(predicate: StatePredicate<S>): Nullable<string>;
+}
+
+type PredicateString<K extends string> = `is${Capitalize<Lowercase<K>>}`;
+
+type StatePredicate<T extends ComponentState> = {
+	[P in T as PredicateString<P>]: boolean;
+};
+
+interface SwitchClassName {
+	on?: string;
+	off?: string;
+}
+
 type KeyBack = "ArrowUp" | "ArrowLeft" | "Home";
 
 type KeyNext = "ArrowDown" | "ArrowRight" | "End";

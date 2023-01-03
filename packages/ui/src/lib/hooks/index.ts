@@ -1,3 +1,4 @@
+export { default as useClassNameResolver } from "./useClassNameResolver";
 export { default as useComponentNaming } from "./useComponentNaming";
 export { default as useContext } from "./useContext";
 export { useCleanup, useGarbageCollector } from "./useGarbageCollector";
