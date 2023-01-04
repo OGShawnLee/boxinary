@@ -38,7 +38,7 @@ type ClassName<S extends ComponentState> = Nullable<
 	  })
 >;
 
-type ComponentState = "DISABLED" | "OPEN" | "SELECTED";
+type ComponentState = "CHECKED" | "DISABLED" | "OPEN" | "SELECTED";
 
 interface FunctionClassName<S extends ComponentState> {
 	(predicate: StatePredicate<S>): Nullable<string>;
