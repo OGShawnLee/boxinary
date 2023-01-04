@@ -22,10 +22,10 @@ export default function useClassNameResolver<S extends ComponentState>(className
 		const classList = [base];
 		const { isChecked, isDisabled, isOpen, isSelected } = state as StatePredicate<ComponentState>;
 
+		classList.push(handleSwitchClassName(checked, isChecked));
 		classList.push(handleSwitchClassName(disabled, isDisabled));
 		if (isDisabled) return getClassNameFromClassList(classList);
 		classList.push(
-			handleSwitchClassName(checked, isChecked),
 			handleSwitchClassName(open, isOpen),
 			handleSwitchClassName(selected, isSelected)
 		);
