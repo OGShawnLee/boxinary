@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { ComponentTagName, Nullable } from "$lib/types";
+	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createSwitchState } from "./state";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"CHECKED" | "DISABLED"> = undefined;
 
 	export let as: ComponentTagName = "button";
 	export let checked = false;
@@ -16,11 +17,13 @@
 
 	$: isChecked.set(checked);
 	$: checked = $isChecked;
+	$: isDisabled = disabled ?? false
+	$: finalClassName = useClassNameResolver(className)({ isChecked: $isChecked, isDisabled })
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	{binder}
@@ -51,5 +54,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot isChecked={$isChecked} isDisabled={disabled ?? false} switcher={action} />
+	<slot isChecked={$isChecked} {isDisabled} switcher={action} />
 </Render>

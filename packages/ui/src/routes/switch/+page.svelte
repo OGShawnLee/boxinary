@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { Page } from "@app/components";
 	import { Switch, SwitchGroup, SwitchDescription, SwitchLabel } from "$lib";
-	import { useSwitch } from "$lib/hooks";
+	import { useClassNameResolver, useSwitch } from "$lib/hooks";
 
 	let checked = useSwitch(false);
+
+	const className = useClassNameResolver<"CHECKED">({
+		base: "relative inline-flex h-8 w-20 items-center rounded-full",
+		checked: { off: "bg-slate-800", on: "bg-indigo-500" }
+	});
 </script>
 
 <Page title="Switch">
@@ -17,11 +22,7 @@
 		</button>
 	</div>
 	<div>
-		<Switch
-			bind:checked={$checked}
-			class="{$checked ? 'bg-indigo-500' : 'bg-slate-800'}
-    relative inline-flex h-8 w-20 items-center rounded-full"
-		>
+		<Switch bind:checked={$checked} class={className}>
 			<span class="sr-only">Enable notifications</span>
 			<span
 				class="{$checked
@@ -37,14 +38,10 @@
 					You will receive notifications in your email once every weekend.
 				</SwitchDescription>
 			</div>
-			<Switch
-				bind:checked={$checked}
-				class="{$checked ? 'bg-indigo-500' : 'bg-slate-800'}
-  relative inline-flex h-8 w-18 items-center rounded-full"
-			>
+			<Switch class={className} checked={$checked} let:isChecked>
 				<span class="sr-only">Enable notifications</span>
 				<span
-					class="{$checked
+					class="{isChecked
 						? 'translate-x-12'
 						: 'translate-x-1'} inline-block h-6 w-6 transform rounded-full bg-white transition"
 					aria-hidden
@@ -60,14 +57,10 @@
 			<SwitchLabel class="sr-only">Another Label</SwitchLabel>
 			<SwitchDescription id="the-description" class="sr-only">First Description</SwitchDescription>
 			<SwitchDescription class="sr-only">Another Description</SwitchDescription>
-			<Switch
-				bind:checked={$checked}
-				class="{$checked ? 'bg-indigo-500' : 'bg-slate-800'}
-  relative inline-flex h-8 w-18 items-center rounded-full"
-			>
+			<Switch checked={$checked} class={className}>
 				<span class="sr-only">Enable notifications</span>
 				<span
-					class="{$checked
+					class="{isChecked
 						? 'translate-x-12'
 						: 'translate-x-1'} inline-block h-6 w-6 transform rounded-full bg-white transition"
 					aria-hidden

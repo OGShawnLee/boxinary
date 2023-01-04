@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { ClassName, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createSwitchGroupState } from "./Group.state";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"CHECKED"> = undefined;
 
 	export let as: ComponentTagName = "div";
 	export let id: string | undefined = undefined;
@@ -14,11 +15,12 @@
 	const { isChecked, isPassive } = createSwitchGroupState({ initialChecked, isPassive: passive });
 
 	$: isPassive.value = passive;
+	$: finalClassName = useClassNameResolver(className)({ isChecked: $isChecked });
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	on:blur
