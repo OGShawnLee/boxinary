@@ -6,12 +6,16 @@
 
 	let className: string | undefined = undefined;
 
-	export let as: ComponentTagName = "span";
+	export let as: ComponentTagName = "label";
 	export let id: string | undefined = undefined;
 	export let passive = false;
 	export { className as class };
 
-	const { isChecked, createSwitchLabel } = Context.getContext();
+	const {
+		isChecked,
+		createSwitchLabel,
+		button: { finalName }
+	} = Context.getContext();
 	const { binder, action, context: isPassive } = createSwitchLabel(id, new ElementBinder());
 
 	$: isPassive.set(passive);
@@ -24,6 +28,7 @@
 	{...$$restProps}
 	{binder}
 	actions={[action]}
+	for={$finalName}
 	on:blur
 	on:change
 	on:click

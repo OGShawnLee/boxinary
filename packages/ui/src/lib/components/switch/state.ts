@@ -5,7 +5,7 @@ import { useComponentNaming, useListener, useSwitch } from "$lib/hooks";
 export function createSwitchState(initialValue: boolean) {
 	const { isChecked, button, descriptions, labels } = handleGroupContext(initialValue);
 	const { baseName } = useComponentNaming({
-		prefix: button.name.value,
+		overwriteWith: button.name.value,
 		component: "switch"
 	});
 

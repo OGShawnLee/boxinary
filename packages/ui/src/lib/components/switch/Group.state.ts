@@ -1,9 +1,9 @@
 import Context from "./Group.context";
+import type { Writable } from "svelte/store";
 import type { ComponentInitialiser } from "$lib/types";
 import { ElementBinder, createComponentLabels, defineActionComponent } from "$lib/core";
 import { useComponentNaming, useListener, useSwitch } from "$lib/hooks";
 import { createReadableRef, ref } from "$lib/utils";
-import type { Writable } from "svelte/store";
 
 interface Settings {
 	initialChecked: boolean; // enrures it has the right value in SSR
@@ -43,7 +43,8 @@ export function createSwitchGroupState(settings: Settings) {
 			onMount: ({ binder, element, name }) => {
 				return [
 					labels.onMountLabel(name, binder),
-					useListener(element, "click", () => {
+					useListener(element, "click", (event) => {
+						event.preventDefault();
 						if (button.disabled.value || isPassive.value) return;
 						isChecked.toggle();
 					})

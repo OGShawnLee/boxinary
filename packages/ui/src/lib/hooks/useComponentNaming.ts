@@ -8,13 +8,15 @@ export default function useComponentNaming(config: {
 	component: string;
 	parentComponent?: Nullable<string>;
 	prefix?: string;
+	overwriteWith?: string;
 }) {
-	let { component, parentComponent, prefix = "boxinary" } = config;
+	let { component, parentComponent, prefix = "boxinary", overwriteWith } = config;
 	const uid = nanoid(UID_LENGTH);
 	parentComponent = parentComponent ? separateWithDashes(parentComponent) : parentComponent;
 	component = separateWithDashes(component);
 	let baseName = `${prefix}-${component}-${uid}`;
 	if (parentComponent) baseName = `${prefix}-${parentComponent}-${component}-${uid}`;
+	if (overwriteWith) baseName = overwriteWith;
 	return {
 		baseName,
 		nameChild(childName: string) {
