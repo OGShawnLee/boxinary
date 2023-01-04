@@ -6,7 +6,7 @@
 		AccordionItem,
 		AccordionPanel
 	} from "$lib";
-	import { Page } from "@app/components";
+	import { Page, Toggle } from "@app/components";
 	import { slide } from "svelte/transition";
 
 	let finite = false;
@@ -15,20 +15,8 @@
 
 <Page title="Accordion">
 	<div class="flex items-center gap-3" slot="options">
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={disabled}
-			on:click={() => (disabled = !disabled)}
-		>
-			Toggle Disabled Navigation
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={finite}
-			on:click={() => (finite = !finite)}
-		>
-			Toggle Finite
-		</button>
+		<Toggle text="Toggle Disabled Navigation" bind:checked={disabled} />
+		<Toggle text="Toggle Finite" bind:checked={finite} />
 	</div>
 	<Accordion class="grid gap-9" {disabled} {finite}>
 		<AccordionItem class="grid gap-6" let:button let:heading let:panel>

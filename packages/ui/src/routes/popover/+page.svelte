@@ -1,5 +1,5 @@
 <script>
-	import { Page } from "@app/components";
+	import { Page, Toggle } from "@app/components";
 	import { Popover, PopoverButton, PopoverOverlay, PopoverPanel } from "$lib";
 	import { fade, scale, slide } from "svelte/transition";
 
@@ -8,13 +8,7 @@
 
 <Page title="Popover">
 	<div class="flex items-center gap-3" slot="options">
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={forceFocus}
-			on:click={() => (forceFocus = !forceFocus)}
-		>
-			Toggle Force Focus
-		</button>
+		<Toggle text="Toggle Force Focus" bind:checked={forceFocus} />
 	</div>
 	<div class="grid gap-6">
 		<button class="button-focus"> External Element </button>

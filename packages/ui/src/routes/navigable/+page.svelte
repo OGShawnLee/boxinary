@@ -1,5 +1,5 @@
 <script>
-	import { Page } from "@app/components";
+	import { Page, Toggle } from "@app/components";
 	import { Navigable, NavigableItem } from "$lib";
 
 	let disabled = false;
@@ -10,34 +10,10 @@
 
 <Page title="Navigable">
 	<svelte:fragment slot="options">
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={finite}
-			on:click={() => (finite = !finite)}
-		>
-			Toggle Finite
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={global}
-			on:click={() => (global = !global)}
-		>
-			Toggle Global
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={vertical}
-			on:click={() => (vertical = !vertical)}
-		>
-			Toggle Vertical
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={disabled}
-			on:click={() => (disabled = !disabled)}
-		>
-			Press D to Toggle Disabled Item
-		</button>
+		<Toggle text="Toggle Finite" bind:checked={finite} />
+		<Toggle text="Toggle Global" bind:checked={global} />
+		<Toggle text="Toggle Vertical" bind:checked={vertical} />
+		<Toggle text="Toggle Disabled Item" bind:checked={disabled} />
 	</svelte:fragment>
 	<div class="grid gap-12">
 		<Navigable class="flex justify-between" {finite} {vertical}>

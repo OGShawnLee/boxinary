@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Disclosure, DisclosureButton, DisclosurePanel } from "$lib";
-	import { Page } from "@app/components";
+	import { Page, Toggle } from "@app/components";
 	import { fade, scale, slide } from "svelte/transition";
 	import { useClassNameResolver } from "$lib/hooks";
 
@@ -19,20 +19,8 @@
 
 <Page title="Disclosure">
 	<div class="flex items-center gap-3" slot="options">
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={open}
-			on:click={() => (open = !open)}
-		>
-			Toggle
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={disabled}
-			on:click={() => (disabled = !disabled)}
-		>
-			Toggle Disabled
-		</button>
+		<Toggle bind:checked={open} />
+		<Toggle text="Toggle Disabled" bind:checked={disabled} />
 	</div>
 	<div class="grid grid-cols-4 gap-6">
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close>

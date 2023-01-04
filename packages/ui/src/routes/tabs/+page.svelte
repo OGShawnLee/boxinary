@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "$lib/components";
 	import { useClassNameResolver } from "$lib/hooks";
-	import { Page } from "@app/components";
+	import { Page, Toggle } from "@app/components";
 
 	const className = useClassNameResolver<"DISABLED" | "SELECTED">({
 		base: "px-6 py-1.75 | border-2 rounded-lg font-semibold outline-none",
@@ -21,41 +21,11 @@
 
 <Page title="Tabs">
 	<svelte:fragment slot="options">
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={finite}
-			on:click={() => (finite = !finite)}
-		>
-			Toggle Finite
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={manual}
-			on:click={() => (manual = !manual)}
-		>
-			Toggle Manual
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={vertical}
-			on:click={() => (vertical = !vertical)}
-		>
-			Toggle Vertical
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={showing}
-			on:click={() => (showing = !showing)}
-		>
-			Toggle Show
-		</button>
-		<button
-			class="button focus:border-slate-400"
-			class:border-purple-500={disabled}
-			on:click={() => (disabled = !disabled)}
-		>
-			Press D to Toggle Disabled Item
-		</button>
+		<Toggle text="Toggle Finite" bind:checked={finite} />
+		<Toggle text="Toggle Manual" bind:checked={manual} />
+		<Toggle text="Toggle Vertical" bind:checked={vertical} />
+		<Toggle text="Toggle Show" bind:checked={showing} />
+		<Toggle text="Toggle Disabled Item" bind:checked={disabled} />
 	</svelte:fragment>
 	<div class="grid gap-12">
 		<TabGroup class="grid gap-4.5" {finite} {manual} {vertical}>
