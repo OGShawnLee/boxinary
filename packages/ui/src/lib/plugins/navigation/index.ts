@@ -5,7 +5,7 @@ import { isHTMLElement, isNavigationKey } from "$lib/predicate";
 
 export const handleNavigation: Navigable.Handler = function (event) {
 	const isNavigationElement = isHTMLElement(event.target) && this.isNavigationElement(event.target);
-	if (!isNavigationKey(event.code) || !isNavigationElement) return;
+	if (!isNavigationKey(event.code) || (!this.isGlobal.value && !isNavigationElement)) return;
 	switch (event.code) {
 		case "ArrowDown":
 		case "ArrowRight":
