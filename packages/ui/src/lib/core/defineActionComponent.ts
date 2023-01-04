@@ -1,4 +1,4 @@
-import type { ActionComponent, Collectable } from "$lib/types";
+import type { ActionComponent, Collectable, Nullable } from "$lib/types";
 import type { Unsubscriber } from "svelte/store";
 import { ElementBinder } from "$lib/core";
 import { useGarbageCollector } from "$lib/hooks";
@@ -16,8 +16,8 @@ export function defineActionComponent<T = void>(config: {
 		name: string;
 	}) =>
 		| { onActionComponent?: () => Collectable; base?: Collectable }
-		| Unsubscriber[]
-		| Unsubscriber
+		| Nullable<Unsubscriber>[]
+		| Nullable<Unsubscriber>
 		| void;
 }): ActionComponent<T> {
 	const { binder = new ElementBinder(), name, onMount, id, isShowing = true } = config;

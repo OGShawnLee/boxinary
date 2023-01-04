@@ -117,6 +117,10 @@ declare type StoresValues<T> = T extends Readable<infer U>
 			[K in keyof T]: T[K] extends Readable<infer U> ? U : never;
 	  };
 
+interface Switch extends Ref<boolean> {
+	toggle(): void;
+}
+
 namespace Toggleable {
 	export interface Configuration {
 		isOpen?: boolean;
