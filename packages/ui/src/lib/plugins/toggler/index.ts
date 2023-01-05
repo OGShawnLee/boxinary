@@ -1,7 +1,8 @@
 import type { ElementBinder } from "$lib/core";
 import type { Toggleable } from "$lib/types";
 import { useWindowListener } from "$lib/hooks";
-import { isHTMLElement, isWithinContainer } from "$lib/predicate";
+import { isFocusable, isHTMLElement, isWithinContainer } from "$lib/predicate";
+import { useDOMTraversal } from "$lib/hooks";
 
 export function handleAriaControls(panel: ElementBinder): Toggleable.Plugin {
 	return function (element) {
@@ -57,5 +58,19 @@ export const useCloseFocusLeave: Toggleable.Plugin = function (panel) {
 			return this.handleClose(target);
 		if (this.isWithinElements(target)) return;
 		this.handleClose(target);
+	});
+};
+
+export const useHidePanelFocusOnClose: Toggleable.Plugin = function (panel) {
+	const elements = useDOMTraversal(panel, isFocusable);
+	const tabIndexes = elements.map(({ tabIndex }) => tabIndex);
+	return this.isOpen.subscribe((isOpen) => {
+		if (isOpen) {
+			elements.forEach((element, index) => {
+				element.tabIndex = tabIndexes[index];
+			});
+		} else {
+			elements.forEach((element) => (element.tabIndex = -1));
+		}
 	});
 };

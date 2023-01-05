@@ -4,6 +4,7 @@ import { focusFirstChildElement, ref } from "$lib/utils";
 import { isNullish } from "@boxinary/predicate-core";
 import { isFocusable, isHTMLElement, isWithinContainer } from "$lib/predicate";
 import { onMount, tick } from "svelte";
+import { useHidePanelFocusOnClose } from "$lib/plugins";
 
 export default class Toggler {
 	readonly isOpen = ref(false);
@@ -47,12 +48,13 @@ export default class Toggler {
 	}
 
 	initPanel(this: Toggler, element: HTMLElement, config?: Toggleable.PanelOptions) {
+		const plugins = [useHidePanelFocusOnClose, ...(config?.plugins ?? [])];
 		this.panel.value = element;
 		return useGarbageCollector({
 			beforeCollection: () => {
 				this.panel.value = undefined;
 			},
-			init: () => this.initialisePlugins(element, config?.plugins)
+			init: () => this.initialisePlugins(element, plugins)
 		});
 	}
 

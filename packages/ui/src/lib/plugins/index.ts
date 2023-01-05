@@ -6,5 +6,6 @@ export {
 	handleAriaLabelledby,
 	useCloseClickOutside,
 	useCloseEscapeKey,
-	useCloseFocusLeave
+	useCloseFocusLeave,
+	useHidePanelFocusOnClose
 } from "./toggler";

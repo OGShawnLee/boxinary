@@ -37,6 +37,10 @@ const VOID_TAGS = Object.freeze({
 	wbr: true
 });
 
+export function isChildless(container: HTMLElement) {
+	return !container.hasChildNodes();
+}
+
 export function isDisabled(element: HTMLElement) {
 	return element.hasAttribute("disabled");
 }
