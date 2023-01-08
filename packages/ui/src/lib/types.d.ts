@@ -108,6 +108,7 @@ namespace Navigable {
 		isGlobal?: boolean;
 		isManual?: boolean;
 		isVertical?: boolean;
+		isWaiting?: boolean;
 	}
 }
 

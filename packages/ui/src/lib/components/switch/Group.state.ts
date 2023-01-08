@@ -1,7 +1,7 @@
 import Context from "./Group.context";
 import type { Writable } from "svelte/store";
 import type { ComponentInitialiser } from "$lib/types";
-import { ElementBinder, createComponentLabels, defineActionComponent } from "$lib/core";
+import { ElementBinder, ElementLabel, defineActionComponent } from "$lib/core";
 import { useComponentNaming, useListener, useSwitch } from "$lib/hooks";
 import { createReadableRef, ref } from "$lib/utils";
 
@@ -14,8 +14,8 @@ export function createSwitchGroupState(settings: Settings) {
 	const isChecked = useSwitch(settings.initialChecked);
 	const isPassive = ref(settings.isPassive);
 	const button = new ElementBinder();
-	const descriptions = createComponentLabels();
-	const labels = createComponentLabels();
+	const descriptions = new ElementLabel();
+	const labels = new ElementLabel();
 	const { baseName, nameChild } = useComponentNaming({ component: "switch" });
 	button.name.value = baseName;
 

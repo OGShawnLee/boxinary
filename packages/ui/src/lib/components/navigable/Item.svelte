@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { ClassName, ComponentTagName } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"DISABLED"> = undefined;
 
 	export let as: ComponentTagName = "button";
 	export let disabled = false;
@@ -12,11 +13,14 @@
 	export { className as class };
 
 	const { action, binder } = Context.getContext().createNavigableItem(id);
+
+	$: isDisabled = disabled ?? false;
+	$: finalClassName = useClassNameResolver(className)({ isDisabled });
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	bind:element
@@ -44,5 +48,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot item={action} />
+	<slot {isDisabled} item={action} />
 </Render>

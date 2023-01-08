@@ -1,9 +1,13 @@
 import type { ReadableRef, Ref } from "$lib/types";
-import { ElementBinder } from "$lib/core";
+import { ElementBinder, ElementLabel } from "$lib/core";
 import { isStore, isWritable } from "@boxinary/predicate-svelte";
 
 export function isElementBinder(value: unknown): value is ElementBinder {
 	return value instanceof ElementBinder;
+}
+
+export function isElementLabel(value: unknown): value is ElementLabel {
+	return value instanceof ElementLabel;
 }
 
 export function isReadableRef(value: unknown): value is ReadableRef<any> {

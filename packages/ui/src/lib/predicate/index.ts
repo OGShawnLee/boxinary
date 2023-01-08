@@ -1,4 +1,10 @@
-export { isElementBinder, isReadableRef, isRef, isValidHTMLElementID } from "./internal";
+export {
+	isElementBinder,
+	isElementLabel,
+	isReadableRef,
+	isRef,
+	isValidHTMLElementID
+} from "./internal";
 export {
 	isChildless,
 	isDisabled,

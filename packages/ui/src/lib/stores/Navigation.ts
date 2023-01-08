@@ -7,7 +7,7 @@ import { handleNavigation } from "$lib/plugins";
 import { isAround, isNullish, isNumber } from "@boxinary/predicate-core";
 import { isFocusable, isWithinContainer } from "$lib/predicate";
 import { onDestroy } from "svelte";
-import { useCleanup, useListener, usePair, useWindowListener } from "$lib/hooks";
+import { useCleanup, useListener, useWindowListener } from "$lib/hooks";
 import { createDerivedRef } from "$lib/utils";
 
 export default class Navigation<T extends Navigable.Item = Navigable.Item> {
@@ -19,6 +19,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	readonly isGlobal: Ref<boolean>;
 	readonly isManual: Ref<boolean>;
 	readonly isVertical: Ref<boolean>;
+	readonly isWaiting: Ref<boolean>;
 	protected readonly items = new Hash<string, T>({ entries: false, keys: false });
 	protected readonly elements: HTMLElement[] = [];
 	readonly selected: ReadableRef<T | undefined>;
@@ -31,14 +32,19 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		this.isGlobal = ref(settings.isGlobal ?? false);
 		this.isManual = ref(settings.isManual ?? false);
 		this.isVertical = ref(settings.isVertical ?? false);
+		this.isWaiting = ref(settings.isWaiting ?? false);
 		this.targetIndexRef = createDerivedRef(this.isManual, (isManual) => {
 			return isManual ? this.manualIndex : this.index;
 		});
-		this.selected = createDerivedRef([this.index, this.items.values], ([index, items]) => {
-			const item = items.at(index);
-			if (isNullish(item) || item.disabled) return;
-			return item;
-		});
+		this.selected = createDerivedRef(
+			[this.index, this.items.values, this.isWaiting],
+			([index, items, isWaiting]) => {
+				if (isWaiting) return;
+				const item = items.at(index);
+				if (isNullish(item) || item.disabled) return;
+				return item;
+			}
+		);
 	}
 
 	get isHorizontal() {
@@ -101,9 +107,11 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 			return item;
 		});
 		return useCleanup([
-			useListener(element, "click", () => this.index.set(index)),
+			useListener(element, "click", () => this.interact(index, false)),
 			useListener(element, "focus", () => {
-				if (this.targetIndex.value !== index && isFocusable(element)) this.targetIndex.set(index);
+				if (this.targetIndex.value !== index && isFocusable(element)) {
+					this.interact(index, false);
+				}
 			})
 		]);
 	}
@@ -114,12 +122,11 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	) {
 		let previous: Nullable<T> = null;
 		return useCleanup(
-			usePair(this.index, this.items.values, (index, values) => {
+			this.selected.subscribe((current) => {
 				if (previous) previous.binder.isSelected.value = false;
-				const item = values.at(index);
-				if (item !== previous) previous = item;
-				if (item && !item.disabled) item.binder.isSelected.value = true;
-				fn?.(previous, item);
+				if (current !== previous) previous = current;
+				if (current && !current.disabled) current.binder.isSelected.value = true;
+				fn?.(previous, current);
 			})
 		);
 	}
@@ -136,10 +143,13 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		this.items.update(name, callback);
 	}
 
-	interact(this: Navigation, index: number | Updater<number>) {
+	interact(this: Navigation, index: number | Updater<number>, focus = true) {
 		index = isNumber(index) ? index : index(this.targetIndex.value);
-		if (this.isValidIndex(index)) this.targetIndex.value = index;
-		this.elements.at(this.targetIndex.value)?.focus();
+		if (this.isValidIndex(index)) {
+			this.targetIndex.value = index;
+			this.isWaiting.set(false);
+		}
+		if (focus) this.elements.at(this.targetIndex.value)?.focus();
 	}
 
 	go(
@@ -239,12 +249,13 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	}
 
 	isSelected(this: Navigation, name: string) {
+		if (this.isWaiting.value) return false;
 		const { index, binder } = this.items.getSafe(name);
 		return !binder.disabled.value && index === this.index.value;
 	}
 
 	isValidIndex(this: Navigation, index: number) {
-		if (!isAround(index, { min: 0, max: this.elements.length })) return;
+		if (!isAround(index, { min: 0, max: this.elements.length })) return false;
 		const element = this.elements.at(index);
 		return element ? Navigation.isFocusable(element) : false;
 	}
