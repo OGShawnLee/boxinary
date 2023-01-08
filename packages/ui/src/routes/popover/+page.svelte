@@ -1,7 +1,13 @@
-<script>
+<script lang="ts">
 	import { Page, Toggle } from "@app/components";
 	import { Popover, PopoverButton, PopoverOverlay, PopoverPanel } from "$lib";
 	import { fade, scale, slide } from "svelte/transition";
+	import { useClassNameResolver } from "$lib/hooks";
+
+	const buttonClassName = useClassNameResolver<"OPEN">({
+		base: "button",
+		open: { off: "button--closed", on: "button--open" }
+	});
 
 	let forceFocus = true;
 </script>
@@ -11,27 +17,23 @@
 		<Toggle text="Toggle Force Focus" bind:checked={forceFocus} />
 	</div>
 	<div class="grid gap-6">
-		<button class="button-focus"> External Element </button>
+		<button class="button-small"> External Element </button>
 		<div class="grid grid-cols-4 gap-6">
-			<Popover class="flex flex-col gap-9" let:isOpen let:button let:panel>
-				<button class="button-focus" use:button>
-					Toggle {isOpen}
-				</button>
-				<div class="grid gap-4.5" slot="panel" use:panel let:close transition:fade|local>
+			<Popover class="flex flex-col gap-4.5" let:isOpen let:button let:panel>
+				<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
+				<div class="panel" slot="panel" use:panel let:close transition:fade|local>
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 						tenetur. Molestiae quo pariatur dolore distinctio dolores.
 					</p>
-					<button class="button-focus" on:click={close}> Close </button>
+					<button class="button-small" on:click={close}> Close </button>
 				</div>
 			</Popover>
 			<Popover class="flex flex-col gap-9" {forceFocus} let:isOpen let:button let:overlay let:panel>
-				<button class="button-focus" use:button>
-					Toggle {isOpen}
-				</button>
-				<div class="fixed inset-0 bg-slate-900/90" slot="overlay" use:overlay />
+				<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
+				<div class="fixed inset-0 bg-raisin-05/90" slot="overlay" use:overlay />
 				<div
-					class="fixed | transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 | grid gap-4.5"
+					class="panel panel--dark panel--modal"
 					slot="panel"
 					use:panel
 					let:close
@@ -41,34 +43,36 @@
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 						tenetur. Molestiae quo pariatur dolore distinctio dolores.
 					</p>
-					<button class="button-focus" on:click={close}> Close </button>
+					<div class="flex gap-3">
+						<button class="button-small" on:click={close}> Accept </button>
+						<button class="button-small" on:click={close}> Close </button>
+					</div>
 				</div>
 			</Popover>
-			<Popover class="flex flex-col gap-9" {forceFocus} let:isOpen let:close>
-				<PopoverButton class="button-focus">
+			<Popover class="flex flex-col gap-4.5" {forceFocus} let:isOpen let:close>
+				<PopoverButton class={buttonClassName}>
 					Toggle {isOpen}
 				</PopoverButton>
-				<PopoverOverlay class="fixed inset-0 bg-slate-900/90" />
-				<PopoverPanel
-					class="fixed | transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 | grid gap-4.5"
-				>
+				<PopoverOverlay class="fixed inset-0 bg-raisin-05/90" />
+				<PopoverPanel class="panel panel--dark panel--modal">
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 						tenetur. Molestiae quo pariatur dolore distinctio dolores.
 					</p>
-					<button class="button-focus" on:click={close}> Close </button>
+					<div class="flex gap-3">
+						<button class="button-small" on:click={close}> Accept </button>
+						<button class="button-small" on:click={close}> Close </button>
+					</div>
 				</PopoverPanel>
 			</Popover>
-			<Popover class="flex flex-col gap-9" let:isOpen let:button let:panel>
-				<button class="button-focus" use:button>
-					Toggle {isOpen}
-				</button>
-				<div class="grid gap-4.5" slot="panel" use:panel let:close transition:slide>
+			<Popover class="flex flex-col gap-4.5" let:isOpen let:button let:panel>
+				<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
+				<div class="panel" slot="panel" use:panel let:close transition:slide>
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 						tenetur. Molestiae quo pariatur dolore distinctio dolores.
 					</p>
-					<button class="button-focus" on:click={close}> Close </button>
+					<button class="button--small" on:click={close}> Close </button>
 				</div>
 			</Popover>
 		</div>

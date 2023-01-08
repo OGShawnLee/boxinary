@@ -4,14 +4,14 @@
 	import { useClassNameResolver } from "$lib/hooks";
 
 	const className = useClassNameResolver<"CHECKED" | "DISABLED">({
-		base: "relative w-18 h-7 | rounded-full",
+		base: "relative w-16 h-7 | rounded-full",
 		disabled: "opacity-50",
-		checked: { off: "bg-slate-800", on: "bg-slate-600" }
+		checked: { off: "bg-raisin-15/75", on: "bg-raisin-20" }
 	});
 
 	const knobClassName = useClassNameResolver<"CHECKED">({
 		base: "absolute bottom-1/2 w-5.5 min-w-5.5 h-5.5 | bg-white rounded-full transform transition translate-y-1/2",
-		checked: { off: "translate-x-1", on: "translate-x-11.25" }
+		checked: { off: "translate-x-1", on: "translate-x-9.75" }
 	});
 
 	let checked = false;

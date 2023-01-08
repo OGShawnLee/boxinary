@@ -4,12 +4,9 @@
 	import { Page, Toggle } from "@app/components";
 
 	const className = useClassNameResolver<"DISABLED" | "SELECTED">({
-		base: "px-6 py-1.75 | border-2 rounded-lg font-semibold outline-none",
-		disabled: "border-slate-800 opacity-50",
-		selected: {
-			off: "border-slate-600 focus:border-slate-300 hover:text-white",
-			on: "bg-slate-800 text-white border-slate-800 focus:border-slate-300"
-		}
+		base: "button | font-semibold",
+		disabled: "button--disabled",
+		selected: { off: "button--closed", on: "button--open" }
 	});
 
 	let disabled = false;

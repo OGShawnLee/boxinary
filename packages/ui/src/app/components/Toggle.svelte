@@ -9,8 +9,8 @@
 	$: finalClassName = useClassNameResolver<"CHECKED">({
 		base: "px-6 py-1.75 | border-2 rounded-lg outline-none font-semibold hover:text-white",
 		checked: {
-			on: "border-purple-400 text-white focus:border-white",
-			off: "border-slate-600 focus:border-slate-300"
+			on: "border-aqua-50 text-white focus:border-aqua-90",
+			off: "border-raisin-20 focus:(border-raisin-50 text-rich-90)"
 		}
 	})({ isChecked: checked });
 </script>

@@ -1,6 +1,15 @@
-<script>
+<script lang="ts">
 	import { Page, Toggle } from "@app/components";
 	import { Navigable, NavigableItem } from "$lib";
+	import { useClassNameResolver } from "$lib/hooks";
+
+	const className = useClassNameResolver<"DISABLED">({
+		base: "button",
+		disabled: {
+			off: "button--closed focus:button--open",
+			on: "button--disabled"
+		}
+	});
 
 	let disabled = false;
 	let global = false;
@@ -17,19 +26,17 @@
 	</svelte:fragment>
 	<div class="grid gap-12">
 		<Navigable class="flex justify-between" {finite} {vertical}>
-			<NavigableItem class="button button--focus">First Item</NavigableItem>
-			<NavigableItem class="button button--focus">Second Item</NavigableItem>
-			<NavigableItem class="button {disabled ? 'button--disabled' : 'button--focus'}" {disabled}>
-				Third Item
-			</NavigableItem>
-			<NavigableItem class="button button--focus">Fourth Item</NavigableItem>
-			<NavigableItem class="button button--focus">Fifth Item</NavigableItem>
+			<NavigableItem class={className}>First Item</NavigableItem>
+			<NavigableItem class={className}>Second Item</NavigableItem>
+			<NavigableItem class={className} {disabled}>Third Item</NavigableItem>
+			<NavigableItem class={className}>Fourth Item</NavigableItem>
+			<NavigableItem class={className}>Fifth Item</NavigableItem>
 		</Navigable>
 		<Navigable class="flex justify-between" {finite} {global} {vertical}>
 			<NavigableItem class="button button--disabled" disabled>First Item</NavigableItem>
-			<NavigableItem class="button button--focus">Second Item</NavigableItem>
+			<NavigableItem class={className}>Second Item</NavigableItem>
 			<NavigableItem class="button button--disabled" disabled>Third Item</NavigableItem>
-			<NavigableItem class="button button--focus">Fourth Item</NavigableItem>
+			<NavigableItem class={className}>Fourth Item</NavigableItem>
 			<NavigableItem class="button button--disabled" disabled>Fifth Item</NavigableItem>
 		</Navigable>
 	</div>
