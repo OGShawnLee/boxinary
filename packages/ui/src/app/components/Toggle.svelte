@@ -9,7 +9,7 @@
 	$: finalClassName = useClassNameResolver<"CHECKED">({
 		base: "px-6 py-1.75 | border-2 rounded-lg outline-none font-semibold hover:text-white",
 		checked: {
-			on: "border-aqua-50 text-white focus:border-aqua-90",
+			on: "border-aqua-50 text-white focus:border-aqua-75",
 			off: "border-raisin-20 focus:(border-raisin-50 text-rich-90)"
 		}
 	})({ isChecked: checked });
