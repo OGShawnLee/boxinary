@@ -29,8 +29,9 @@
 		{...$$restProps}
 		{binder}
 		actions={[action]}
-		role="tabpanel"
 		aria-labelledby={$tabFinalName}
+		role="tabpanel"
+		tabIndex={0}
 		on:blur
 		on:change
 		on:click

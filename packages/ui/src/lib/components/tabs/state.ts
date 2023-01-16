@@ -76,6 +76,7 @@ export function createTabGroupState(settings: Navigable.Settings) {
 			},
 			onMount({ element, binder: { finalName } }) {
 				element.role = "tabpanel";
+				element.tabIndex = 0;
 				return useGarbageCollector({
 					beforeCollection: () => {
 						if (tab.item.element) tab.item.element.removeAttribute("aria-controls");

@@ -8,6 +8,7 @@
 		disabled: "button--disabled",
 		selected: { off: "button--closed", on: "button--open" }
 	});
+	const panelClassName = "p-6 | rounded-lg outline-none focus:(ring-2 ring-raisin-20)";
 
 	let disabled = false;
 	let manual = false;
@@ -34,11 +35,11 @@
 				<Tab class={className}>Tab 5</Tab>
 			</TabList>
 			<TabPanels>
-				<TabPanel>Panel 1</TabPanel>
-				<TabPanel>Panel 2</TabPanel>
-				<TabPanel>Panel 3</TabPanel>
-				<TabPanel>Panel 4</TabPanel>
-				<TabPanel>Panel 5</TabPanel>
+				<TabPanel class={panelClassName}>Panel 1</TabPanel>
+				<TabPanel class={panelClassName}>Panel 2</TabPanel>
+				<TabPanel class={panelClassName}>Panel 3</TabPanel>
+				<TabPanel class={panelClassName}>Panel 4</TabPanel>
+				<TabPanel class={panelClassName}>Panel 5</TabPanel>
 			</TabPanels>
 		</TabGroup>
 		{#if showing}
@@ -49,9 +50,9 @@
 					<Tab class={className}>Tab 3</Tab>
 				</TabList>
 				<TabPanels>
-					<TabPanel>Panel 1</TabPanel>
-					<TabPanel>Panel 2</TabPanel>
-					<TabPanel>Panel 3</TabPanel>
+					<TabPanel class={panelClassName}>Panel 1</TabPanel>
+					<TabPanel class={panelClassName}>Panel 2</TabPanel>
+					<TabPanel class={panelClassName}>Panel 3</TabPanel>
 				</TabPanels>
 			</TabGroup>
 		{/if}
