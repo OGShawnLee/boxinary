@@ -3,7 +3,7 @@
 	import { Menu, MenuButton, MenuItem, MenuItems } from "$lib";
 	import { useClassNameResolver } from "$lib/hooks";
 	import { Page, Toggle } from "@app/components";
-	import { fly, slide } from "svelte/transition";
+	import { fade, fly, slide } from "svelte/transition";
 
 	const className = useClassNameResolver<"ACTIVE" | "DISABLED">({
 		base: "px-6 py-2 | flex items-center gap-1.75 | text-light text-left",
@@ -28,7 +28,7 @@
 	<output class="max-w-fit px-6 py-2 | bg-raisin-12 rounded-lg">
 		{option ? `You've clicked: ${option}` : "Click an Option"}
 	</output>
-	<div class="grid grid-cols-3 gap-6">
+	<div class="grid grid-cols-4 gap-6">
 		<Menu class="flex flex-col items-start gap-3" {horizontal} {infinite} let:items>
 			<MenuButton class={{ base: "button", open: { on: "button--open", off: "button--closed" } }}>
 				Options
@@ -108,6 +108,34 @@
 					</MenuItem>
 					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
 					<MenuItem class={className} on:click={handleClick}>
+						<i class="bx bx-duplicate" />
+						Duplicate
+					</MenuItem>
+				</MenuItems>
+			</div>
+		</Menu>
+		<Menu class="flex flex-col items-start gap-3" {horizontal} {infinite}>
+			<MenuButton class={{ base: "button", open: { on: "button--open", off: "button--closed" } }}>
+				Options
+			</MenuButton>
+			<div slot="items" transition:fade>
+				<MenuItems class="w-40 | grid | bg-raisin-12 rounded-lg outline-none" static>
+					<MenuItem class={className} on:click={handleClick}>
+						<i class="bx bx-archive" />
+						Archive
+					</MenuItem>
+					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
+					<MenuItem class={className} on:click={handleClick} disabled>
+						<i class="bx bx-trash" />
+						Delete
+					</MenuItem>
+					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
+					<MenuItem class={className} on:click={handleClick}>
+						<i class="bx bx-pen" />
+						Edit
+					</MenuItem>
+					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
+					<MenuItem class={className} on:click={handleClick} disabled>
 						<i class="bx bx-duplicate" />
 						Duplicate
 					</MenuItem>
