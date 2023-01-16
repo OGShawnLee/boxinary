@@ -6,6 +6,7 @@ import { defineActionComponent } from "$lib/core";
 import { useComponentNaming, useGarbageCollector } from "$lib/hooks";
 import { createReadableRef } from "$lib/utils";
 import { isNullish } from "@boxinary/predicate-core";
+import { handleAriaOrientation } from "$lib/plugins";
 
 export function createTabGroupState(settings: Navigable.Settings) {
 	const navigation = new Navigation<Tab>(settings);
@@ -19,10 +20,9 @@ export function createTabGroupState(settings: Navigable.Settings) {
 			onMount: ({ element }) => {
 				element.role = "tablist";
 				return [
-					navigation.isVertical.subscribe((isVertical) => {
-						element.ariaOrientation = isVertical ? "vertical" : "horizontal";
-					}),
-					navigation.initNavigation(element)
+					navigation.initNavigation(element, {
+						plugins: [handleAriaOrientation]
+					})
 				];
 			}
 		});
