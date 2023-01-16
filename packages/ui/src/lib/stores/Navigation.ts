@@ -196,8 +196,10 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		if (this.isValidIndex(index)) {
 			this.targetIndex.value = index;
 			if (!this.isManual.value) this.isWaiting.set(false);
+			if (this.isFocusEnabled.value && focus) {
+				this.elements.at(this.targetIndex.value)?.focus();
+			}
 		}
-		if (this.isFocusEnabled.value && focus) this.elements.at(this.targetIndex.value)?.focus();
 	}
 
 	go(
