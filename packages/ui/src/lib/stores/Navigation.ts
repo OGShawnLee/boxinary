@@ -66,6 +66,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		const { handler = handleNavigation, plugins = [] } = settings;
 		const onKeydown = handler.bind(this);
 		return useCleanup(
+			this.index.subscribe(this.manualIndex.set),
 			useListener(element, "keydown", (event) => {
 				if (this.isDisabled.value || this.isGlobal.value) return;
 				onKeydown(event);
@@ -116,7 +117,6 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 			return item;
 		});
 		return useCleanup([
-			this.index.subscribe(this.manualIndex.set),
 			useListener(element, "click", () => {
 				this.set(index, false);
 			}),
