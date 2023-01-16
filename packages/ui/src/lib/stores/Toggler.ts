@@ -32,6 +32,7 @@ export default class Toggler {
 
 	initButton(this: Toggler, element: HTMLElement, settings?: Toggleable.ButtonOptions) {
 		this.button.value = element;
+		element.setAttribute("type", "button");
 		return useGarbageCollector({
 			beforeCollection: () => {
 				this.button.value = undefined;
