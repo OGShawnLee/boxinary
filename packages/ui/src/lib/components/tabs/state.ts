@@ -15,19 +15,7 @@ export function createTabGroupState(settings: Navigable.Settings) {
 		defineActionComponent({
 			id: id,
 			name: nameChild("tablist"),
-			onInit: () => {
-				navigation.onInit((previous, current) => {
-					if (previous?.element) {
-						previous.element.ariaSelected = "false";
-						previous.element.tabIndex = -1;
-					}
-					if (current?.element) {
-						current.element.ariaSelected = "true";
-						current.element.tabIndex = 0;
-					}
-				});
-				return createReadableRef(navigation.isVertical);
-			},
+			onInit: () => createReadableRef(navigation.isVertical),
 			onMount: ({ element }) => {
 				element.role = "tablist";
 				return [
@@ -48,15 +36,19 @@ export function createTabGroupState(settings: Navigable.Settings) {
 				return navigation.onInitItem(name, binder, { panelName: undefined });
 			},
 			onMount: ({ binder, element, name }) => {
-				if (binder.isSelected.value) {
-					element.ariaSelected = "true";
-					element.tabIndex = 0;
-				} else {
-					element.ariaSelected = "false";
-					element.tabIndex = -1;
-				}
 				element.role = "tab";
-				return navigation.initItem(element, name);
+				return [
+					navigation.initItem(element, name),
+					binder.isSelected.subscribe((isSelected) => {
+						if (isSelected) {
+							element.ariaSelected = "true";
+							element.tabIndex = 0;
+						} else {
+							element.ariaSelected = "false";
+							element.tabIndex = -1;
+						}
+					})
+				];
 			}
 		});
 

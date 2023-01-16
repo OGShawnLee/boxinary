@@ -62,10 +62,6 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		return this.items.size;
 	}
 
-	onInit(this: Navigation<T>, fn?: (previous: Nullable<T>, current: Nullable<T>) => void) {
-		onDestroy(this.onSelectedChange(fn));
-	}
-
 	initNavigation(this: Navigation, element: HTMLElement, settings: Navigable.RootSettings = {}) {
 		const { handler = handleNavigation, plugins = [] } = settings;
 		const onKeydown = handler.bind(this);
@@ -171,21 +167,6 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 					item.isSelected = binder.isSelected.value = isSelected;
 					return item;
 				});
-			})
-		);
-	}
-
-	protected onSelectedChange(
-		this: Navigation<T>,
-		fn?: (previous: Nullable<T>, current: Nullable<T>) => void
-	) {
-		let previous: Nullable<T> = null;
-		return useCleanup(
-			this.selected.subscribe((current) => {
-				if (previous) previous.binder.isSelected.value = false;
-				if (current !== previous) previous = current;
-				if (current && !current.disabled) current.binder.isSelected.value = true;
-				fn?.(previous, current);
 			})
 		);
 	}

@@ -27,18 +27,6 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 			binder: radioGroup,
 			id: id,
 			name: baseName,
-			onInit() {
-				navigation.onInit((previous, current) => {
-					if (current) {
-						globalValue.set(current.value);
-						if (current.element) {
-							current.element.ariaChecked = "true";
-						}
-					}
-
-					if (previous?.element) previous.element.ariaChecked = "false";
-				});
-			},
 			onMount({ element }) {
 				return [
 					navigation.initNavigation(element),
@@ -104,7 +92,13 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 					return [
 						navigation.initItem(element, name),
 						descriptions.handleAriaDescribedby(element),
-						labels.handleAriaLabelledby(element)
+						labels.handleAriaLabelledby(element),
+						option.isSelected.subscribe((isSelected) => {
+							if (isSelected) {
+								globalValue.set(initialValue);
+								element.ariaChecked = "true";
+							} else element.ariaChecked = "false";
+						})
 					];
 				}
 			});
