@@ -41,7 +41,7 @@ export const useKeyMatch: Plugin<Navigation> = function (element) {
 			key = key.toLowerCase();
 			const index = this.findIndex((element) => {
 				if (isDisabled(element)) return;
-				return element.textContent?.toLowerCase().startsWith(key);
+				return element.textContent?.toLowerCase().trim().startsWith(key);
 			});
 			if (index > -1) this.interact(index, false);
 		})
