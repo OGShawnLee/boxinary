@@ -25,6 +25,10 @@ interface ComponentInitialiser<T = void> {
 	(id?: string, binder?: ElementBinder): ActionComponent<T>;
 }
 
+interface ComponentInitialiserStrict<T = void> {
+	(id?: string, binder: ElementBinder): ActionComponent<T>;
+}
+
 type ComponentTagName = keyof HTMLElementTagNameMap | "fragment";
 
 // --> ClassName Resolver
@@ -59,7 +63,7 @@ type KeyBack = "ArrowUp" | "ArrowLeft" | "Home";
 
 type KeyNext = "ArrowDown" | "ArrowRight" | "End";
 
-type NavigationKey = KeyBack | KeyNext;
+type NavigationKey = KeyBack | KeyNext | "Enter" | "Space";
 
 type Nullable<T> = T | null | undefined;
 

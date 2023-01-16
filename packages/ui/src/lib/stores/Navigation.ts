@@ -171,6 +171,10 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		);
 	}
 
+	at(this: Navigation, index: number) {
+		return this.elements.at(index);
+	}
+
 	get(this: Navigation<T>, fn: (entry: { name: string; item: T }) => unknown) {
 		for (const entry of this.items.hash.value) {
 			const item = { name: entry[0], item: entry[1] };

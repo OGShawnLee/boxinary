@@ -13,5 +13,6 @@ export {
 	useCloseEscapeKey,
 	useCloseFocusLeave,
 	useFocusKeep,
-	useHidePanelFocusOnClose
+	useHidePanelFocusOnClose,
+	useNavigationStarter
 } from "./toggler";

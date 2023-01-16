@@ -6,7 +6,9 @@ const NAVIGATION_KEY: Record<NavigationKey, boolean> = {
 	ArrowRight: true,
 	ArrowUp: true,
 	End: true,
-	Home: true
+	Enter: true,
+	Home: true,
+	Space: true
 };
 
 const HEADING_TAGS = {

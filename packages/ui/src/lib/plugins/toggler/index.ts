@@ -1,8 +1,10 @@
 import type { ElementBinder } from "$lib/core";
 import type { Toggleable } from "$lib/types";
+import type { Navigation } from "$lib/stores";
 import { useListener, useWindowListener } from "$lib/hooks";
-import { isFocusable, isHTMLElement, isWithinContainer } from "$lib/predicate";
+import { isFocusable, isHTMLElement, isNavigationKey, isWithinContainer } from "$lib/predicate";
 import { useDOMTraversal } from "$lib/hooks";
+import { tick } from "svelte";
 
 export function handleAriaControls(panel: ElementBinder): Toggleable.Plugin {
 	return function (element) {
@@ -80,3 +82,22 @@ export const useHidePanelFocusOnClose: Toggleable.Plugin = function (panel) {
 		}
 	});
 };
+
+export function useNavigationStarter(nav: Navigation): Toggleable.Plugin {
+	return function (button) {
+		const open = async (act: () => void) => {
+			this.handleOpen();
+			await tick();
+			act();
+		};
+		return useListener(button, "keydown", async (event) => {
+			if (!isNavigationKey(event.code)) return;
+			switch (event.code) {
+				case "ArrowDown":
+					if (nav.isVertical.value) return open(() => nav.goFirst());
+				case "ArrowUp":
+					if (nav.isVertical.value) return open(() => nav.goLast());
+			}
+		});
+	};
+}

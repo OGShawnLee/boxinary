@@ -14,7 +14,8 @@ export default defineConfig({
 		panel: "p-6 | grid gap-3 | border-2 border-raisin-20 rounded-xl",
 		"panel--dark": "bg-raisin-05 border-raisin-10",
 		"panel--modal": "fixed transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-		"layout-length": "md:max-w-2xl lg:max-w-4xl xl:max-w-6xl"
+		"layout-length": "md:max-w-2xl lg:max-w-4xl xl:max-w-6xl",
+		"max-w-fit": "max-w-[fit-content]"
 	},
 	theme: {
 		colors: {

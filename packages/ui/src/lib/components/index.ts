@@ -7,6 +7,7 @@ export {
 } from "./accordion";
 export { Disclosure, DisclosureButton, DisclosurePanel } from "./disclosure";
 export { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from "./listbox";
+export { Menu, MenuButton, MenuItem, MenuItems } from "./menu";
 export { Navigable, NavigableItem } from "./navigable";
 export { Popover, PopoverButton, PopoverOverlay, PopoverPanel } from "./popover";
 export {

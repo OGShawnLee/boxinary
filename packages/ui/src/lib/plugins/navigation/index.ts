@@ -15,9 +15,6 @@ export const handleNavigation: Navigable.Handler = function (event) {
 		isNavigationRoot || (isHTMLElement(event.target) && this.isNavigationElement(event.target));
 	if (!this.isGlobal.value && !isNavigationElement) return;
 
-	if (!this.isFocusEnabled.value && this.isManual.value && event.code === "Enter")
-		this.set(this.manualIndex.value);
-
 	if (!isNavigationKey(event.code)) return;
 	switch (event.code) {
 		case "ArrowDown":
@@ -32,6 +29,14 @@ export const handleNavigation: Navigable.Handler = function (event) {
 			if (event.code === "Home" && this.isGlobal.value) return;
 			event.preventDefault();
 			return this.handleBackKey(event.code, event.ctrlKey);
+		case "Enter":
+		case "Space":
+			if (this.isFocusEnabled.value) return;
+			const element = this.at(this.manualIndex.value);
+			if (element) {
+				if (event.code === "Enter") event.preventDefault();
+				element.click();
+			}
 	}
 };
 
