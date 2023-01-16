@@ -1,26 +1,27 @@
 <script lang="ts">
 	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import Context from "./context";
 	import { Render } from "$lib/components";
-	import { GroupContext } from "./context";
 	import { useClassNameResolver } from "$lib/hooks";
+	import { ElementBinder } from "$lib/core";
 
-	let className: ClassName<"DISABLED" | "SELECTED"> = undefined;
+	let className: ClassName<"ACTIVE" | "DISABLED" | "SELECTED"> = undefined;
 
-	export let as: ComponentTagName = "div";
+	export let as: ComponentTagName = "li";
 	export let disabled: Nullable<boolean> = undefined;
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
-	export let selected = false;
 	export let value = "";
 	export { className as class };
 
-	const { createRadioGroupOptionState } = GroupContext.getContext();
-	const { createOption, descriptions, labels } = createRadioGroupOptionState(value, selected);
-	const { action, binder } = createOption(id);
-	const { isSelected } = binder;
+	const { createListboxOptionState } = Context.getContext();
+	const { createListboxOption } = createListboxOptionState(value, disabled);
+	const { action, binder } = createListboxOption(id, new ElementBinder());
+	const { isActive, isSelected } = binder;
 
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({
+		isActive: $isActive,
 		isDisabled,
 		isSelected: $isSelected
 	});
@@ -34,11 +35,10 @@
 	bind:element
 	{binder}
 	actions={[action]}
-	aria-checked={$isSelected}
-	aria-describedby={$descriptions}
-	aria-labelledby={$labels}
-	role="radio"
-	tabIndex={0}
+	aria-selected={$isSelected}
+	{disabled}
+	role="option"
+	tabIndex={-1}
 	on:blur
 	on:change
 	on:click
@@ -60,5 +60,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot {isDisabled} isSelected={$isSelected} option={action} />
+	<slot {isDisabled} isActive={$isActive} isSelected={$isSelected} option={action} />
 </Render>

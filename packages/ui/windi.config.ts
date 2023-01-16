@@ -23,6 +23,7 @@ export default defineConfig({
 				75: "#80FFD4",
 				50: "#33FFBB"
 			},
+			black: "#000000",
 			raisin: {
 				50: "#6A40BF",
 				20: "#30293D",

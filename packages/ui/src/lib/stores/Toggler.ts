@@ -54,7 +54,10 @@ export default class Toggler {
 			beforeCollection: () => {
 				this.panel.value = undefined;
 			},
-			init: () => this.initialisePlugins(element, plugins)
+			init: () => [
+				config?.onOpen && this.isOpen.subscribe((isOpen) => isOpen && config.onOpen?.(element)),
+				this.initialisePlugins(element, plugins)
+			]
 		});
 	}
 

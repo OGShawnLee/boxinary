@@ -38,7 +38,7 @@ type ClassName<S extends ComponentState> = Nullable<
 	  })
 >;
 
-type ComponentState = "CHECKED" | "DISABLED" | "OPEN" | "SELECTED";
+type ComponentState = "ACTIVE" | "CHECKED" | "DISABLED" | "OPEN" | "SELECTED";
 
 interface FunctionClassName<S extends ComponentState> {
 	(predicate: StatePredicate<S>): Nullable<string>;
@@ -91,9 +91,11 @@ namespace Navigable {
 
 	interface Item {
 		binder: ElementBinder;
+		disabled: Nullable<boolean>;
 		element?: HTMLElement;
 		index: number;
-		disabled: Nullable<boolean>;
+		isActive: boolean;
+		isSelected: boolean;
 	}
 
 	interface RootSettings {
@@ -105,6 +107,7 @@ namespace Navigable {
 		initialIndex?: number;
 		isDisabled?: boolean;
 		isFinite?: boolean;
+		isFocusEnabled?: boolean;
 		isGlobal?: boolean;
 		isManual?: boolean;
 		isVertical?: boolean;
@@ -138,5 +141,6 @@ namespace Toggleable {
 
 	export interface PanelOptions {
 		plugins?: Array<Plugin>;
+		onOpen?: (panel: HTMLElement) => void;
 	}
 }

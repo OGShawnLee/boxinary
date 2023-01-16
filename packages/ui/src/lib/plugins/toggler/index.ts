@@ -1,6 +1,6 @@
 import type { ElementBinder } from "$lib/core";
 import type { Toggleable } from "$lib/types";
-import { useWindowListener } from "$lib/hooks";
+import { useListener, useWindowListener } from "$lib/hooks";
 import { isFocusable, isHTMLElement, isWithinContainer } from "$lib/predicate";
 import { useDOMTraversal } from "$lib/hooks";
 
@@ -60,6 +60,12 @@ export const useCloseFocusLeave: Toggleable.Plugin = function (panel) {
 		this.handleClose(target);
 	});
 };
+
+export function useFocusKeep(panel: HTMLElement) {
+	return useListener(panel, "keydown", (event) => {
+		if (event.code === "Tab") event.preventDefault();
+	});
+}
 
 export const useHidePanelFocusOnClose: Toggleable.Plugin = function (panel) {
 	const elements = useDOMTraversal(panel, isFocusable);

@@ -4,9 +4,10 @@ import type { Updater } from "svelte/store";
 import Hash from "./Hash";
 import { findIndex, findLastIndex, ref } from "$lib/utils";
 import { handleNavigation } from "$lib/plugins";
-import { isAround, isNullish, isNumber } from "@boxinary/predicate-core";
+import { isAround, isNumber } from "@boxinary/predicate-core";
 import { isFocusable, isWithinContainer } from "$lib/predicate";
 import { onDestroy } from "svelte";
+import { derived } from "svelte/store";
 import { useCleanup, useListener, useWindowListener } from "$lib/hooks";
 import { createDerivedRef } from "$lib/utils";
 
@@ -20,8 +21,10 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	readonly isManual: Ref<boolean>;
 	readonly isVertical: Ref<boolean>;
 	readonly isWaiting: Ref<boolean>;
+	readonly isFocusEnabled: Ref<boolean>;
 	protected readonly items = new Hash<string, T>({ entries: false, keys: false });
 	protected readonly elements: HTMLElement[] = [];
+	readonly active: ReadableRef<T | undefined>;
 	readonly selected: ReadableRef<T | undefined>;
 
 	constructor(settings: Navigable.Settings = {}) {
@@ -29,6 +32,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		this.manualIndex = ref(settings.initialIndex ?? 0, this.index.subscribe);
 		this.isDisabled = ref(settings.isDisabled ?? false);
 		this.isFinite = ref(settings.isFinite ?? false);
+		this.isFocusEnabled = ref(settings.isFocusEnabled ?? true);
 		this.isGlobal = ref(settings.isGlobal ?? false);
 		this.isManual = ref(settings.isManual ?? false);
 		this.isVertical = ref(settings.isVertical ?? false);
@@ -36,15 +40,14 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		this.targetIndexRef = createDerivedRef(this.isManual, (isManual) => {
 			return isManual ? this.manualIndex : this.index;
 		});
-		this.selected = createDerivedRef(
-			[this.index, this.items.values, this.isWaiting],
-			([index, items, isWaiting]) => {
-				if (isWaiting) return;
-				const item = items.at(index);
-				if (isNullish(item) || item.disabled) return;
-				return item;
-			}
-		);
+		this.active = createDerivedRef([this.items.values, this.isWaiting], ([items, isWaiting]) => {
+			if (isWaiting) return;
+			return items.find((item) => item.isActive);
+		});
+		this.selected = createDerivedRef([this.items.values, this.isWaiting], ([items, isWaiting]) => {
+			if (isWaiting) return;
+			return items.find((item) => item.isSelected);
+		});
 	}
 
 	get isHorizontal() {
@@ -88,10 +91,20 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 	) {
 		const index = this.items.size;
 		if (this.items.has(name)) return index;
-		const finalItem = { ...item, binder, disabled: binder.disabled.value, index };
+		const finalItem = {
+			...item,
+			binder,
+			disabled: binder.disabled.value,
+			index,
+			isActive: false,
+			isSelected: false
+		};
 		this.items.set(name, finalItem as T);
 		binder.isSelected.value = this.isSelected(name);
+		this.handleItemActiveState(index, binder, name);
+		this.handleItemSelectedState(index, binder, name);
 		onDestroy(() => {
+			const index = this.elements.findIndex((element) => element === binder.element.value);
 			this.elements.splice(index, 1);
 			this.items.delete(name);
 		});
@@ -107,13 +120,59 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 			return item;
 		});
 		return useCleanup([
-			useListener(element, "click", () => this.interact(index, false)),
+			this.index.subscribe(this.manualIndex.set),
+			useListener(element, "click", () => {
+				this.set(index, false);
+			}),
 			useListener(element, "focus", () => {
 				if (this.targetIndex.value !== index && isFocusable(element)) {
 					this.interact(index, false);
 				}
 			})
 		]);
+	}
+
+	protected handleItemActiveState(
+		this: Navigation,
+		index: number,
+		binder: ElementBinder,
+		name: string
+	) {
+		const isActive = derived([this.manualIndex, binder.disabled], ([manualIndex, isDisabled]) => {
+			if (isDisabled) return false;
+			return manualIndex === index;
+		});
+		onDestroy(
+			isActive.subscribe((isActive) => {
+				this.items.update(name, (item) => {
+					item.isActive = binder.isActive.value = isActive;
+					return item;
+				});
+			})
+		);
+	}
+
+	protected handleItemSelectedState(
+		this: Navigation,
+		index: number,
+		binder: ElementBinder,
+		name: string
+	) {
+		const isSelected = derived(
+			[this.index, binder.disabled, this.isWaiting],
+			([globalIndex, isDisabled, isWaiting]) => {
+				if (isWaiting || isDisabled) return false;
+				return globalIndex === index;
+			}
+		);
+		onDestroy(
+			isSelected.subscribe((isSelected) => {
+				this.items.update(name, (item) => {
+					item.isSelected = binder.isSelected.value = isSelected;
+					return item;
+				});
+			})
+		);
 	}
 
 	protected onSelectedChange(
@@ -143,13 +202,21 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		this.items.update(name, callback);
 	}
 
+	set(this: Navigation, index: number, focus = true) {
+		if (this.isValidIndex(index)) {
+			this.index.value = index;
+			this.isWaiting.value = false;
+			if (this.isFocusEnabled.value && focus) this.elements.at(index)?.focus();
+		}
+	}
+
 	interact(this: Navigation, index: number | Updater<number>, focus = true) {
 		index = isNumber(index) ? index : index(this.targetIndex.value);
 		if (this.isValidIndex(index)) {
 			this.targetIndex.value = index;
-			this.isWaiting.set(false);
+			if (!this.isManual.value) this.isWaiting.set(false);
 		}
-		if (focus) this.elements.at(this.targetIndex.value)?.focus();
+		if (this.isFocusEnabled.value && focus) this.elements.at(this.targetIndex.value)?.focus();
 	}
 
 	go(

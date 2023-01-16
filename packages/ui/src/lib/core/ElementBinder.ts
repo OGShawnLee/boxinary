@@ -15,6 +15,7 @@ export default class ElementBinder {
 	protected readonly node = ref<HTMLElement | undefined>(undefined);
 	readonly name = ref<string | undefined>(undefined);
 	readonly id = ref<string | undefined>(undefined);
+	readonly isActive = ref(false);
 	readonly isSelected = ref(false);
 	readonly isUsingFragment = ref(true);
 	readonly finalName = createDerivedRef([this.id, this.name], ([id, name]) => {
