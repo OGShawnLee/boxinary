@@ -2,7 +2,7 @@
 	import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from "$lib";
 	import { useClassNameResolver } from "$lib/hooks";
 	import { Page, Toggle } from "@app/components";
-	import { slide } from "svelte/transition";
+	import { fly, slide } from "svelte/transition";
 
 	const className = useClassNameResolver<"ACTIVE" | "DISABLED" | "SELECTED">({
 		base: "pl-6 pr-6 py-2 | text-sm text-center",
@@ -59,17 +59,20 @@
 				<ListboxOption class={className} value="The Rock">The Rock</ListboxOption>
 			</ListboxOptions>
 		</Listbox>
-		<Listbox class="flex flex-col items-start gap-3" {infinite} {horizontal} let:value>
+		<Listbox class="flex flex-col items-start gap-3" {infinite} {horizontal} let:value let:options>
 			<ListboxLabel class="sr-only">Select your Fighter</ListboxLabel>
 			<ListboxButton class={buttonClassName}>{value ?? "No Figher"}</ListboxButton>
-			<ListboxOptions
+			<ul
 				class="flex flex-col gap-1.5 | bg-raisin-12 rounded-lg outline-none overflow-hidden"
+				slot="options"
+				use:options
+				transition:fly|local
 			>
 				<ListboxOption class={className} value="John Cena">John Cena</ListboxOption>
 				<ListboxOption class={className} value="Ricardo Milos">Ricardo Milos</ListboxOption>
 				<ListboxOption class={className} value="Goku" disabled>Goku</ListboxOption>
 				<ListboxOption class={className} value="The Rock">The Rock</ListboxOption>
-			</ListboxOptions>
+			</ul>
 		</Listbox>
 	</div>
 </Page>
