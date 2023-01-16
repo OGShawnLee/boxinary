@@ -1,5 +1,5 @@
 import type { ElementBinder } from "$lib/core";
-import type { KeyBack, KeyNext, Navigable, Nullable, Plugin, ReadableRef, Ref } from "$lib/types";
+import type { KeyBack, KeyNext, Navigable, Plugin, ReadableRef, Ref } from "$lib/types";
 import type { Updater } from "svelte/store";
 import Hash from "./Hash";
 import { findIndex, findLastIndex, ref } from "$lib/utils";
