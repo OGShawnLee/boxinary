@@ -108,10 +108,7 @@ export function createListboxState<T>(settings: Settings<T>) {
 						plugins: [useCloseFocusLeave, useCloseClickOutside, useCloseEscapeKey],
 						onOpen: () => element.focus()
 					}),
-					labels.finalName.subscribe((id) => {
-						if (id) element.setAttribute("aria-labelledby", id);
-						else element.removeAttribute("aria-labelledby");
-					}),
+					labels.handleAriaLabelledby(element),
 					navigation.active.subscribe((active) => {
 						const name = active?.binder.finalName.value;
 						if (active && name) element.setAttribute("aria-activedescendant", name);
