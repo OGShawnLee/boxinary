@@ -19,8 +19,8 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 	const radioGroup = new ElementBinder();
 	const descriptions = new ElementLabel();
 	const labels = new ElementLabel();
-	const value = ref(settings.initialValue);
-	let isPending = true;
+	const globalValue = ref(settings.initialValue);
+	let isInitialValueFound = false;
 
 	function createRadioGroup(id: string | undefined) {
 		return defineActionComponent({
@@ -30,7 +30,7 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 			onInit() {
 				navigation.onInit((previous, current) => {
 					if (current) {
-						value.set(current.value);
+						globalValue.set(current.value);
 						if (current.element) {
 							current.element.ariaChecked = "true";
 						}
@@ -92,10 +92,11 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 				name: baseName,
 				onInit: ({ binder, name }) => {
 					const index = navigation.onInitItem(name, binder, { value: initialValue });
-					if (initialValue === value.value || (isSelected && isPending)) {
+					if (isInitialValueFound) return;
+					if (initialValue === globalValue.value || isSelected) {
 						navigation.index.set(index);
 						navigation.isWaiting.set(false);
-						isPending = false;
+						isInitialValueFound = true;
 					}
 				},
 				onMount({ element, name }) {
@@ -124,9 +125,9 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 	return {
 		createRadioGroup,
 		descriptions: descriptions.finalName,
+		globalValue,
 		labels: labels.finalName,
-		navigation,
-		value
+		navigation
 	};
 }
 

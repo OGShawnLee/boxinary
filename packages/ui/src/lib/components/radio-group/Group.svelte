@@ -12,21 +12,17 @@
 	export let value = "";
 	export { className as class };
 
-	const {
-		createRadioGroup,
-		descriptions,
-		labels,
-		navigation,
-		value: valueRef
-	} = createRadioGroupState({
-		initialValue: value,
-		isVertical: !horizontal,
-		isWaiting: true
-	});
+	const { createRadioGroup, descriptions, labels, navigation, globalValue } = createRadioGroupState(
+		{
+			initialValue: value,
+			isVertical: !horizontal,
+			isWaiting: true
+		}
+	);
 	const { action, binder } = createRadioGroup(id);
 
 	$: navigation.isVertical.set(!horizontal);
-	$: value = $valueRef;
+	$: value = $globalValue;
 </script>
 
 <Render
