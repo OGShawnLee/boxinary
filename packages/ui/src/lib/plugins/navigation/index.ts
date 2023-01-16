@@ -38,6 +38,7 @@ export const handleNavigation: Navigable.Handler = function (event) {
 export const useKeyMatch: Plugin<Navigation> = function (element) {
 	return useCleanup(
 		useListener(element, "keydown", ({ key }) => {
+			if (isNavigationKey(key)) return;
 			key = key.toLowerCase();
 			const index = this.findIndex((element) => {
 				if (isDisabled(element)) return;
