@@ -30,7 +30,8 @@ export default class Toggler {
 		return this.isOpen.value === false;
 	}
 
-	initButton(this: Toggler, element: HTMLElement, settings?: Toggleable.ButtonOptions) {
+	initButton(this: Toggler, element: HTMLElement, settings: Toggleable.ButtonOptions = {}) {
+		const { plugins, isToggler = true } = settings;
 		this.button.value = element;
 		element.setAttribute("type", "button");
 		return useGarbageCollector({
@@ -38,8 +39,8 @@ export default class Toggler {
 				this.button.value = undefined;
 			},
 			init: () => [
-				settings?.isToggler && useListener(element, "click", () => this.handleToggle()),
-				this.initialisePlugins(element, settings?.plugins)
+				isToggler && useListener(element, "click", () => this.handleToggle()),
+				this.initialisePlugins(element, plugins)
 			]
 		});
 	}
