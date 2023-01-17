@@ -1,7 +1,7 @@
 import type { ReadableRef } from "$lib/types";
 import type ElementBinder from "./ElementBinder";
 import { Hash } from "$lib/stores";
-import { createDerivedRef } from "$lib/utils";
+import { clearString, createDerivedRef } from "$lib/utils";
 import { onDestroy } from "svelte";
 import { useGarbageCollector } from "$lib/hooks";
 
@@ -12,7 +12,7 @@ export default class ElementLabel {
 	constructor() {
 		this.items = new Hash({ keys: false, entries: false });
 		this.finalName = createDerivedRef(this.items.values, (labels) => {
-			if (labels.length) return labels.join(" ");
+			if (labels.length) return clearString(labels.join(" "));
 		});
 	}
 
