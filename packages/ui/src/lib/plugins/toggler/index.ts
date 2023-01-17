@@ -1,10 +1,11 @@
 import type { ElementBinder } from "$lib/core";
-import type { Toggleable } from "$lib/types";
+import type { Nullable, Toggleable } from "$lib/types";
 import type { Navigation } from "$lib/stores";
 import { useListener, useWindowListener } from "$lib/hooks";
 import { isFocusable, isHTMLElement, isNavigationKey, isWithinContainer } from "$lib/predicate";
 import { useDOMTraversal } from "$lib/hooks";
 import { tick } from "svelte";
+import { isEmpty } from "@boxinary/predicate-core";
 
 export function handleAriaControls(panel: ElementBinder): Toggleable.Plugin {
 	return function (element) {
@@ -67,6 +68,32 @@ export function useFocusKeep(panel: HTMLElement) {
 	return useListener(panel, "keydown", (event) => {
 		if (event.code === "Tab") event.preventDefault();
 	});
+}
+
+export function useFocusTrap(fallback?: Nullable<Element>) {
+	return function (panel: HTMLElement) {
+		return useWindowListener("keydown", (event) => {
+			const children = useDOMTraversal(panel, isFocusable);
+			if (event.code !== "Tab") return;
+			if (isEmpty(children) && isHTMLElement(fallback) && isFocusable(fallback)) {
+				event.preventDefault();
+				return fallback.focus();
+			}
+			const first = children.at(0);
+			const last = children.at(-1);
+			if (event.shiftKey) {
+				if (first && first === document.activeElement) {
+					event.preventDefault();
+					last?.focus();
+				}
+			} else {
+				if (last && last === document.activeElement) {
+					event.preventDefault();
+					first?.focus();
+				}
+			}
+		});
+	};
 }
 
 export const useHidePanelFocusOnClose: Toggleable.Plugin = function (panel) {

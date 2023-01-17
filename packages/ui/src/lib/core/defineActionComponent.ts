@@ -10,15 +10,7 @@ export function defineActionComponent<T = void>(config: {
 	name: string;
 	isShowing?: boolean;
 	onInit?: (context: { binder: ElementBinder; name: string }) => T;
-	onMount: (context: {
-		binder: ElementBinder;
-		element: HTMLElement;
-		name: string;
-	}) =>
-		| { onActionComponent?: () => Collectable; base?: Collectable }
-		| Nullable<Unsubscriber>[]
-		| Nullable<Unsubscriber>
-		| void;
+	onMount: (context: { binder: ElementBinder; element: HTMLElement; name: string }) => Collectable;
 }): ActionComponent<T> {
 	const { binder = new ElementBinder(), name, onMount, id, isShowing = true } = config;
 	if (isShowing) {
@@ -30,15 +22,10 @@ export function defineActionComponent<T = void>(config: {
 		context,
 		binder: binder,
 		action: (element: HTMLElement) => {
-			const destroy = onMount?.({ binder, element, name });
 			return {
 				destroy: useGarbageCollector({
 					beforeInit: () => binder.onMount(element, name),
-					init: () => {
-						if (Array.isArray(destroy) || isFunction(destroy)) return destroy;
-						else if (isObject(destroy))
-							return [binder.isUsingFragment.value && destroy.onActionComponent?.(), destroy.base];
-					}
+					init: () => onMount?.({ binder, element, name })
 				})
 			};
 		}

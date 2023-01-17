@@ -141,6 +141,7 @@ namespace Toggleable {
 
 	export interface ButtonOptions {
 		plugins?: Array<Plugin>;
+		isToggler?: boolean;
 	}
 
 	export interface PanelOptions {

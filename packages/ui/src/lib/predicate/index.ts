@@ -7,6 +7,7 @@ export {
 } from "./internal";
 export {
 	isChildless,
+	isClient,
 	isDisabled,
 	isFocusable,
 	isHTMLElement,

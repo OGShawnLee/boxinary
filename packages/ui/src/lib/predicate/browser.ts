@@ -43,6 +43,14 @@ export function isChildless(container: HTMLElement) {
 	return !container.hasChildNodes();
 }
 
+export function isClient() {
+	try {
+		return !!window;
+	} catch {
+		return false;
+	}
+}
+
 export function isDisabled(element: HTMLElement) {
 	return element.hasAttribute("disabled");
 }

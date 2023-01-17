@@ -29,9 +29,7 @@ export function createDisclosureState(initialValue: boolean) {
 			id: id,
 			name: nameChild("panel"),
 			isShowing: initialValue,
-			onMount: ({ element }) => ({
-				base: toggler.initPanel(element)
-			})
+			onMount: ({ element }) => toggler.initPanel(element)
 		});
 	};
 

@@ -5,6 +5,7 @@ export {
 	AccordionItem,
 	AccordionPanel
 } from "./accordion";
+export { Dialog, DialogContent, DialogDescription, DialogOverlay, DialogTitle } from "./dialog";
 export { Disclosure, DisclosureButton, DisclosurePanel } from "./disclosure";
 export { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from "./listbox";
 export { Menu, MenuButton, MenuItem, MenuItems } from "./menu";

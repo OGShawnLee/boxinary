@@ -1,5 +1,5 @@
 import type { Nullable } from "$lib/types";
-import { isFocusable, isHTMLElement } from "$lib/predicate";
+import { isFocusable, isHTMLElement, isWithinContainer } from "$lib/predicate";
 
 function findElement(
 	container: HTMLElement,
@@ -17,11 +17,15 @@ function findElement(
 
 export function focusFirstChildElement(
 	container: HTMLElement,
-	configuration: {
+	config: {
 		fallback?: Nullable<HTMLElement>;
-	}
+		initialFocus?: Nullable<HTMLElement>;
+	} = {}
 ) {
+	const { fallback, initialFocus } = config;
+	if (initialFocus && isFocusable(initialFocus) && isWithinContainer(container, initialFocus))
+		return initialFocus.focus();
 	const child = findElement(container, isFocusable);
 	if (child) child.focus();
-	else configuration.fallback?.focus();
+	else fallback?.focus();
 }

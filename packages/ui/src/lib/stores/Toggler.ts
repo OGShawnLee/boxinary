@@ -38,7 +38,7 @@ export default class Toggler {
 				this.button.value = undefined;
 			},
 			init: () => [
-				useListener(element, "click", () => this.handleToggle()),
+				settings?.isToggler && useListener(element, "click", () => this.handleToggle()),
 				this.initialisePlugins(element, settings?.plugins)
 			]
 		});
