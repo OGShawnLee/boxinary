@@ -1,5 +1,6 @@
 import type { Readable, Unsubscriber, Writable } from "svelte/store";
 import type { ElementBinder } from "$lib/core";
+import type { TogglerGroup } from "./stores/Toggler";
 import { Navigation, Toggler } from "$lib/stores";
 
 interface Action {
@@ -133,6 +134,7 @@ namespace Toggleable {
 	export interface Configuration {
 		isOpen?: boolean;
 		isFocusForced?: boolean;
+		group?: TogglerGroup;
 	}
 
 	export interface Plugin {

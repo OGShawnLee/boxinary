@@ -11,9 +11,10 @@ export default defineConfig({
 		"button--open":
 			"bg-raisin-15 text-white border-raisin-12 hover:bg-raisin-20 focus:border-rich-75",
 		"button-focus": "button button--focus",
-		panel: "p-6 | grid gap-3 | border-2 border-raisin-20 rounded-xl",
-		"panel--dark": "bg-raisin-05 border-raisin-10",
-		"panel--modal": "fixed transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+		panel: "p-6 | grid gap-3 | bg-raisin-12 rounded-xl",
+		"panel--modal":
+			"fixed transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 | bg-raisin-10",
+		overlay: "fixed inset-0 | bg-raisin-05/90 backdrop-filter backdrop-blur-1px",
 		"layout-length": "md:max-w-2xl lg:max-w-4xl xl:max-w-6xl",
 		"max-w-fit": "max-w-[fit-content]"
 	},

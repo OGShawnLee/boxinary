@@ -34,9 +34,7 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 			id: id,
 			name: nameChild("overlay"),
 			isShowing: false,
-			onMount: ({ element }) => ({
-				base: toggler.createOverlay(element)
-			})
+			onMount: ({ element }) => toggler.createOverlay(element)
 		});
 
 	const createPanel: ComponentInitialiser = (id) =>
@@ -45,11 +43,10 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 			id: id,
 			name: nameChild("panel"),
 			isShowing: false,
-			onMount: ({ element }) => ({
-				base: toggler.createPanel(element, {
+			onMount: ({ element }) =>
+				toggler.createPanel(element, {
 					plugins: [useCloseClickOutside, useCloseEscapeKey, useCloseFocusLeave]
 				})
-			})
 		});
 
 	Context.setContext({

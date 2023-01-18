@@ -25,6 +25,7 @@ export {
 	NavigableItem,
 	Popover,
 	PopoverButton,
+	PopoverGroup,
 	PopoverOverlay,
 	PopoverPanel,
 	Render,

@@ -1,25 +1,18 @@
 <script lang="ts">
 	import type { ClassName, ComponentTagName } from "$lib/types";
-	import GroupContext from "./Group.context";
 	import { Render } from "$lib/components";
-	import { createPopoverState } from "./state";
+	import { createPopoverGroupState } from "./Group.state";
 	import { useClassNameResolver } from "$lib/hooks";
 
 	let className: ClassName<"OPEN"> = undefined;
 
 	export let as: ComponentTagName = "div";
-	export let forceFocus = false;
 	export let id: string | undefined = undefined;
 	export { className as class };
 
-	const { isOpen, isFocusForced, close, button, overlay, panel } = createPopoverState({
-		isFocusForced: forceFocus,
-		isOpen: false,
-		group: GroupContext.getContext(false)
-	});
+	const isOpen = createPopoverGroupState();
 
-	$: isFocusForced.value = forceFocus;
-	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen });
+	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen })
 </script>
 
 <Render
@@ -48,12 +41,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	{#if $isOpen}
-		<slot name="overlay" {overlay} />
-		<slot name="up-panel" {panel} {close} />
-	{/if}
-	<slot isOpen={$isOpen} {button} {overlay} {panel} {close} />
-	{#if $isOpen}
-		<slot name="panel" {panel} {close} />
-	{/if}
+	<slot isOpen={$isOpen} />
 </Render>

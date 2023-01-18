@@ -41,9 +41,10 @@ export function handleAriaLabelledby(button: ElementBinder): Toggleable.Plugin {
 }
 
 export const useCloseClickOutside: Toggleable.Plugin = function () {
-	return useWindowListener("click", ({ target }) => {
+	return useWindowListener("click", (event) => {
+		const { target } = event;
 		if (this.isClosed || !isHTMLElement(target) || this.isWithinElements(target)) return;
-		this.handleClose(target);
+		this.handleClose(event);
 	});
 };
 
@@ -55,12 +56,13 @@ export const useCloseEscapeKey: Toggleable.Plugin = function () {
 };
 
 export const useCloseFocusLeave: Toggleable.Plugin = function (panel) {
-	return useWindowListener("focusin", ({ target }) => {
+	return useWindowListener("focusin", (event) => {
+		const { target } = event;
 		if (this.isClosed || target === document || target === window || !isHTMLElement(target)) return;
 		if (this.isFocusForced.value && !isWithinContainer(panel, target))
-			return this.handleClose(target);
-		if (this.isWithinElements(target)) return;
-		this.handleClose(target);
+			return this.handleClose(event);
+		if (this.isWithinElements(target) || this.group?.isWithinElements(target)) return;
+		this.handleClose(event);
 	});
 };
 

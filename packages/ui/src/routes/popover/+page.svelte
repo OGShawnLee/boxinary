@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Page, Toggle } from "@app/components";
-	import { Popover, PopoverButton, PopoverOverlay, PopoverPanel } from "$lib";
+	import { Popover, PopoverButton, PopoverGroup, PopoverOverlay, PopoverPanel } from "$lib";
 	import { fade, scale, slide } from "svelte/transition";
 	import { useClassNameResolver } from "$lib/hooks";
 
@@ -31,9 +31,9 @@
 			</Popover>
 			<Popover class="flex flex-col gap-9" {forceFocus} let:isOpen let:button let:overlay let:panel>
 				<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
-				<div class="fixed inset-0 bg-raisin-05/90" slot="overlay" use:overlay />
+				<div class="overlay" slot="overlay" use:overlay />
 				<div
-					class="panel panel--dark panel--modal"
+					class="panel panel--modal"
 					slot="panel"
 					use:panel
 					let:close
@@ -53,8 +53,8 @@
 				<PopoverButton class={buttonClassName}>
 					Toggle {isOpen}
 				</PopoverButton>
-				<PopoverOverlay class="fixed inset-0 bg-raisin-05/90" />
-				<PopoverPanel class="panel panel--dark panel--modal">
+				<PopoverOverlay class="overlay" />
+				<PopoverPanel class="panel panel--modal">
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
 						tenetur. Molestiae quo pariatur dolore distinctio dolores.
@@ -76,5 +76,76 @@
 				</div>
 			</Popover>
 		</div>
+		<PopoverGroup class="grid gap-3" let:isOpen>
+			<h2 class="mt-12 | text-xl text-white font-semibold">Popover Group</h2>
+			<span class="max-w-fit px-6 py-2 | bg-raisin-12 rounded-lg">
+				Group State: {isOpen ? "Open" : "Closed"}
+			</span>
+			<div class="grid grid-cols-4">
+				<Popover class="flex flex-col gap-4.5" let:isOpen let:button let:panel>
+					<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
+					<div class="panel" slot="panel" use:panel let:close transition:fade|local>
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
+							tenetur. Molestiae quo pariatur dolore distinctio dolores.
+						</p>
+						<button class="button-small" on:click={close}> Close </button>
+					</div>
+				</Popover>
+				<Popover
+					class="flex flex-col gap-9"
+					{forceFocus}
+					let:isOpen
+					let:button
+					let:overlay
+					let:panel
+				>
+					<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
+					<div class="overlay" slot="overlay" use:overlay />
+					<div
+						class="panel panel--modal"
+						slot="panel"
+						use:panel
+						let:close
+						transition:scale={{ start: 0.75 }}
+					>
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
+							tenetur. Molestiae quo pariatur dolore distinctio dolores.
+						</p>
+						<div class="flex gap-3">
+							<button class="button-small" on:click={close}> Accept </button>
+							<button class="button-small" on:click={close}> Close </button>
+						</div>
+					</div>
+				</Popover>
+				<Popover class="flex flex-col gap-4.5" {forceFocus} let:isOpen let:close>
+					<PopoverButton class={buttonClassName}>
+						Toggle {isOpen}
+					</PopoverButton>
+					<PopoverOverlay class="overlay" />
+					<PopoverPanel class="panel panel--modal">
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
+							tenetur. Molestiae quo pariatur dolore distinctio dolores.
+						</p>
+						<div class="flex gap-3">
+							<button class="button-small" on:click={close}> Accept </button>
+							<button class="button-small" on:click={close}> Close </button>
+						</div>
+					</PopoverPanel>
+				</Popover>
+				<Popover class="flex flex-col gap-4.5" let:isOpen let:button let:panel>
+					<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
+					<div class="panel" slot="panel" use:panel let:close transition:slide>
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
+							tenetur. Molestiae quo pariatur dolore distinctio dolores.
+						</p>
+						<button class="button--small" on:click={close}> Close </button>
+					</div>
+				</Popover>
+			</div>
+		</PopoverGroup>
 	</div>
 </Page>
