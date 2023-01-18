@@ -11,6 +11,7 @@ export default defineConfig({
 		"button--open":
 			"bg-raisin-15 text-white border-raisin-12 hover:bg-raisin-20 focus:border-rich-75",
 		"button-focus": "button button--focus",
+		"button--tab": "rounded-b-none",
 		panel: "p-6 | grid gap-3 | bg-raisin-12 rounded-xl",
 		"panel--modal":
 			"fixed transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 | bg-raisin-10",

@@ -39,49 +39,49 @@
 				use:items
 				transition:slide|local
 			>
-				<MenuItem class={className} on:click={handleClick}>
-					<i class="bx bx-archive" />
+				<MenuItem class={className} on:click={handleClick} let:isActive>
+					<i class="bx bx-archive" class:text-aqua-50={isActive} />
 					Archive
 				</MenuItem>
 				<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-				<MenuItem class={className} on:click={handleClick}>
-					<i class="bx bx-trash" />
+				<MenuItem class={className} on:click={handleClick} let:isActive>
+					<i class="bx bx-trash" class:text-aqua-50={isActive} />
 					Delete
 				</MenuItem>
 				<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-				<MenuItem class={className} on:click={handleClick}>
-					<i class="bx bx-pen" />
+				<MenuItem class={className} on:click={handleClick} let:isActive>
+					<i class="bx bx-pen" class:text-aqua-50={isActive} />
 					Edit
 				</MenuItem>
 				<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-				<MenuItem class={className} on:click={handleClick}>
-					<i class="bx bx-duplicate" />
+				<MenuItem class={className} on:click={handleClick} let:isActive>
+					<i class="bx bx-duplicate" class:text-aqua-50={isActive} />
 					Duplicate
 				</MenuItem>
 			</div>
 		</Menu>
-		<Menu class="flex flex-col items-start gap-3" {horizontal} {infinite} let:items>
+		<Menu class="flex flex-col items-start gap-3" {horizontal} {infinite}>
 			<MenuButton class={{ base: "button", open: { on: "button--open", off: "button--closed" } }}>
 				Options
 			</MenuButton>
 			<MenuItems class="w-40 | flex flex-col | bg-raisin-12 rounded-lg outline-none">
-				<MenuItem class={className} on:click={handleClick}>
-					<i class="bx bx-archive" />
+				<MenuItem class={className} on:click={handleClick} let:isActive>
+					<i class="bx bx-archive" class:text-aqua-50={isActive} />
 					Archive
 				</MenuItem>
 				<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-				<MenuItem class={className} on:click={handleClick}>
-					<i class="bx bx-trash" />
+				<MenuItem class={className} on:click={handleClick} let:isActive>
+					<i class="bx bx-trash" class:text-aqua-50={isActive} />
 					Delete
 				</MenuItem>
 				<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-				<MenuItem class={className} on:click={handleClick}>
-					<i class="bx bx-pen" />
+				<MenuItem class={className} on:click={handleClick} let:isActive>
+					<i class="bx bx-pen" class:text-aqua-50={isActive} />
 					Edit
 				</MenuItem>
 				<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-				<MenuItem class={className} on:click={handleClick}>
-					<i class="bx bx-duplicate" />
+				<MenuItem class={className} on:click={handleClick} let:isActive>
+					<i class="bx bx-duplicate" class:text-aqua-50={isActive} />
 					Duplicate
 				</MenuItem>
 			</MenuItems>
@@ -92,8 +92,8 @@
 			</MenuButton>
 			<div slot="items" transition:fly|local={{ y: 15 }}>
 				<MenuItems class="w-40 | grid | bg-raisin-12 rounded-lg outline-none" static>
-					<MenuItem class={className} on:click={handleClick}>
-						<i class="bx bx-archive" />
+					<MenuItem class={className} on:click={handleClick} let:isActive>
+						<i class="bx bx-archive" class:text-aqua-50={isActive} />
 						Archive
 					</MenuItem>
 					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
@@ -102,13 +102,13 @@
 						Delete
 					</MenuItem>
 					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-					<MenuItem class={className} on:click={handleClick}>
-						<i class="bx bx-pen" />
+					<MenuItem class={className} on:click={handleClick} let:isActive>
+						<i class="bx bx-pen" class:text-aqua-50={isActive} />
 						Edit
 					</MenuItem>
 					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-					<MenuItem class={className} on:click={handleClick}>
-						<i class="bx bx-duplicate" />
+					<MenuItem class={className} on:click={handleClick} let:isActive>
+						<i class="bx bx-duplicate" class:text-aqua-50={isActive} />
 						Duplicate
 					</MenuItem>
 				</MenuItems>
@@ -120,8 +120,8 @@
 			</MenuButton>
 			<div slot="items" transition:fade>
 				<MenuItems class="w-40 | grid | bg-raisin-12 rounded-lg outline-none" static>
-					<MenuItem class={className} on:click={handleClick}>
-						<i class="bx bx-archive" />
+					<MenuItem class={className} on:click={handleClick} let:isActive>
+						<i class="bx bx-archive" class:text-aqua-50={isActive} />
 						Archive
 					</MenuItem>
 					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
@@ -130,8 +130,8 @@
 						Delete
 					</MenuItem>
 					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
-					<MenuItem class={className} on:click={handleClick}>
-						<i class="bx bx-pen" />
+					<MenuItem class={className} on:click={handleClick} let:isActive>
+						<i class="bx bx-pen" class:text-aqua-50={isActive} />
 						Edit
 					</MenuItem>
 					<div class="w-full h-0.5 | bg-raisin-15" aria-hidden role="separator" />
