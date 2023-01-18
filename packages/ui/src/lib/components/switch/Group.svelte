@@ -7,6 +7,7 @@
 	let className: ClassName<"CHECKED"> = undefined;
 
 	export let as: ComponentTagName = "div";
+	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let initialChecked = false;
 	export let passive = false;
@@ -23,6 +24,7 @@
 	class={finalClassName}
 	{id}
 	{...$$restProps}
+	bind:element
 	on:blur
 	on:change
 	on:click

@@ -8,6 +8,7 @@
 	let className: ClassName<"OPEN"> = undefined;
 
 	export let as: ComponentTagName = "div";
+	export let element: HTMLElement | undefined = undefined;
 	export let forceFocus = false;
 	export let id: string | undefined = undefined;
 	export { className as class };
@@ -27,6 +28,7 @@
 	class={finalClassName}
 	{id}
 	{...$$restProps}
+	bind:element
 	on:blur
 	on:change
 	on:click

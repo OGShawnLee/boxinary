@@ -6,6 +6,7 @@
 	let className: string | undefined = undefined;
 
 	export let as: ComponentTagName = "div";
+	export let element: HTMLElement | undefined = undefined;
 	export let finite = false;
 	export let id: string | undefined = undefined;
 	export let initialIndex = 0;
@@ -30,6 +31,7 @@
 	class={className}
 	{id}
 	{...$$restProps}
+	bind:element
 	on:blur
 	on:change
 	on:click

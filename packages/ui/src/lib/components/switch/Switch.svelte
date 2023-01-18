@@ -7,6 +7,7 @@
 	let className: ClassName<"CHECKED" | "DISABLED"> = undefined;
 
 	export let as: ComponentTagName = "button";
+	export let element: HTMLElement | undefined = undefined;
 	export let checked = false;
 	export let disabled: Nullable<boolean> = undefined;
 	export let id: string | undefined = undefined;
@@ -17,8 +18,8 @@
 
 	$: isChecked.set(checked);
 	$: checked = $isChecked;
-	$: isDisabled = disabled ?? false
-	$: finalClassName = useClassNameResolver(className)({ isChecked: $isChecked, isDisabled })
+	$: isDisabled = disabled ?? false;
+	$: finalClassName = useClassNameResolver(className)({ isChecked: $isChecked, isDisabled });
 </script>
 
 <Render
@@ -26,6 +27,7 @@
 	class={finalClassName}
 	{id}
 	{...$$restProps}
+	bind:element
 	{binder}
 	actions={[action]}
 	{disabled}

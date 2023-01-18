@@ -7,6 +7,7 @@
 	let isLocked = false;
 
 	export let as: ComponentTagName = "div";
+	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export { className as class };
 	export { isLocked as static };
@@ -26,6 +27,7 @@
 		class={className}
 		{id}
 		{...$$restProps}
+		bind:element
 		{binder}
 		actions={[action]}
 		aria-labelledby={$buttonName}

@@ -8,6 +8,7 @@
 
 	export let as: ComponentTagName = "div";
 	export let disabled = false;
+	export let element: HTMLElement | undefined = undefined;
 	export let finite = false;
 	export let unique = true;
 	export let id: string | undefined = undefined;
@@ -33,6 +34,7 @@
 	class={finalClassName}
 	{id}
 	{...$$restProps}
+	bind:element
 	{binder}
 	actions={[action]}
 	on:blur

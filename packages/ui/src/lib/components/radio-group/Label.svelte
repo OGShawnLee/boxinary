@@ -7,6 +7,7 @@
 	let className: string | undefined = undefined;
 
 	export let as: ComponentTagName = "label";
+	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export { className as class };
 
@@ -19,6 +20,7 @@
 	class={className}
 	{id}
 	{...$$restProps}
+	bind:element
 	{binder}
 	actions={[action]}
 	for={$parentName}

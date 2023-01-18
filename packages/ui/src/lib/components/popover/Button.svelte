@@ -7,6 +7,7 @@
 	let className: ClassName<"DISABLED" | "OPEN"> = undefined;
 
 	export let as: ComponentTagName = "button";
+	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let disabled: Nullable<boolean> = undefined;
 	export { className as class };
@@ -23,6 +24,7 @@
 	class={finalClassName}
 	{id}
 	{...$$restProps}
+	bind:element
 	{binder}
 	actions={[action]}
 	aria-expanded={$isOpen}
