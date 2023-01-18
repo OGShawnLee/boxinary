@@ -4,11 +4,11 @@
 	import { Render } from "$lib/components";
 
 	let className: string | undefined = undefined;
+	let isLocked = false;
 
 	export let as: ComponentTagName = "div";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
-	export let isLocked = false;
 	export { className as class };
 	export { isLocked as static };
 

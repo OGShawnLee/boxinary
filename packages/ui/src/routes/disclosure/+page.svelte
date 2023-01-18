@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Disclosure, DisclosureButton, DisclosurePanel } from "$lib";
 	import { Page, Toggle } from "@app/components";
-	import { fade, scale, slide } from "svelte/transition";
+	import { fade, fly, scale, slide } from "svelte/transition";
 	import { useClassNameResolver } from "$lib/hooks";
 
 	const className = useClassNameResolver<"DISABLED" | "OPEN">({
@@ -22,13 +22,15 @@
 	<div class="grid grid-cols-4 gap-6">
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close>
 			<DisclosureButton class={className}>Disclosure Button</DisclosureButton>
-			<DisclosurePanel class="panel">
-				<p>
-					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, et voluptatum eos nemo
-					recusandae dicta corporis totam exercitationem odio deserunt.
-				</p>
-				<button class="button-small" on:click={close}> Close </button>
-			</DisclosurePanel>
+			<div slot="panel" transition:fly|local={{ y: 15 }}>
+				<DisclosurePanel class="panel" static>
+					<p>
+						Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, et voluptatum eos nemo
+						recusandae dicta corporis totam exercitationem odio deserunt.
+					</p>
+					<button class="button-small" on:click={close}> Close </button>
+				</DisclosurePanel>
+			</div>
 		</Disclosure>
 		<Disclosure class="flex flex-col items-start gap-4.5" {open} let:close let:panel>
 			<DisclosureButton class={className}>Disclosure Button</DisclosureButton>

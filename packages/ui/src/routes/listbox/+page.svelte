@@ -51,13 +51,16 @@
 		>
 			<ListboxLabel class="sr-only">Select your Fighter</ListboxLabel>
 			<ListboxButton class={buttonClassName}>{value}</ListboxButton>
-			<ListboxOptions
-				class="flex flex-col gap-1.5 | bg-raisin-12 rounded-lg outline-none overflow-hidden"
-			>
-				<ListboxOption class={className} value="John Cena">John Cena</ListboxOption>
-				<ListboxOption class={className} value="Ricardo Milos">Ricardo Milos</ListboxOption>
-				<ListboxOption class={className} value="The Rock">The Rock</ListboxOption>
-			</ListboxOptions>
+			<div slot="options" transition:slide|local>
+				<ListboxOptions
+					class="flex flex-col gap-1.5 | bg-raisin-12 rounded-lg outline-none overflow-hidden"
+					static
+				>
+					<ListboxOption class={className} value="John Cena">John Cena</ListboxOption>
+					<ListboxOption class={className} value="Ricardo Milos">Ricardo Milos</ListboxOption>
+					<ListboxOption class={className} value="The Rock">The Rock</ListboxOption>
+				</ListboxOptions>
+			</div>
 		</Listbox>
 		<Listbox class="flex flex-col items-start gap-3" {infinite} {horizontal} let:value let:options>
 			<ListboxLabel class="sr-only">Select your Fighter</ListboxLabel>

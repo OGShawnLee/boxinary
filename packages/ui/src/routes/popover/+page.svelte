@@ -49,10 +49,8 @@
 					</div>
 				</div>
 			</Popover>
-			<Popover class="flex flex-col gap-4.5" {forceFocus} let:isOpen let:close>
-				<PopoverButton class={buttonClassName}>
-					Toggle {isOpen}
-				</PopoverButton>
+			<Popover class="flex flex-col gap-4.5" {forceFocus} let:close>
+				<PopoverButton class={buttonClassName}>Toggle</PopoverButton>
 				<PopoverOverlay class="overlay" />
 				<PopoverPanel class="panel panel--modal">
 					<p>
@@ -65,14 +63,16 @@
 					</div>
 				</PopoverPanel>
 			</Popover>
-			<Popover class="flex flex-col gap-4.5" let:isOpen let:button let:panel>
+			<Popover class="flex flex-col gap-4.5" let:isOpen let:button>
 				<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
-				<div class="panel" slot="panel" use:panel let:close transition:slide>
-					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
-						tenetur. Molestiae quo pariatur dolore distinctio dolores.
-					</p>
-					<button class="button--small" on:click={close}> Close </button>
+				<div slot="panel" transition:slide|local let:close>
+					<PopoverPanel class="panel" static>
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
+							tenetur. Molestiae quo pariatur dolore distinctio dolores.
+						</p>
+						<button class="button-small" on:click={close}> Close </button>
+					</PopoverPanel>
 				</div>
 			</Popover>
 		</div>
@@ -135,14 +135,16 @@
 						</div>
 					</PopoverPanel>
 				</Popover>
-				<Popover class="flex flex-col gap-4.5" let:isOpen let:button let:panel>
+				<Popover class="flex flex-col gap-4.5" let:isOpen let:button>
 					<button class={buttonClassName({ isOpen })} use:button> Toggle </button>
-					<div class="panel" slot="panel" use:panel let:close transition:slide>
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam vel
-							tenetur. Molestiae quo pariatur dolore distinctio dolores.
-						</p>
-						<button class="button--small" on:click={close}> Close </button>
+					<div slot="panel" transition:slide let:close>
+						<PopoverPanel class="panel" static>
+							<p>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nulla id totam
+								vel tenetur. Molestiae quo pariatur dolore distinctio dolores.
+							</p>
+							<button class="button-small" on:click={close}> Close </button>
+						</PopoverPanel>
 					</div>
 				</Popover>
 			</div>

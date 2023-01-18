@@ -4,17 +4,19 @@
 	import { Render } from "$lib/components";
 
 	let className: string | undefined = undefined;
+	let isLocked = false;
 
 	export let as: ComponentTagName = "ul";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export { className as class };
+	export { isLocked as static };
 
 	const { isOpen, createListboxPanel } = Context.getContext();
 	const { action, binder } = createListboxPanel(id);
 </script>
 
-{#if $isOpen}
+{#if $isOpen || isLocked}
 	<Render
 		{as}
 		class={className}
