@@ -1,22 +1,24 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { ClassName, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { GroupContext } from "./context";
-	import { Toggler } from "$lib/stores";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"OPEN"> = undefined;
 
 	export let as: ComponentTagName = "div";
 	export let id: string | undefined = undefined;
 	export { className as class };
 
 	const { createAccordionItemState } = GroupContext.getContext();
-	const { isOpen, close, button, heading, panel } = createAccordionItemState(new Toggler());
+	const { isOpen, close, button, heading, panel } = createAccordionItemState();
+
+	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen });
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	on:blur

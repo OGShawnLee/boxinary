@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { ClassName, ComponentTagName } from "$lib/types";
 	import { ItemContext } from "./context";
 	import { Render } from "$lib/components";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"OPEN"> = undefined;
 
 	export let as: ComponentTagName = "h3";
 	export let id: string | undefined = undefined;
@@ -11,11 +12,13 @@
 
 	const { isOpen, createAccordionHeading } = ItemContext.getContext();
 	const { action, binder } = createAccordionHeading(id);
+
+	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen });
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	{binder}

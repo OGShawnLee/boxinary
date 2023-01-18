@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { ComponentTagName, Nullable } from "$lib/types";
+	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import { ItemContext } from "./context";
 	import { Render } from "$lib/components";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"DISABLED" | "OPEN"> = undefined;
 
 	export let as: ComponentTagName = "button";
 	export let id: string | undefined = undefined;
@@ -16,11 +17,14 @@
 		panel: { finalName: panelName }
 	} = ItemContext.getContext();
 	const { action, binder } = createAccordionButton(id);
+
+	$: isDisabled = disabled ?? false;
+	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen, isDisabled });
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	{binder}
@@ -50,5 +54,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot isOpen={$isOpen} button={action} />
+	<slot {isDisabled} isOpen={$isOpen} button={action} />
 </Render>
