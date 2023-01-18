@@ -1,4 +1,4 @@
-import type { Toggleable } from "$lib/types";
+import type { Ref, Toggleable } from "$lib/types";
 import type { Unsubscriber } from "svelte/store";
 import Hash from "./Hash";
 import { derived } from "svelte/store";
@@ -132,39 +132,56 @@ export class Toggler {
 interface Item {
 	isOpen: boolean;
 	toggler: Toggler;
+	close: () => void;
 }
 
 export class TogglerGroup {
+	protected currentOpenItem?: Item;
 	protected elements: HTMLElement[] = [];
 	protected items = new Hash<Toggler, Item>({ entries: false, keys: false });
 	readonly isOpen = derived(this.items.values, (items) => {
 		return items.some((item) => item.isOpen);
 	});
+	readonly isUnique: Ref<boolean>;
+
+	constructor(isUnique = false) {
+		this.isUnique = ref(isUnique);
+	}
 
 	createClient(this: TogglerGroup, toggler: Toggler) {
-		const self = this;
-		this.items.set(toggler, { isOpen: toggler.isOpen.value, toggler });
-		return {
-			createButton(element: HTMLElement): Unsubscriber {
-				self.elements.push(element);
-				const free = toggler.isOpen.subscribe((isOpen) => {
-					self.items.update(toggler, (item) => {
-						item.isOpen = isOpen;
-						return item;
-					});
-				});
-				return () => {
-					self.elements = self.elements.filter((el) => el !== element);
-					free();
-				};
-			},
-			createPanel(element: HTMLElement): Unsubscriber {
-				self.elements.push(element);
-				return () => {
-					self.elements = self.elements.filter((el) => el !== element);
-				};
-			}
-		};
+		const item = { isOpen: toggler.isOpen.value, toggler, close: () => toggler.isOpen.set(false) };
+		this.items.set(toggler, item);
+
+		function createButton(this: TogglerGroup, element: HTMLElement) {
+			this.elements.push(element);
+			return useGarbageCollector({
+				beforeCollection: () => {
+					this.elements = this.elements.filter((el) => el !== element);
+				},
+				init: () =>
+					toggler.isOpen.subscribe((isOpen) => {
+						this.items.update(toggler, (item) => {
+							item.isOpen = isOpen;
+							return item;
+						});
+
+						if (isOpen) {
+							if (this.isUnique.value && this.currentOpenItem !== item)
+								this.currentOpenItem?.close();
+							this.currentOpenItem = item;
+						}
+					})
+			});
+		}
+
+		function createPanel(this: TogglerGroup, element: HTMLElement): Unsubscriber {
+			this.elements.push(element);
+			return () => {
+				this.elements = this.elements.filter((el) => el !== element);
+			};
+		}
+
+		return { createButton: createButton.bind(this), createPanel: createPanel.bind(this) };
 	}
 
 	isWithinElements(this: TogglerGroup, element: HTMLElement) {

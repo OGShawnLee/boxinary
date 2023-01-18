@@ -2,13 +2,14 @@
 	import type { ComponentTagName } from "$lib/types";
 	import { ItemContext } from "./context";
 	import { Render } from "$lib/components";
-	import { ElementBinder } from "$lib/core";
 
 	let className: string | undefined = undefined;
+	let isLocked = false;
 
 	export let as: ComponentTagName = "div";
 	export let id: string | undefined = undefined;
 	export { className as class };
+	export { isLocked as static };
 
 	const {
 		isOpen,
@@ -19,7 +20,7 @@
 	const { action, binder } = createAccordionPanel(id);
 </script>
 
-{#if $isOpen}
+{#if $isOpen || isLocked}
 	<Render
 		{as}
 		class={className}

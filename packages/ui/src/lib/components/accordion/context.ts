@@ -8,11 +8,11 @@ import { isStore } from "@boxinary/predicate-svelte";
 import { isElementBinder } from "$lib/predicate";
 
 interface Context {
-	createAccordionItemState(toggler: Toggler): {
-		isOpen: Readable<boolean>;
-		close: OmitThisParameter<Toggler["handleClose"]>;
+	createAccordionItemState(): {
 		button: Action;
+		close: OmitThisParameter<Toggler["handleClose"]>;
 		heading: Action;
+		isOpen: Readable<boolean>;
 		panel: Action;
 	};
 }
@@ -39,12 +39,12 @@ export const ItemContext = useContext<ItemContext>({
 	component: "accordion-item",
 	predicate: (context): context is ItemContext =>
 		isInterface<ItemContext>(context, {
-			isOpen: isStore,
 			button: isElementBinder,
-			panel: isElementBinder,
 			close: isFunction,
 			createAccordionButton: isFunction,
 			createAccordionHeading: isFunction,
-			createAccordionPanel: isFunction
+			createAccordionPanel: isFunction,
+			isOpen: isStore,
+			panel: isElementBinder
 		})
 });

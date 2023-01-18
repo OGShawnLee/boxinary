@@ -1,30 +1,36 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { ClassName, ComponentTagName } from "$lib/types";
 	import { createAccordionState } from "./state";
 	import { Render } from "$lib/components";
+	import { useClassNameResolver } from "$lib/hooks";
 
-	let className: string | undefined = undefined;
+	let className: ClassName<"OPEN"> = undefined;
 
 	export let as: ComponentTagName = "div";
 	export let disabled = false;
 	export let finite = false;
+	export let unique = true;
 	export let id: string | undefined = undefined;
 	export { className as class };
 
-	const { createAccordion, navigation } = createAccordionState({
+	const { createAccordion, navigation, isOpen, isUnique } = createAccordionState({
 		isDisabled: disabled,
 		isFinite: finite,
-		isVertical: true
+		isVertical: true,
+		isUnique: unique
 	});
 	const { action, binder } = createAccordion(id);
 
 	$: navigation.isDisabled.value = disabled;
 	$: navigation.isFinite.value = finite;
+	$: isUnique.value = unique;
+
+	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen });
 </script>
 
 <Render
 	{as}
-	class={className}
+	class={finalClassName}
 	{id}
 	{...$$restProps}
 	{binder}
@@ -50,5 +56,5 @@
 	on:mouseup
 	on:mousewheel
 >
-	<slot accordion={action} isDisabled={disabled} />
+	<slot isDisabled={disabled} isOpen={$isOpen} accordion={action} />
 </Render>

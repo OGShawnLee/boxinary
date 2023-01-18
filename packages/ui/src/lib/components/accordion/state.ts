@@ -1,5 +1,5 @@
-import type { Toggler } from "$lib/stores";
 import type { Navigable } from "$lib/types";
+import { Toggler, TogglerGroup } from "$lib/stores";
 import { GroupContext, ItemContext } from "./context";
 import { Navigation } from "$lib/stores";
 import { ElementBinder, defineActionComponent } from "$lib/core";
@@ -12,10 +12,13 @@ import {
 	handleAriaLabelledby
 } from "$lib/plugins";
 
-// TODO: ADD SUPPORT FOR UNIQUE OPEN ITEM
+interface Settings extends Navigable.Settings {
+	isUnique: boolean;
+}
 
-export function createAccordionState(settings: Navigable.Settings) {
+export function createAccordionState(settings: Settings) {
 	const navigation = new Navigation(settings);
+	const group = new TogglerGroup(settings.isUnique);
 	const { baseName } = useComponentNaming({ component: "accordion" });
 
 	function createAccordion(id: string | undefined) {
@@ -26,12 +29,13 @@ export function createAccordionState(settings: Navigable.Settings) {
 		});
 	}
 
-	function createItemState(toggler: Toggler) {
+	function createItemState() {
 		const { nameChild } = useComponentNaming({ prefix: baseName, component: "item" });
 		const button = new ElementBinder();
+		const buttonName = nameChild("button");
 		const header = new ElementBinder();
 		const panel = new ElementBinder();
-		const buttonName = nameChild("button");
+		const toggler = new Toggler({ group });
 
 		function createButton(id: string | undefined) {
 			return defineActionComponent({
@@ -70,7 +74,6 @@ export function createAccordionState(settings: Navigable.Settings) {
 				name: nameChild("panel"),
 				onMount({ element }) {
 					element.setAttribute("role", "region");
-					element.scrollIntoView(); // ? EXPERIMENTAL
 					return toggler.createPanel(element, {
 						plugins: [handleAriaLabelledby(button)]
 					});
@@ -101,5 +104,5 @@ export function createAccordionState(settings: Navigable.Settings) {
 		createAccordionItemState: createItemState
 	});
 
-	return { createAccordion, navigation };
+	return { createAccordion, navigation, isOpen: group.isOpen, isUnique: group.isUnique };
 }
