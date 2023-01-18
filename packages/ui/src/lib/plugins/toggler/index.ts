@@ -48,9 +48,9 @@ export const useCloseClickOutside: Toggleable.Plugin = function () {
 };
 
 export const useCloseEscapeKey: Toggleable.Plugin = function () {
-	return useWindowListener("keydown", ({ code }) => {
-		if (this.isClosed || code !== "Escape") return;
-		this.handleClose();
+	return useWindowListener("keydown", (event) => {
+		if (this.isClosed || event.code !== "Escape") return;
+		this.handleClose(event);
 	});
 };
 
