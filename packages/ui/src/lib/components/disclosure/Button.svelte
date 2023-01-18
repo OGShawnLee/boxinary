@@ -11,9 +11,8 @@
 	export let disabled: Nullable<boolean> = undefined;
 	export { className as class };
 
-	const { isOpen, createDisclosureButton, panel } = Context.getContext();
-	const { action, binder } = createDisclosureButton(id);
-	const panelName = panel.finalName;
+	const { isOpen, createDisclosureButton } = Context.getContext();
+	const { action, binder, context: panelName } = createDisclosureButton(id);
 
 	$: finalClassName = useClassNameResolver(className)({
 		isOpen: $isOpen,

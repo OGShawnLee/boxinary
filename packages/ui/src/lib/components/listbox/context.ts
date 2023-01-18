@@ -6,6 +6,7 @@ import { isFunction, isInterface } from "@boxinary/predicate-core";
 import { isStore } from "@boxinary/predicate-svelte";
 
 interface Context<T> {
+	isOpen: Readable<boolean>;
 	createListboxButton: ComponentInitialiser;
 	createListboxLabel: ComponentInitialiser<Readable<string | undefined>>;
 	createListboxOptionState(
@@ -15,17 +16,16 @@ interface Context<T> {
 		createListboxOption(id: string | undefined, binder: ElementBinder): ActionComponent;
 	};
 	createListboxPanel: ComponentInitialiser;
-	isOpen: Readable<boolean>;
 }
 
 export default useContext({
 	component: "listbox",
 	predicate: (context): context is Context<any> =>
 		isInterface<Context<any>>(context, {
+			isOpen: isStore,
 			createListboxButton: isFunction,
 			createListboxLabel: isFunction,
 			createListboxOptionState: isFunction,
-			createListboxPanel: isFunction,
-			isOpen: isStore
+			createListboxPanel: isFunction
 		})
 });

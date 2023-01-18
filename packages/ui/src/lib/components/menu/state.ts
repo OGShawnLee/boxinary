@@ -17,10 +17,10 @@ import {
 } from "$lib/plugins";
 
 export function createMenuState(settings: Navigable.Settings) {
-	const navigation = new Navigation(settings);
-	const toggler = new Toggler();
 	const button = new ElementBinder();
+	const navigation = new Navigation(settings);
 	const panel = new ElementBinder();
+	const toggler = new Toggler();
 	const { nameChild } = useComponentNaming({ component: "menu" });
 
 	Context.setContext({
@@ -104,9 +104,9 @@ export function createMenuState(settings: Navigable.Settings) {
 	}
 
 	return {
-		button: createMenuButton("").action,
 		isOpen: toggler.isOpen,
 		navigation,
+		button: createMenuButton("").action,
 		panel: createMenuPanel("").action
 	};
 }

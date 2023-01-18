@@ -15,8 +15,11 @@
 	export { className as class };
 
 	const { createRadioGroupOptionState } = GroupContext.getContext();
-	const { createOption, descriptions, labels } = createRadioGroupOptionState(value, selected);
-	const { action, binder } = createOption(id);
+	const { createRadioGroupOption, descriptions, labels } = createRadioGroupOptionState(
+		value,
+		selected
+	);
+	const { action, binder } = createRadioGroupOption(id);
 	const { isSelected } = binder;
 
 	$: isDisabled = disabled ?? false;

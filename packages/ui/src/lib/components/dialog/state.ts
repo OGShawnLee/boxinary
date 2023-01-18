@@ -26,11 +26,11 @@ export function createDialogState(initialValue: boolean, initialFocus: Ref<Nulla
 
 	Context.setContext({
 		isOpen: toggler.isOpen,
+		close: toggler.handleClose.bind(toggler),
 		createDialogContent,
 		createDialogDescription,
 		createDialogOverlay,
-		createDialogTitle,
-		close: toggler.handleClose.bind(toggler)
+		createDialogTitle
 	});
 
 	function createDialogRoot(id: string | undefined) {
@@ -111,10 +111,10 @@ export function createDialogState(initialValue: boolean, initialFocus: Ref<Nulla
 	}
 
 	return {
-		close: toggler.handleClose.bind(toggler),
-		createDialogRoot,
-		content: createDialogContent("").action,
 		isOpen: toggler.isOpen,
+		close: toggler.handleClose.bind(toggler),
+		content: createDialogContent("").action,
+		createDialogRoot,
 		overlay: createDialogOverlay("").action
 	};
 }

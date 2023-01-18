@@ -3,24 +3,23 @@ import Context from "./context";
 import { Navigation } from "$lib/stores";
 import { defineActionComponent } from "$lib/core";
 import { useComponentNaming } from "$lib/hooks";
-import { handleNavigation, useResetOnLeave } from "$lib/plugins";
+import { useResetOnLeave } from "$lib/plugins";
 
 export function createNavigableState(settings: Navigable.Settings) {
 	const navigation = new Navigation(settings);
 	const { baseName, nameChild } = useComponentNaming({ component: "navigable" });
 
-	const createSelf: ComponentInitialiser = (id) =>
+	const createNavigable: ComponentInitialiser = (id) =>
 		defineActionComponent({
 			id: id,
 			name: baseName,
 			onMount: ({ element }) =>
 				navigation.initNavigation(element, {
-					plugins: [useResetOnLeave],
-					handler: handleNavigation
+					plugins: [useResetOnLeave]
 				})
 		});
 
-	const createItem: ComponentInitialiser = (id, binder) =>
+	const createNavigableItem: ComponentInitialiser = (id, binder) =>
 		defineActionComponent({
 			binder: binder,
 			id: id,
@@ -31,6 +30,6 @@ export function createNavigableState(settings: Navigable.Settings) {
 			onMount: ({ element, name }) => navigation.initItem(element, name)
 		});
 
-	Context.setContext({ createNavigableItem: createItem });
-	return { createSelf, navigation };
+	Context.setContext({ createNavigableItem });
+	return { createNavigable, navigation };
 }

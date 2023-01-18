@@ -14,7 +14,7 @@
 	export let id: string | undefined = undefined;
 	export { className as class };
 
-	const { createSelf, navigation } = createNavigableState({
+	const { createNavigable, navigation } = createNavigableState({
 		initialIndex: index,
 		isFinite: finite,
 		isGlobal: global,
@@ -25,7 +25,7 @@
 	$: navigation.isGlobal.value = global;
 	$: navigation.isVertical.value = vertical;
 
-	const { action, binder } = createSelf(id);
+	const { action, binder } = createNavigable(id);
 </script>
 
 <Render

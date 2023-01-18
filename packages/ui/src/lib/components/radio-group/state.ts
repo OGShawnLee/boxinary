@@ -1,4 +1,4 @@
-import type { ComponentInitialiser, Navigable, Ref } from "$lib/types";
+import type { Navigable } from "$lib/types";
 import { GroupContext, OptionContext } from "./context";
 import { ElementBinder, ElementLabel, defineActionComponent } from "$lib/core";
 import { Navigation } from "$lib/stores";
@@ -14,13 +14,22 @@ interface Item<T> extends Navigable.Item {
 }
 
 export function createRadioGroupState<T>(settings: Settings<T>) {
-	const { baseName, nameChild } = useComponentNaming({ component: "radio-group" });
-	const navigation = new Navigation<Item<T>>(settings);
-	const radioGroup = new ElementBinder();
 	const descriptions = new ElementLabel();
-	const labels = new ElementLabel();
 	const globalValue = ref(settings.initialValue);
+	const navigation = new Navigation<Item<T>>(settings);
+	const labels = new ElementLabel();
+	const radioGroup = new ElementBinder();
+	const { baseName, nameChild } = useComponentNaming({ component: "radio-group" });
 	let isInitialValueFound = false;
+
+	GroupContext.setContext({
+		parentName: radioGroup.finalName,
+		labels,
+		descriptions,
+		createRadioGroupDescription,
+		createRadioGroupLabel,
+		createRadioGroupOptionState
+	});
 
 	function createRadioGroup(id: string | undefined) {
 		return defineActionComponent({
@@ -37,7 +46,7 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 		});
 	}
 
-	const createDescription: ComponentInitialiser = (id, binder) => {
+	function createRadioGroupDescription(id: string | undefined, binder: ElementBinder) {
 		const { descriptions } = getDescriptionContext();
 		return defineActionComponent({
 			id: id,
@@ -50,9 +59,9 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 				return descriptions.onMountLabel(name, binder);
 			}
 		});
-	};
+	}
 
-	const createLabel: ComponentInitialiser = (id, binder) => {
+	function createRadioGroupLabel(id: string | undefined, binder: ElementBinder) {
 		const { labels } = getDescriptionContext();
 		return defineActionComponent({
 			id: id,
@@ -65,16 +74,18 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 				return labels.onMountLabel(name, binder);
 			}
 		});
-	};
+	}
 
-	function createOptionState(initialValue: T, isSelected: boolean) {
-		const { baseName } = useComponentNaming({ component: "option" });
-		const option = new ElementBinder();
+	function createRadioGroupOptionState(initialValue: T, isSelected: boolean) {
 		const descriptions = new ElementLabel();
 		const labels = new ElementLabel();
+		const option = new ElementBinder();
+		const { baseName } = useComponentNaming({ component: "option" });
 
-		const createOption: ComponentInitialiser = (id) =>
-			defineActionComponent({
+		OptionContext.setContext({ labels, descriptions, parentName: option.finalName });
+
+		function createRadioGroupOption(id: string | undefined) {
+			return defineActionComponent({
 				binder: option,
 				id: id,
 				name: baseName,
@@ -102,19 +113,14 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 					];
 				}
 			});
+		}
 
-		OptionContext.setContext({ labels, descriptions, parentName: option.finalName });
-		return { createOption, descriptions: descriptions.finalName, labels: labels.finalName };
+		return {
+			createRadioGroupOption,
+			descriptions: descriptions.finalName,
+			labels: labels.finalName
+		};
 	}
-
-	GroupContext.setContext({
-		labels,
-		descriptions,
-		createRadioGroupDescription: createDescription,
-		createRadioGroupLabel: createLabel,
-		createRadioGroupOptionState: createOptionState,
-		parentName: radioGroup.finalName
-	});
 
 	return {
 		createRadioGroup,

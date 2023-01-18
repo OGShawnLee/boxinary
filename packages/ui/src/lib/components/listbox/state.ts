@@ -35,11 +35,11 @@ export function createListboxState<T>(settings: Settings<T>) {
 	let isInitialValueFound = false;
 
 	Context.setContext({
+		isOpen: toggler.isOpen,
 		createListboxButton,
 		createListboxOptionState,
 		createListboxPanel,
-		createListboxLabel,
-		isOpen: toggler.isOpen
+		createListboxLabel
 	});
 
 	function createListboxButton(id: string | undefined) {
@@ -155,10 +155,10 @@ export function createListboxState<T>(settings: Settings<T>) {
 	}
 
 	return {
-		button: createListboxButton("").action,
-		globalValue: createReadableRef(globalValue),
 		isOpen: toggler.isOpen,
-		navigation: navigation,
+		globalValue: createReadableRef(globalValue),
+		navigation,
+		button: createListboxButton("").action,
 		panel: createListboxPanel("").action
 	};
 }

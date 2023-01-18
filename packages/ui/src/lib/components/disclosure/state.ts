@@ -1,4 +1,3 @@
-import type { ComponentInitialiser } from "$lib/types";
 import Context from "./context";
 import { Toggler } from "$lib/stores";
 import { ElementBinder, defineActionComponent } from "$lib/core";
@@ -7,23 +6,32 @@ import { createReadableRef } from "$lib/utils";
 import { handleAriaControls, handleAriaExpanded } from "$lib/plugins";
 
 export function createDisclosureState(initialValue: boolean) {
-	const toggler = new Toggler({ isOpen: initialValue });
-	const { nameChild } = useComponentNaming({ component: "disclosure" });
 	const button = new ElementBinder();
 	const panel = new ElementBinder();
+	const toggler = new Toggler({ isOpen: initialValue });
+	const { nameChild } = useComponentNaming({ component: "disclosure" });
 
-	const createButton: ComponentInitialiser = (id) =>
-		defineActionComponent({
+	Context.setContext({
+		isOpen: createReadableRef(toggler.isOpen),
+		close: toggler.handleClose.bind(toggler),
+		createDisclosureButton,
+		createDisclosurePanel
+	});
+
+	function createDisclosureButton(id: string | undefined) {
+		return defineActionComponent({
 			binder: button,
 			id: id,
 			name: nameChild("button"),
+			onInit: () => panel.finalName,
 			onMount: ({ element }) =>
 				toggler.createButton(element, {
 					plugins: [handleAriaControls(panel), handleAriaExpanded]
 				})
 		});
+	}
 
-	const createPanel: ComponentInitialiser = (id) => {
+	function createDisclosurePanel(id: string | undefined) {
 		return defineActionComponent({
 			binder: panel,
 			id: id,
@@ -31,21 +39,12 @@ export function createDisclosureState(initialValue: boolean) {
 			isShowing: initialValue,
 			onMount: ({ element }) => toggler.createPanel(element)
 		});
-	};
-
-	Context.setContext({
-		close: toggler.handleClose.bind(toggler),
-		isOpen: createReadableRef(toggler.isOpen),
-		panel,
-		createDisclosureButton: createButton,
-		createDisclosurePanel: createPanel
-	});
+	}
 
 	return {
-		subscribe: toggler.subscribe,
 		isOpen: toggler.isOpen,
+		button: createDisclosureButton("").action,
 		close: toggler.handleClose.bind(toggler),
-		button: createButton().action,
-		panel: createPanel().action
+		panel: createDisclosurePanel("").action
 	};
 }

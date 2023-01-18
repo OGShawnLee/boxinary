@@ -21,6 +21,10 @@ export function createAccordionState(settings: Settings) {
 	const group = new TogglerGroup(settings.isUnique);
 	const { baseName } = useComponentNaming({ component: "accordion" });
 
+	GroupContext.setContext({
+		createAccordionItemState: createItemState
+	});
+
 	function createAccordion(id: string | undefined) {
 		return defineActionComponent({
 			id: id,
@@ -36,6 +40,16 @@ export function createAccordionState(settings: Settings) {
 		const header = new ElementBinder();
 		const panel = new ElementBinder();
 		const toggler = new Toggler({ group });
+
+		ItemContext.setContext({
+			isOpen: createReadableRef(toggler.isOpen),
+			button,
+			close: toggler.handleClose.bind(toggler),
+			panel,
+			createAccordionButton: createButton,
+			createAccordionHeading: createHeading,
+			createAccordionPanel: createPanel
+		});
 
 		function createButton(id: string | undefined) {
 			return defineActionComponent({
@@ -81,16 +95,6 @@ export function createAccordionState(settings: Settings) {
 			});
 		}
 
-		ItemContext.setContext({
-			isOpen: createReadableRef(toggler.isOpen),
-			button,
-			close: toggler.handleClose.bind(toggler),
-			panel,
-			createAccordionButton: createButton,
-			createAccordionHeading: createHeading,
-			createAccordionPanel: createPanel
-		});
-
 		return {
 			isOpen: createReadableRef(toggler.isOpen),
 			close: toggler.handleClose.bind(toggler),
@@ -99,10 +103,6 @@ export function createAccordionState(settings: Settings) {
 			panel: createPanel("").action
 		};
 	}
-
-	GroupContext.setContext({
-		createAccordionItemState: createItemState
-	});
 
 	return { createAccordion, navigation, isOpen: group.isOpen, isUnique: group.isUnique };
 }

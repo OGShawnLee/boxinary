@@ -11,9 +11,8 @@
 	export let disabled: Nullable<boolean> = undefined;
 	export { className as class };
 
-	const { isOpen, createPopoverButton, panel } = Context.getContext();
-	const { action, binder } = createPopoverButton(id);
-	const panelName = panel.finalName;
+	const { isOpen, createPopoverButton } = Context.getContext();
+	const { action, binder, context: panelName } = createPopoverButton(id);
 
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isDisabled, isOpen: $isOpen });

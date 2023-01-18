@@ -1,8 +1,8 @@
-import type { ComponentInitialiser, Navigable, ReadableRef } from "$lib/types";
-import type { Tab, TabsContext } from "./context";
+import type { Navigable } from "$lib/types";
+import type { Tab } from "./context";
 import Context from "./context";
 import { Navigation } from "$lib/stores";
-import { defineActionComponent } from "$lib/core";
+import { ElementBinder, defineActionComponent } from "$lib/core";
 import { useComponentNaming, useGarbageCollector } from "$lib/hooks";
 import { createReadableRef } from "$lib/utils";
 import { isNullish } from "@boxinary/predicate-core";
@@ -12,8 +12,16 @@ export function createTabGroupState(settings: Navigable.Settings) {
 	const navigation = new Navigation<Tab>(settings);
 	const { nameChild } = useComponentNaming({ component: "tabs" });
 
-	const createTabList: ComponentInitialiser<ReadableRef<boolean>> = (id) =>
-		defineActionComponent({
+	Context.setContext({
+		index: createReadableRef(navigation.index),
+		createPanel,
+		createPanels,
+		createTab,
+		createTabList
+	});
+
+	function createTabList(id: string | undefined) {
+		return defineActionComponent({
 			id: id,
 			name: nameChild("tablist"),
 			onInit: () => createReadableRef(navigation.isVertical),
@@ -26,9 +34,10 @@ export function createTabGroupState(settings: Navigable.Settings) {
 				];
 			}
 		});
+	}
 
-	const createTab: TabsContext["createTab"] = (id, binder) =>
-		defineActionComponent({
+	function createTab(id: string | undefined, binder: ElementBinder) {
+		return defineActionComponent({
 			binder: binder,
 			name: nameChild("tab"),
 			id: id,
@@ -51,15 +60,17 @@ export function createTabGroupState(settings: Navigable.Settings) {
 				];
 			}
 		});
+	}
 
-	const createPanels: ComponentInitialiser = (id) =>
-		defineActionComponent({
+	function createPanels(id: string | undefined) {
+		return defineActionComponent({
 			id: id,
 			name: nameChild("panels"),
-			onMount: () => []
+			onMount: () => {}
 		});
+	}
 
-	const createPanel: ComponentInitialiser<Tab> = (id, binder) => {
+	function createPanel(id: string | undefined, binder: ElementBinder) {
 		const tab = navigation.get(({ item: { panelName } }) => isNullish(panelName));
 		const name = nameChild("panel");
 		navigation.update(tab.name, (tab) => {
@@ -71,9 +82,7 @@ export function createTabGroupState(settings: Navigable.Settings) {
 			binder: binder,
 			id: id,
 			name: name,
-			onInit: () => {
-				return tab.item;
-			},
+			onInit: () => tab.item,
 			onMount({ element, binder: { finalName } }) {
 				element.role = "tabpanel";
 				element.tabIndex = 0;
@@ -94,15 +103,7 @@ export function createTabGroupState(settings: Navigable.Settings) {
 				});
 			}
 		});
-	};
-
-	Context.setContext({
-		index: createReadableRef(navigation.index),
-		createPanel,
-		createPanels,
-		createTab,
-		createTabList
-	});
+	}
 
 	return {
 		isFinite: navigation.isFinite,

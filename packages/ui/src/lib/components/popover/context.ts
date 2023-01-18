@@ -1,15 +1,14 @@
-import type { ElementBinder } from "$lib/core";
+import type { Readable } from "svelte/store";
 import type { Toggler } from "$lib/stores";
 import type { ComponentInitialiser, ReadableRef } from "$lib/types";
 import { useContext } from "$lib/hooks";
-import { isElementBinder, isReadableRef } from "$lib/predicate";
+import { isReadableRef } from "$lib/predicate";
 import { isFunction, isInterface } from "@boxinary/predicate-core";
 
 interface Context {
 	isOpen: ReadableRef<boolean>;
 	close: OmitThisParameter<Toggler["handleClose"]>;
-	panel: ElementBinder;
-	createPopoverButton: ComponentInitialiser;
+	createPopoverButton: ComponentInitialiser<Readable<string | undefined>>;
 	createPopoverOverlay: ComponentInitialiser;
 	createPopoverPanel: ComponentInitialiser;
 }
@@ -20,7 +19,6 @@ export default useContext({
 		return isInterface<Context>(context, {
 			isOpen: isReadableRef,
 			close: isFunction,
-			panel: isElementBinder,
 			createPopoverButton: isFunction,
 			createPopoverOverlay: isFunction,
 			createPopoverPanel: isFunction
