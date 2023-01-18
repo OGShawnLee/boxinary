@@ -72,9 +72,10 @@ export function useFocusKeep(panel: HTMLElement) {
 	});
 }
 
-export function useFocusTrap(fallback?: Nullable<Element>) {
+export function useFocusTrap(fallback?: Nullable<Element>): Toggleable.Plugin {
 	return function (panel: HTMLElement) {
 		return useWindowListener("keydown", (event) => {
+			if (this.isClosed) return;
 			const children = useDOMTraversal(panel, isFocusable);
 			if (event.code !== "Tab") return;
 			if (isEmpty(children) && isHTMLElement(fallback) && isFocusable(fallback)) {
