@@ -30,7 +30,7 @@ export default class Toggler {
 		return this.isOpen.value === false;
 	}
 
-	initButton(this: Toggler, element: HTMLElement, settings: Toggleable.ButtonOptions = {}) {
+	createButton(this: Toggler, element: HTMLElement, settings: Toggleable.ButtonOptions = {}) {
 		const { plugins, isToggler = true } = settings;
 		this.button.value = element;
 		element.setAttribute("type", "button");
@@ -45,11 +45,11 @@ export default class Toggler {
 		});
 	}
 
-	initOverlay(this: Toggler, element: HTMLElement) {
+	createOverlay(this: Toggler, element: HTMLElement) {
 		return useListener(element, "click", () => this.handleClose());
 	}
 
-	initPanel(this: Toggler, element: HTMLElement, config?: Toggleable.PanelOptions) {
+	createPanel(this: Toggler, element: HTMLElement, config?: Toggleable.PanelOptions) {
 		const plugins = [useHidePanelFocusOnClose, ...(config?.plugins ?? [])];
 		this.panel.value = element;
 		return useGarbageCollector({

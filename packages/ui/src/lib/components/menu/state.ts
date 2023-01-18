@@ -37,7 +37,7 @@ export function createMenuState(settings: Navigable.Settings) {
 			name: nameChild("button"),
 			onMount: ({ element }) => {
 				return [
-					toggler.initButton(element, {
+					toggler.createButton(element, {
 						plugins: [
 							useNavigationStarter(navigation),
 							handleAriaControls(panel),
@@ -62,7 +62,7 @@ export function createMenuState(settings: Navigable.Settings) {
 					navigation.initNavigation(element, {
 						plugins: [handleAriaOrientation, useFocusKeep, useKeyMatch]
 					}),
-					toggler.initPanel(element, {
+					toggler.createPanel(element, {
 						plugins: [
 							handleAriaLabelledby(button),
 							useCloseClickOutside,

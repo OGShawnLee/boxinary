@@ -44,7 +44,7 @@ export function createAccordionState(settings: Navigable.Settings) {
 				onMount({ element, name }) {
 					return [
 						navigation.initItem(element, name),
-						toggler.initButton(element, {
+						toggler.createButton(element, {
 							plugins: [handleAriaExpanded, handleAriaControls(panel), handleAriaDisabled(button)]
 						})
 					];
@@ -71,7 +71,7 @@ export function createAccordionState(settings: Navigable.Settings) {
 				onMount({ element }) {
 					element.setAttribute("role", "region");
 					element.scrollIntoView(); // ? EXPERIMENTAL
-					return toggler.initPanel(element, {
+					return toggler.createPanel(element, {
 						plugins: [handleAriaLabelledby(button)]
 					});
 				}

@@ -24,7 +24,7 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 			id: id,
 			name: nameChild("button"),
 			onMount: ({ element }) =>
-				toggler.initButton(element, {
+				toggler.createButton(element, {
 					plugins: [handleAriaControls(panel), handleAriaExpanded]
 				})
 		});
@@ -35,7 +35,7 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 			name: nameChild("overlay"),
 			isShowing: false,
 			onMount: ({ element }) => ({
-				base: toggler.initOverlay(element)
+				base: toggler.createOverlay(element)
 			})
 		});
 
@@ -46,7 +46,7 @@ export function createPopoverState(configuration: Toggleable.Configuration) {
 			name: nameChild("panel"),
 			isShowing: false,
 			onMount: ({ element }) => ({
-				base: toggler.initPanel(element, {
+				base: toggler.createPanel(element, {
 					plugins: [useCloseClickOutside, useCloseEscapeKey, useCloseFocusLeave]
 				})
 			})

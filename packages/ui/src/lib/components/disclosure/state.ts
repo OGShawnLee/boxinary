@@ -18,7 +18,7 @@ export function createDisclosureState(initialValue: boolean) {
 			id: id,
 			name: nameChild("button"),
 			onMount: ({ element }) =>
-				toggler.initButton(element, {
+				toggler.createButton(element, {
 					plugins: [handleAriaControls(panel), handleAriaExpanded]
 				})
 		});
@@ -29,7 +29,7 @@ export function createDisclosureState(initialValue: boolean) {
 			id: id,
 			name: nameChild("panel"),
 			isShowing: initialValue,
-			onMount: ({ element }) => toggler.initPanel(element)
+			onMount: ({ element }) => toggler.createPanel(element)
 		});
 	};
 

@@ -54,7 +54,7 @@ export function createListboxState<T>(settings: Settings<T>) {
 				element.ariaHasPopup = "true";
 				return [
 					labels.onMountLabel(name, button),
-					toggler.initButton(element, {
+					toggler.createButton(element, {
 						plugins: [handleAriaControls(panel), handleAriaExpanded]
 					}),
 					useListener(element, "keydown", async ({ code }) => {
@@ -104,7 +104,7 @@ export function createListboxState<T>(settings: Settings<T>) {
 					navigation.initNavigation(element, {
 						plugins: [handleAriaOrientation, useFocusKeep, useKeyMatch]
 					}),
-					toggler.initPanel(element, {
+					toggler.createPanel(element, {
 						plugins: [useCloseFocusLeave, useCloseClickOutside, useCloseEscapeKey],
 						onOpen: () => element.focus()
 					}),

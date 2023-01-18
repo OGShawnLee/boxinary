@@ -52,8 +52,8 @@ export function createDialogState(initialValue: boolean, initialFocus: Ref<Nulla
 				element.role = "dialog";
 				element.ariaModal = "true";
 				return [
-					isHTMLElement(button) && toggler.initButton(button, { isToggler: false }),
-					toggler.initPanel(element, {
+					isHTMLElement(button) && toggler.createButton(button, { isToggler: false }),
+					toggler.createPanel(element, {
 						onOpen: async () => {
 							await tick();
 							focusFirstChildElement(element, {
@@ -92,7 +92,7 @@ export function createDialogState(initialValue: boolean, initialFocus: Ref<Nulla
 		return defineActionComponent({
 			id: id,
 			name: nameChild("overlay"),
-			onMount: ({ element }) => toggler.initOverlay(element)
+			onMount: ({ element }) => toggler.createOverlay(element)
 		});
 	}
 
