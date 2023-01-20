@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Page, Toggle } from "@app/components";
 	import {
+		Button,
 		Menu,
 		MenuButton,
 		MenuItem,
@@ -19,6 +20,10 @@
 		base: "px-4 py-2 | flex items-center gap-1.75 | text-light text-left",
 		disabled: "opacity-50",
 		active: "text-white"
+	});
+	const buttonClassName = useClassNameResolver<"PRESSED">({
+		base: "px-4 py-2 | bg-raisin-15 rounded-lg | focus:(ring-2 ring-raisin-50)",
+		pressed: "text-white"
 	});
 	const itemClassName = useClassNameResolver<"SELECTED">({
 		base: "px-4 py-2 | bg-raisin-15 rounded-lg | focus:(ring-2 ring-raisin-50)",
@@ -50,26 +55,22 @@
 				{vertical}
 			>
 				<ToolbarItem
-					class="px-4 py-2 | bg-raisin-15 rounded-lg | focus:(ring-2 ring-raisin-50)"
+					class="px-4 py-2 | bg-raisin-15 rounded-lg | focus:(ring-2 ring-raisin-50) {bold
+						? 'text-white'
+						: ''}"
 					on:click={() => (bold = !bold)}
 				>
-					<span class="sr-only">Turn Text Bold</span>
+					<span class="sr-only">Toggle Text Bold</span>
 					<i class="bx bx-bold" />
 				</ToolbarItem>
-				<ToolbarItem
-					class="px-4 py-2 | bg-raisin-15 rounded-lg | focus:(ring-2 ring-raisin-50)"
-					on:click={() => (italic = !italic)}
-				>
-					<span class="sr-only">Turn Text Italic</span>
+				<Button class={buttonClassName} bind:pressed={italic}>
+					<span class="sr-only">Toggle Text Italic</span>
 					<i class="bx bx-italic" />
-				</ToolbarItem>
-				<ToolbarItem
-					class="px-4 py-2 | bg-raisin-15 rounded-lg | focus:(ring-2 ring-raisin-50)"
-					on:click={() => (underline = !underline)}
-				>
-					<span class="sr-only">Underline text</span>
+				</Button>
+				<Button class={buttonClassName} bind:pressed={underline}>
+					<span class="sr-only">Toggle Text Underline</span>
 					<i class="bx bx-underline" />
-				</ToolbarItem>
+				</Button>
 				<Menu class="relative | flex flex-col items-start gap-3" let:isOpen>
 					<MenuButton
 						class={{

@@ -15,12 +15,12 @@ export default function useClassNameResolver<S extends ComponentState>(className
 		if (isNullish(className)) return;
 		if (isString(className)) return clearClassName(className);
 
-		const { active, base, checked, disabled, open, selected } = className as Exclude<
+		const { active, base, checked, disabled, open, pressed, selected } = className as Exclude<
 			ClassName<ComponentState>,
 			Nullable<string | FunctionClassName<ComponentState>>
 		>;
 		const classList = [base];
-		const { isActive, isChecked, isDisabled, isOpen, isSelected } =
+		const { isActive, isChecked, isDisabled, isOpen, isPressed, isSelected } =
 			state as StatePredicate<ComponentState>;
 
 		classList.push(handleSwitchClassName(checked, isChecked));
@@ -29,6 +29,7 @@ export default function useClassNameResolver<S extends ComponentState>(className
 		classList.push(
 			handleSwitchClassName(open, isOpen),
 			handleSwitchClassName(active, isActive),
+			handleSwitchClassName(pressed, isPressed),
 			handleSwitchClassName(selected, isSelected)
 		);
 		return getClassNameFromClassList(classList);
