@@ -39,6 +39,13 @@ const VOID_TAGS = Object.freeze({
 	wbr: true
 });
 
+export function hasTagName<T extends keyof HTMLElementTagNameMap>(
+	element: HTMLElement,
+	tagName: T
+) {
+	return element.tagName === tagName.toUpperCase();
+}
+
 export function isChildless(container: HTMLElement) {
 	return !container.hasChildNodes();
 }

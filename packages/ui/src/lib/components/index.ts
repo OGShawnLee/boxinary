@@ -20,3 +20,4 @@ export {
 export { Render } from "./render";
 export { Switch, SwitchDescription, SwitchGroup, SwitchLabel } from "./switch";
 export { Tab, TabGroup, TabList, TabPanel, TabPanels } from "./tabs";
+export { Toolbar, ToolbarGroup, ToolbarItem, ToolbarLabel } from "./toolbar";

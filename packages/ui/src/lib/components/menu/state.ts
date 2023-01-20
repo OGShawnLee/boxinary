@@ -1,5 +1,6 @@
 import type { Navigable } from "$lib/types";
 import Context from "./context";
+import ToolbarContext from "../toolbar/context";
 import { Navigation, Toggler } from "$lib/stores";
 import { ElementBinder, defineActionComponent } from "$lib/core";
 import { useComponentNaming, useListener } from "$lib/hooks";
@@ -21,6 +22,7 @@ export function createMenuState(settings: Navigable.Settings) {
 	const navigation = new Navigation(settings);
 	const panel = new ElementBinder();
 	const toggler = new Toggler();
+	const toolbar = ToolbarContext.getContext(false);
 	const { nameChild } = useComponentNaming({ component: "menu" });
 
 	Context.setContext({
@@ -39,11 +41,12 @@ export function createMenuState(settings: Navigable.Settings) {
 				return [
 					toggler.createButton(element, {
 						plugins: [
-							useNavigationStarter(navigation),
+							useNavigationStarter(navigation, toolbar),
 							handleAriaControls(panel),
 							handleAriaExpanded
 						]
-					})
+					}),
+					toolbar?.item(element)
 				];
 			}
 		});

@@ -1,9 +1,11 @@
 import type { Navigable } from "$lib/types";
+import ToolbarContext from "../toolbar/context";
 import { GroupContext, OptionContext } from "./context";
 import { ElementBinder, ElementLabel, defineActionComponent } from "$lib/core";
 import { Navigation } from "$lib/stores";
 import { useComponentNaming } from "$lib/hooks";
 import { ref } from "$lib/utils";
+import { getRadioGroupNavigationHandler } from "$lib/plugins";
 
 interface Settings<T> extends Navigable.Settings {
 	initialValue: T;
@@ -14,6 +16,9 @@ interface Item<T> extends Navigable.Item {
 }
 
 export function createRadioGroupState<T>(settings: Settings<T>) {
+	const toolbar = ToolbarContext.getContext(false);
+	settings.isManual = ToolbarContext.hasContext();
+
 	const descriptions = new ElementLabel();
 	const globalValue = ref(settings.initialValue);
 	const navigation = new Navigation<Item<T>>(settings);
@@ -38,7 +43,9 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 			name: baseName,
 			onMount({ element }) {
 				return [
-					navigation.initNavigation(element),
+					navigation.initNavigation(element, {
+						handler: getRadioGroupNavigationHandler(toolbar)
+					}),
 					descriptions.handleAriaDescribedby(element),
 					labels.handleAriaLabelledby(element)
 				];
@@ -101,6 +108,7 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 				onMount({ element, name }) {
 					element.tabIndex = 0;
 					return [
+						toolbar?.item(element),
 						navigation.initItem(element, name),
 						descriptions.handleAriaDescribedby(element),
 						labels.handleAriaLabelledby(element),

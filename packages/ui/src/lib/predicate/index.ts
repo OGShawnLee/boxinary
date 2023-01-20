@@ -6,6 +6,7 @@ export {
 	isValidHTMLElementID
 } from "./internal";
 export {
+	hasTagName,
 	isChildless,
 	isClient,
 	isDisabled,

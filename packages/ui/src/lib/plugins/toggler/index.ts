@@ -1,5 +1,5 @@
 import type { ElementBinder } from "$lib/core";
-import type { Nullable, Toggleable } from "$lib/types";
+import type { Nullable, ReadableRef, Toggleable } from "$lib/types";
 import type { Navigation } from "$lib/stores";
 import { useListener, useWindowListener } from "$lib/hooks";
 import { isFocusable, isHTMLElement, isNavigationKey, isWithinContainer } from "$lib/predicate";
@@ -113,7 +113,10 @@ export const useHidePanelFocusOnClose: Toggleable.Plugin = function (panel) {
 	});
 };
 
-export function useNavigationStarter(nav: Navigation): Toggleable.Plugin {
+export function useNavigationStarter(
+	nav: Navigation,
+	toolbar: { isVertical: ReadableRef<boolean> } | undefined
+): Toggleable.Plugin {
 	return function (button) {
 		const open = async (act: () => void) => {
 			this.handleOpen();
@@ -121,7 +124,7 @@ export function useNavigationStarter(nav: Navigation): Toggleable.Plugin {
 			act();
 		};
 		return useListener(button, "keydown", async (event) => {
-			if (!isNavigationKey(event.code)) return;
+			if (!isNavigationKey(event.code) || toolbar?.isVertical.value) return;
 			switch (event.code) {
 				case "ArrowDown":
 					if (nav.isVertical.value) return open(() => nav.goFirst());

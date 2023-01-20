@@ -5,10 +5,10 @@ import Hash from "./Hash";
 import { findIndex, findLastIndex, ref } from "$lib/utils";
 import { handleNavigation } from "$lib/plugins";
 import { isAround, isNumber } from "@boxinary/predicate-core";
-import { isFocusable, isWithinContainer } from "$lib/predicate";
+import { hasTagName, isDisabled, isFocusable, isWithinContainer } from "$lib/predicate";
 import { onDestroy } from "svelte";
 import { derived } from "svelte/store";
-import { useCleanup, useListener, useWindowListener } from "$lib/hooks";
+import { useCleanup, useGarbageCollector, useListener, useWindowListener } from "$lib/hooks";
 import { createDerivedRef } from "$lib/utils";
 
 export default class Navigation<T extends Navigable.Item = Navigable.Item> {
@@ -116,16 +116,18 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 			item.element = element;
 			return item;
 		});
-		return useCleanup([
-			useListener(element, "click", () => {
-				this.set(index, false);
-			}),
-			useListener(element, "focus", () => {
-				if (this.targetIndex.value !== index && isFocusable(element)) {
-					this.interact(index, false);
-				}
-			})
-		]);
+		return this.addItemEventListeners(element, index);
+	}
+
+	createQuickItem(this: Navigation, element: HTMLElement) {
+		const index = this.elements.push(element) - 1;
+		return useGarbageCollector({
+			beforeCollection: () => {
+				const index = this.elements.indexOf(element);
+				this.elements.splice(index, 1);
+			},
+			init: () => this.addItemEventListeners(element, index)
+		});
 	}
 
 	protected handleItemActiveState(
@@ -169,6 +171,25 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 				});
 			})
 		);
+	}
+
+	protected addItemEventListeners(this: Navigation, element: HTMLElement, index: number) {
+		const isButton = hasTagName(element, "button");
+		return useCleanup([
+			useListener(element, "click", () => {
+				this.set(index, false);
+			}),
+			useListener(element, "focus", () => {
+				if (this.targetIndex.value !== index && isFocusable(element)) {
+					this.interact(index, false);
+				}
+			}),
+			!isButton &&
+				useListener(element, "keydown", (event) => {
+					if (isDisabled(element) || !this.isManual.value) return;
+					if (event.code === "Enter" || event.code === "Space") element.click();
+				})
+		]);
 	}
 
 	at(this: Navigation, index: number) {
@@ -267,17 +288,21 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		}
 	}
 
-	handleBackKey(this: Navigation, code: KeyBack, ctrlKey = false) {
+	handleBackKey(this: Navigation, code: KeyBack, ctrlKey = false, directionSensitive = true) {
 		if (code === "Home") return this.goFirst();
-		if (this.isVertical.value && code !== "ArrowUp") return;
-		if (this.isHorizontal && code !== "ArrowLeft") return;
+		if (directionSensitive) {
+			if (this.isVertical.value && code !== "ArrowUp") return;
+			if (this.isHorizontal && code !== "ArrowLeft") return;
+		}
 		ctrlKey ? this.goFirst() : this.goBack();
 	}
 
-	handleNextKey(this: Navigation, code: KeyNext, ctrlKey = false) {
+	handleNextKey(this: Navigation, code: KeyNext, ctrlKey = false, directionSensitive = true) {
 		if (code === "End") return this.goLast();
-		if (this.isVertical.value && code !== "ArrowDown") return;
-		if (this.isHorizontal && code !== "ArrowRight") return;
+		if (directionSensitive) {
+			if (this.isVertical.value && code !== "ArrowDown") return;
+			if (this.isHorizontal && code !== "ArrowRight") return;
+		}
 		ctrlKey ? this.goLast() : this.goNext();
 	}
 

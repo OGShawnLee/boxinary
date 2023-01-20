@@ -1,5 +1,5 @@
 import type { Predicate } from "@boxinary/predicate-core";
-import { getContext, setContext } from "svelte";
+import { getContext, hasContext, setContext } from "svelte";
 import { coolString } from "$lib/utils";
 
 export default function useContext<T>(config: {
@@ -21,6 +21,9 @@ export default function useContext<T>(config: {
 				if (isStrict) throw Error(`Unable to Get ${key} Context. Did you set it?`);
 				return undefined as [S] extends [true] ? T : T | undefined;
 			}
+		},
+		hasContext() {
+			return hasContext(key);
 		},
 		setContext(value: T) {
 			setContext(key, value);
