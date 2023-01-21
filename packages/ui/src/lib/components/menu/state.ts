@@ -17,6 +17,7 @@ import {
 	useKeyMatch,
 	useNavigationStarter
 } from "$lib/plugins";
+import { isDisabled } from "$lib/predicate";
 
 export function createMenuState(settings: Navigable.Settings) {
 	const button = new ElementBinder();
@@ -99,7 +100,8 @@ export function createMenuState(settings: Navigable.Settings) {
 				return [
 					navigation.initItem(element, name),
 					useListener(element, "click", () => {
-						toggler.handleClose(event);
+						if (isDisabled(element)) return;
+						toggler.handleClose();
 						element.click();
 					})
 				];

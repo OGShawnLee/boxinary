@@ -4,6 +4,7 @@ import { ElementBinder, ElementLabel, defineActionComponent } from "$lib/core";
 import { Navigation, Toggler } from "$lib/stores";
 import { createReadableRef, ref } from "$lib/utils";
 import { useComponentNaming, useListener } from "$lib/hooks";
+import { isDisabled as isDisabledFn } from "$lib/predicate";
 import {
 	handleAriaControls,
 	handleAriaExpanded,
@@ -137,7 +138,7 @@ export function createListboxState<T>(settings: Settings<T>) {
 							isInitialValueFound = true;
 						}
 					},
-					onMount: ({ element, name }) => {
+					onMount: ({ element, binder, name }) => {
 						element.tabIndex = -1;
 						element.role = "option";
 						return [
@@ -147,6 +148,11 @@ export function createListboxState<T>(settings: Settings<T>) {
 									globalValue.set(initialValue);
 									element.ariaSelected = "true";
 								} else element.ariaSelected = "false";
+							}),
+							useListener(element, "click", () => {
+								if (isDisabledFn(element)) return;
+								toggler.handleClose();
+								element.click();
 							})
 						];
 					}
