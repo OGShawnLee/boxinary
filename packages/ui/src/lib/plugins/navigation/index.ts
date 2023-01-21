@@ -68,6 +68,14 @@ export const handleNavigation: Navigable.Handler = function (event) {
 	}
 };
 
+export const useHoverMove: Plugin<Navigation> = function (element) {
+	return useListener(element, "mousemove", (event) => {
+		if (!isHTMLElement(event.target) || isDisabled(event.target)) return;
+		const index = this.findIndex((element) => element === event.target);
+		if (index > -1) this.interact(index, false);
+	});
+};
+
 export const useKeyMatch: Plugin<Navigation> = function (element) {
 	return useCleanup(
 		useListener(element, "keydown", ({ key }) => {

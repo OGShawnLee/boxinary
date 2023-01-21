@@ -12,6 +12,7 @@ import {
 	useCloseEscapeKey,
 	useCloseFocusLeave,
 	useFocusKeep,
+	useHoverMove,
 	useKeyMatch
 } from "$lib/plugins";
 import { tick } from "svelte";
@@ -102,7 +103,7 @@ export function createListboxState<T>(settings: Settings<T>) {
 				element.role = "listbox";
 				return [
 					navigation.initNavigation(element, {
-						plugins: [handleAriaOrientation, useFocusKeep, useKeyMatch]
+						plugins: [handleAriaOrientation, useFocusKeep, useHoverMove, useKeyMatch]
 					}),
 					toggler.createPanel(element, {
 						plugins: [useCloseFocusLeave, useCloseClickOutside, useCloseEscapeKey],

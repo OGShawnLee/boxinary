@@ -13,6 +13,7 @@ import {
 	useCloseEscapeKey,
 	useCloseFocusLeave,
 	useFocusKeep,
+	useHoverMove,
 	useKeyMatch,
 	useNavigationStarter
 } from "$lib/plugins";
@@ -63,7 +64,7 @@ export function createMenuState(settings: Navigable.Settings) {
 				element.tabIndex = 0;
 				return [
 					navigation.initNavigation(element, {
-						plugins: [handleAriaOrientation, useFocusKeep, useKeyMatch]
+						plugins: [handleAriaOrientation, useHoverMove, useFocusKeep, useKeyMatch]
 					}),
 					toggler.createPanel(element, {
 						plugins: [

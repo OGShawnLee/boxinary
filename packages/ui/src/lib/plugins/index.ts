@@ -2,6 +2,7 @@ export {
 	getRadioGroupNavigationHandler,
 	handleAriaOrientation,
 	handleNavigation,
+	useHoverMove,
 	useKeyMatch,
 	useResetOnLeave
 } from "./navigation";
