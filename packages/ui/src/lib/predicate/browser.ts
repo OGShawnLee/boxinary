@@ -72,12 +72,20 @@ export function isHeading(element: HTMLElement) {
 	return tagName in HEADING_TAGS;
 }
 
+export function isHorizontalNavigationKey(code: string): code is "ArrowRight" | "ArrowLeft" {
+	return code === "ArrowRight" || code === "ArrowLeft";
+}
+
 export function isHTMLElement(value: unknown): value is HTMLElement {
 	return value instanceof HTMLElement;
 }
 
 export function isNavigationKey(code: string): code is NavigationKey {
 	return code in NAVIGATION_KEY;
+}
+
+export function isVerticalNavigationKey(code: string): code is "ArrowDown" | "ArrowUp" {
+	return code === "ArrowDown" || code === "ArrowUp";
 }
 
 export function isVoidElement(tagName: string) {

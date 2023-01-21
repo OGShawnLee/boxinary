@@ -11,8 +11,10 @@ export {
 	isClient,
 	isDisabled,
 	isFocusable,
+	isHorizontalNavigationKey,
 	isHTMLElement,
 	isNavigationKey,
+	isVerticalNavigationKey,
 	isVoidElement,
 	isWithinContainer
 } from "./browser";
