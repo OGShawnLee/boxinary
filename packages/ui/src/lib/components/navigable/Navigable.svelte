@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createNavigableState } from "./state";
 
@@ -12,6 +12,7 @@
 	export let global = false;
 	export let vertical = false;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { createNavigable, navigation } = createNavigableState({
@@ -21,6 +22,7 @@
 		isVertical: vertical
 	});
 
+	$: actions = use ? [action, ...use] : [action];
 	$: navigation.isFinite.value = finite;
 	$: navigation.isGlobal.value = global;
 	$: navigation.isVertical.value = vertical;
@@ -35,7 +37,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	on:blur
 	on:change
 	on:click

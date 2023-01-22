@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createToolbarState } from "./state";
 
@@ -9,15 +9,16 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let vertical = false;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { createToolbar, navigation } = createToolbarState({
 		isVertical: vertical
 	});
-
-	$: navigation.isVertical.value = vertical;
-
 	const { action, binder, context: labels } = createToolbar(id);
+
+	$: actions = use ? [action, ...use] : [action];
+	$: navigation.isVertical.value = vertical;
 </script>
 
 <!-- {$index} -->
@@ -28,7 +29,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	aria-labelledby={$labels}
 	role="toolbar"
 	tabIndex={-1}

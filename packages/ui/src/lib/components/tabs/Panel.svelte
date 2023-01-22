@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 	import { ElementBinder } from "$lib/core";
@@ -9,6 +9,7 @@
 	export let as: ComponentTagName = "div";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { index, createPanel } = Context.getContext();
@@ -20,6 +21,8 @@
 			binder: { finalName: tabFinalName }
 		}
 	} = createPanel(id, new ElementBinder());
+
+	$: actions = use ? [action, ...use] : [action];
 </script>
 
 {#if $index === panelIndex}
@@ -30,7 +33,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		actions={[action]}
+		{actions}
 		aria-labelledby={$tabFinalName}
 		role="tabpanel"
 		tabIndex={0}

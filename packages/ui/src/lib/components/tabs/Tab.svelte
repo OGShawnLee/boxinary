@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 	import { ElementBinder } from "$lib/core";
@@ -11,13 +11,14 @@
 	export let disabled: Nullable<boolean> = undefined;
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
-
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { createTab } = Context.getContext();
 	const { action, binder } = createTab(id, new ElementBinder());
 	const { isSelected } = binder;
 
+	$: actions = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isDisabled, isSelected: $isSelected });
 </script>
@@ -30,7 +31,7 @@
 	bind:element
 	{binder}
 	{disabled}
-	actions={[action]}
+	{actions}
 	aria-selected={$isSelected}
 	role="tab"
 	tabIndex={$isSelected ? 0 : -1}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 
@@ -8,10 +8,13 @@
 	export let as: ComponentTagName = "div";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { createPanels } = Context.getContext();
 	const { action, binder } = createPanels(id);
+
+	$: actions = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -21,7 +24,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	on:blur
 	on:change
 	on:click

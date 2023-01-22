@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 
@@ -9,11 +9,14 @@
 	export let as: ComponentTagName = "ul";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 	export { isLocked as static };
 
 	const { isOpen, createListboxPanel } = Context.getContext();
 	const { action, binder } = createListboxPanel(id);
+
+	$: actions = use ? [action, ...use] : [action];
 </script>
 
 {#if $isOpen || isLocked}
@@ -24,7 +27,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		actions={[action]}
+		{actions}
 		role="listbox"
 		tabIndex={0}
 		on:blur

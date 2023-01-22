@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createToolbarGroupState } from "./Group.state";
 
@@ -8,6 +8,7 @@
 	export let as: ComponentTagName = "fragment";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	createToolbarGroupState();
@@ -19,6 +20,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
+	actions={use}
 	on:blur
 	on:change
 	on:click

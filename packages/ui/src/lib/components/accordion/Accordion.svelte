@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName } from "$lib/types";
 	import { createAccordionState } from "./state";
 	import { Render } from "$lib/components";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -12,6 +12,7 @@
 	export let finite = false;
 	export let unique = true;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { createAccordion, navigation, isOpen, isUnique } = createAccordionState({
@@ -22,10 +23,10 @@
 	});
 	const { action, binder } = createAccordion(id);
 
+	$: actions = use ? [action, ...use] : [action];
 	$: navigation.isDisabled.value = disabled;
 	$: navigation.isFinite.value = finite;
 	$: isUnique.value = unique;
-
 	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen });
 </script>
 
@@ -36,7 +37,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	on:blur
 	on:change
 	on:click

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import { ItemContext } from "./context";
 	import { Render } from "$lib/components";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -10,6 +10,7 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let disabled: Nullable<boolean> = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const {
@@ -19,6 +20,7 @@
 	} = ItemContext.getContext();
 	const { action, binder } = createAccordionButton(id);
 
+	$: actions = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen, isDisabled });
 </script>
@@ -30,7 +32,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	aria-expanded={$isOpen}
 	aria-controls={$panelName}
 	aria-disabled={disabled}

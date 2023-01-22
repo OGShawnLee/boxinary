@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import Context from "./Group.context";
 	import { Render } from "$lib/components";
 	import { ElementBinder } from "$lib/core";
@@ -9,10 +9,13 @@
 	export let as: ComponentTagName = "label";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { createToolbarLabel } = Context.getContext();
 	const { binder, action, context: toolbarName } = createToolbarLabel(id, new ElementBinder());
+
+	$: actions = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -22,7 +25,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	for={$toolbarName}
 	on:blur
 	on:change

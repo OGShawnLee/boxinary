@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createDisclosureState } from "./state";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -10,6 +10,7 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let open = false;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { isOpen, close, button, panel } = createDisclosureState(open);
@@ -25,6 +26,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
+	actions={use}
 	on:blur
 	on:change
 	on:click

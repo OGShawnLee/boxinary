@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName } from "$lib/types";
 	import GroupContext from "./Group.context";
 	import { Render } from "$lib/components";
 	import { createPopoverState } from "./state";
@@ -11,6 +11,7 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let forceFocus = false;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { isOpen, isFocusForced, close, button, overlay, panel } = createPopoverState({
@@ -29,6 +30,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
+	actions={use}
 	on:blur
 	on:change
 	on:click

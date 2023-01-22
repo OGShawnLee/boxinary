@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { GroupContext } from "./context";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -9,6 +9,7 @@
 	export let as: ComponentTagName = "div";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { createAccordionItemState } = GroupContext.getContext();
@@ -23,6 +24,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
+	actions={use}
 	on:blur
 	on:change
 	on:click

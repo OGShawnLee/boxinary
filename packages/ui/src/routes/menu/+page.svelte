@@ -30,7 +30,10 @@
 	</output>
 	<div class="grid grid-cols-4 gap-6">
 		<Menu class="flex flex-col items-start gap-3" {horizontal} {infinite} let:items>
-			<MenuButton class={{ base: "button", open: { on: "button--open", off: "button--closed" } }}>
+			<MenuButton
+				class={{ base: "button", open: { on: "button--open", off: "button--closed" } }}
+				use={[console.log]}
+			>
 				Options
 			</MenuButton>
 			<div

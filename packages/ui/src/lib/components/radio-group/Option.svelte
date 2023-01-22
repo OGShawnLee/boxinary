@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { GroupContext } from "./context";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -11,6 +11,8 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let selected = false;
+	export let use: Action[] | undefined = undefined;
+
 	export let value = "";
 	export { className as class };
 
@@ -22,6 +24,7 @@
 	const { action, binder } = createRadioGroupOption(id);
 	const { isSelected } = binder;
 
+	$: actions = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({
 		isDisabled,
@@ -36,7 +39,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	aria-checked={$isSelected}
 	aria-describedby={$descriptions}
 	aria-labelledby={$labels}

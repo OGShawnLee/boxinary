@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createSwitchState } from "./state";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -11,11 +11,13 @@
 	export let checked = false;
 	export let disabled: Nullable<boolean> = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { isChecked, createSwitch, descriptions, labels } = createSwitchState(checked);
 	const { binder, action } = createSwitch(id);
 
+	$: actions = use ? [action, ...use] : [action];
 	$: isChecked.set(checked);
 	$: checked = $isChecked;
 	$: isDisabled = disabled ?? false;
@@ -29,7 +31,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	{disabled}
 	aria-checked={$isChecked}
 	aria-describedby={$descriptions}

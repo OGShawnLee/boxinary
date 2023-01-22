@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -12,12 +12,14 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let value = "";
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { createMenuItem } = Context.getContext();
 	const { action, binder } = createMenuItem(value, new ElementBinder());
 	const { isActive } = binder;
 
+	$: actions = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({
 		isDisabled,
@@ -32,7 +34,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	{disabled}
 	role="menuitem"
 	tabIndex={-1}

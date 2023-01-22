@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName } from "$lib/types";
 	import { ItemContext } from "./context";
 	import { Render } from "$lib/components";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -9,11 +9,14 @@
 	export let as: ComponentTagName = "h3";
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
+
 	export { className as class };
 
 	const { isOpen, createAccordionHeading } = ItemContext.getContext();
 	const { action, binder } = createAccordionHeading(id);
 
+	$: actions = use ? [action, ...use] : [action];
 	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen });
 </script>
 
@@ -24,7 +27,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	on:blur
 	on:change
 	on:click

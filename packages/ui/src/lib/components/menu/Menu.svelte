@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createMenuState } from "./state";
 
@@ -10,6 +10,7 @@
 	export let horizontal = false;
 	export let infinite = false;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { button, isOpen, navigation, panel } = createMenuState({
@@ -29,6 +30,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
+	actions={use}
 	on:blur
 	on:change
 	on:click

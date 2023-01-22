@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createTabGroupState } from "./state";
 
@@ -10,9 +10,10 @@
 	export let finite = false;
 	export let id: string | undefined = undefined;
 	export let initialIndex = 0;
-	export { className as class };
 	export let manual = false;
 	export let vertical = false;
+	export let use: Action[] | undefined = undefined;
+	export { className as class };
 
 	const { isFinite, isManual, isVertical } = createTabGroupState({
 		isFinite: finite,
@@ -32,6 +33,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
+	actions={use}
 	on:blur
 	on:change
 	on:click

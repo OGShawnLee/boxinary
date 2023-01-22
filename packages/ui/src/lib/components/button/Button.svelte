@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { useClassNameResolver } from "$lib/hooks";
 	import { createButtonState } from "./state";
@@ -11,11 +11,13 @@
 	export let id: string | undefined = undefined;
 	export let pressed = false;
 	export let disabled: Nullable<boolean> = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { isPressed, createButton } = createButtonState(pressed);
 	const { action, binder } = createButton(id);
 
+	$: actions = use ? [action, ...use] : [action];
 	$: isPressed.set(pressed);
 	$: pressed = $isPressed;
 	$: isDisabled = disabled ?? false;
@@ -29,7 +31,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	aria-pressed={$isPressed}
 	role="button"
 	type="button"

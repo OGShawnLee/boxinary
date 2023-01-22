@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createRadioGroupState } from "./state";
 
@@ -9,6 +9,7 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let horizontal = false;
+	export let use: Action[] | undefined = undefined;
 	export let value = "";
 	export { className as class };
 
@@ -21,6 +22,7 @@
 	);
 	const { action, binder } = createRadioGroup(id);
 
+	$: actions = use ? [action, ...use] : [action];
 	$: navigation.isVertical.set(!horizontal);
 	$: value = $globalValue;
 </script>
@@ -32,7 +34,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	aria-describedby={$descriptions}
 	aria-labelledby={$labels}
 	role="radiogroup"

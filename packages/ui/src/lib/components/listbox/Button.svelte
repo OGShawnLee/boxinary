@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -10,11 +10,13 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let disabled: Nullable<boolean> = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { isOpen, createListboxButton } = Context.getContext();
 	const { action, binder } = createListboxButton(id);
 
+	$: actions = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isDisabled, isOpen: $isOpen });
 </script>
@@ -26,7 +28,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	aria-haspopup="true"
 	on:blur
 	on:change

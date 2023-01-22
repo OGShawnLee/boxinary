@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import Context from "./Group.context";
 	import { Render } from "$lib/components";
 	import { ElementBinder } from "$lib/core";
@@ -10,6 +10,7 @@
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let passive = false;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const {
@@ -20,6 +21,7 @@
 	const { binder, action, context: isPassive } = createSwitchLabel(id, new ElementBinder());
 
 	$: isPassive.set(passive);
+	$: actions = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -29,7 +31,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	actions={[action]}
+	{actions}
 	for={$finalName}
 	on:blur
 	on:change

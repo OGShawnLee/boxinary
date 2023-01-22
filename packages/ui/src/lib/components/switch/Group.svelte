@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createSwitchGroupState } from "./Group.state";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -11,6 +11,7 @@
 	export let id: string | undefined = undefined;
 	export let initialChecked = false;
 	export let passive = false;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const { isChecked, isPassive } = createSwitchGroupState({ initialChecked, isPassive: passive });
@@ -25,6 +26,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
+	actions={use}
 	on:blur
 	on:change
 	on:click

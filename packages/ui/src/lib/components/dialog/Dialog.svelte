@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ClassName, ComponentTagName, Nullable } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createDialogState } from "./state";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -13,6 +13,7 @@
 	export let initialFocus: Nullable<HTMLElement> = undefined;
 	export let open = false;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export { className as class };
 
 	const initialFocusRef = ref(initialFocus);
@@ -22,6 +23,7 @@
 	);
 	const { action, binder } = createDialogRoot(id);
 
+	$: actions = use ? [action, ...use] : [action];
 	$: isOpen.set(open);
 	$: open = $isOpen;
 	$: initialFocusRef.set(initialFocus);
@@ -36,7 +38,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		actions={[action]}
+		{actions}
 		on:blur
 		on:change
 		on:click

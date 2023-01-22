@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComponentTagName } from "$lib/types";
+	import type { Action, ComponentTagName } from "$lib/types";
 	import { Render } from "$lib/components";
 	import { createListboxState } from "./state";
 
@@ -10,6 +10,7 @@
 	export let horizontal = false;
 	export let infinite = false;
 	export let id: string | undefined = undefined;
+	export let use: Action[] | undefined = undefined;
 	export let value: any = undefined;
 	export { className as class };
 
@@ -33,6 +34,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
+	actions={use}
 	on:blur
 	on:change
 	on:click
