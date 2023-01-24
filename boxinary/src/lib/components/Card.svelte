@@ -30,7 +30,12 @@
 				class="h-full px-6 | grid-center | bg-raisin-12 rounded-t-md text-xs"
 				datetime={createdAt.toISOString()}
 			>
-				{getFormatedDate(createdAt)}
+				<span class="hidden md:inline">
+					{getFormatedDate(createdAt)}
+				</span>
+				<span class="md:hidden">
+					{getFormatedDate(createdAt, "medium")}
+				</span>
 			</time>
 			{#if isOwner}
 				{@const padding = compact ? "button-option-compact" : "button-option"}
