@@ -9,12 +9,12 @@
 
 	$: isActive = $page.url.pathname.includes(path);
 	$: className = useClassNameResolver<"ACTIVE">({
-		base: "group px-6 py-4 | grid gap-1.5 | border-2 border-transparent rounded-lg focus:(border-white)",
+		base: "group px-6 py-4 | grid gap-1.5 | border-2 border-transparent outline-none rounded-lg focus:border-white",
 		active: { on: "bg-raisin-12 hover:bg-raisin-15", off: "hover:bg-raisin-12" }
-	});
+	})({ isActive });
 </script>
 
-<NavigableItem as="a" class={className({ isActive })} href="/settings/{path}">
+<NavigableItem as="a" class={className} href="/settings/{path}">
 	<span class="flex items-center gap-1.5">
 		<i class="bx {icon} text-xl group-focus-within:text-white" class:text-aqua-50={isActive} />
 		<span class="text-lg text-rich-90 font-medium"> {title} </span>
