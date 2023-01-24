@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Header, SettingsLink } from "$lib/components";
-	import { Navigable } from "malachite-ui/components";
+	import { Navigable } from "@boxinary/ui";
 </script>
 
 <div class="grid lg:grid-cols-12 gap-12">

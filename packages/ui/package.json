@@ -26,5 +26,7 @@
 		"vite": "^4.0.0",
 		"vite-plugin-windicss": "^1.8.8"
 	},
-	"type": "module"
+	"type": "module",
+	"module": "./package/index.js",
+	"types": "./package/index.d.ts"
 }
