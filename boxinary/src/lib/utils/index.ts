@@ -23,5 +23,5 @@ export {
 	getProfilePath,
 	getUserExamplesPath
 } from "./pathing";
-export { formatUserJoinDate, getFormatedDate, getStringMonth } from "./time";
+export { formatUserJoinDate, getFormatedDate } from "./time";
 export { capitalise, defineMessage, plural, possessive } from "./string";
