@@ -1,8 +1,12 @@
 import type { ReadableRef, Ref, Refs, StoresValues } from "$lib/types";
-import type { StartStopNotifier } from "svelte/store";
+import type { Readable, StartStopNotifier } from "svelte/store";
 import { isReadableRef } from "$lib/predicate";
 import { onDestroy } from "svelte";
 import { derived, writable } from "svelte/store";
+
+export function asReadable<T>(store: Readable<T>): Readable<T> {
+	return { subscribe: store.subscribe };
+}
 
 export function createReadableRef<T>(ref: Ref<T>): ReadableRef<T> {
 	return {
