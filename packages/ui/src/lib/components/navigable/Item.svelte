@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Action, ClassName, ComponentTagName } from "$lib/types";
+	import type { Action, ClassName, ComponentTagName, Nullable } from "$lib/types";
 	import Context from "./context";
 	import { Render } from "$lib/components";
 	import { useClassNameResolver } from "$lib/hooks";
@@ -7,7 +7,7 @@
 	let className: ClassName<"DISABLED"> = undefined;
 
 	export let as: ComponentTagName = "button";
-	export let disabled = false;
+	export let disabled: Nullable<boolean> = undefined;
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
 	export let use: Action[] | undefined = undefined;
