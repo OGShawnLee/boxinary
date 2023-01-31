@@ -6,12 +6,12 @@
 
 	let className: string | undefined = undefined;
 
-	export let actions: Array<Action> = [];
 	export let as: keyof HTMLElementTagNameMap | "fragment";
 	export let binder = new ElementBinder();
 	export let disabled: Nullable<boolean> = undefined;
 	export let element: HTMLElement | undefined = undefined;
 	export let id: string | undefined = undefined;
+	export let use: Array<Action> = [];
 	export let value: any = undefined;
 	export { className as class };
 
@@ -40,7 +40,7 @@
 		id={$finalName}
 		{disabled}
 		{value}
-		use:forward={actions}
+		use:forward={use}
 		on:blur
 		on:change
 		on:click
@@ -71,7 +71,7 @@
 		class={className}
 		id={$finalName}
 		{disabled}
-		use:forward={actions}
+		use:forward={use}
 		on:blur
 		on:click
 		on:contextmenu

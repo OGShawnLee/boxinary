@@ -16,7 +16,7 @@
 	const { isOpen, createMenuButton } = Context.getContext();
 	const { action, binder } = createMenuButton(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isDisabled, isOpen: $isOpen });
 </script>
@@ -28,7 +28,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-haspopup="true"
 	aria-expanded={$isOpen}
 	on:blur

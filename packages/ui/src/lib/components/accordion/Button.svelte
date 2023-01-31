@@ -20,9 +20,9 @@
 	} = ItemContext.getContext();
 	const { action, binder } = createAccordionButton(id);
 
-	$: actions = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen, isDisabled });
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -32,7 +32,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-expanded={$isOpen}
 	aria-controls={$panelName}
 	aria-disabled={disabled}

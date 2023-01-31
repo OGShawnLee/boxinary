@@ -1,6 +1,7 @@
 import type { Nullable } from "$lib/types";
 import { nanoid } from "nanoid";
-import { separateWithDashes } from "$lib/utils";
+import { clearString, separateWithDashes } from "$lib/utils";
+import { isString, isWhitespace } from "@boxinary/predicate-core";
 
 const UID_LENGTH = 8;
 
@@ -25,4 +26,32 @@ export default function useComponentNaming(config: {
 			return `${baseName}-${childName}-${uid}`;
 		}
 	};
+}
+
+{
+	function useComponentNaming(name: string | { name: string; parent?: string }) {
+		name = isString(name) ? name : name.name;
+		const baseName = getUniqueName(name, "component");
+
+		function getChildName(name: string) {
+			return getUniqueName(name, "child");
+		}
+
+		return { baseName, getChildName };
+	}
+
+	function clearAndSeparateWithDashes(str: string) {
+		return clearString(str).replace(/\s/, "-");
+	}
+
+	function getUniqueName(name: string, type: string, parent?: string) {
+		name = clearAndSeparateWithDashes(name);
+		const uid = nanoid(UID_LENGTH);
+
+		if (parent) {
+			return isWhitespace(name) ? `${parent}-${type}-${uid}` : `${parent}-${name}-${uid}`;
+		}
+
+		return isWhitespace(name) ? `boxinary-${type}-${uid}` : `boxinary-${name}-${uid}`;
+	}
 }

@@ -16,7 +16,7 @@
 	const { isOpen, close, createDisclosurePanel } = Context.getContext();
 	const { action, binder } = createDisclosurePanel(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 {#if $isOpen || isLocked}
@@ -27,7 +27,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		{actions}
+		use={finalUse}
 		on:blur
 		on:change
 		on:click

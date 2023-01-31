@@ -18,7 +18,7 @@
 	const { action, binder } = createTab(id, new ElementBinder());
 	const { isSelected } = binder;
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isDisabled, isSelected: $isSelected });
 </script>
@@ -31,7 +31,7 @@
 	bind:element
 	{binder}
 	{disabled}
-	{actions}
+	use={finalUse}
 	aria-selected={$isSelected}
 	role="tab"
 	tabIndex={$isSelected ? 0 : -1}

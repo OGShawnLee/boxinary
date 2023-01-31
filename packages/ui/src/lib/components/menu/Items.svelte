@@ -16,7 +16,7 @@
 	const { isOpen, createMenuPanel } = Context.getContext();
 	const { action, binder } = createMenuPanel(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 {#if $isOpen || isLocked}
@@ -27,7 +27,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		{actions}
+		use={finalUse}
 		role="menu"
 		tabIndex={0}
 		on:blur

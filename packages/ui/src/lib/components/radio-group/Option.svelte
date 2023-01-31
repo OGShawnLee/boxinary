@@ -24,7 +24,7 @@
 	const { action, binder } = createRadioGroupOption(id);
 	const { isSelected } = binder;
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({
 		isDisabled,
@@ -39,7 +39,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-checked={$isSelected}
 	aria-describedby={$descriptions}
 	aria-labelledby={$labels}

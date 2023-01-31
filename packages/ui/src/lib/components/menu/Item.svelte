@@ -19,7 +19,7 @@
 	const { action, binder } = createMenuItem(value, new ElementBinder());
 	const { isActive } = binder;
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({
 		isDisabled,
@@ -34,7 +34,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	{disabled}
 	role="menuitem"
 	tabIndex={-1}

@@ -22,7 +22,7 @@
 		}
 	} = createPanel(id, new ElementBinder());
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 {#if $index === panelIndex}
@@ -33,7 +33,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		{actions}
+		use={finalUse}
 		aria-labelledby={$tabFinalName}
 		role="tabpanel"
 		tabIndex={0}

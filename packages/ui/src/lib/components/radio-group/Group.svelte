@@ -22,7 +22,7 @@
 	);
 	const { action, binder } = createRadioGroup(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: navigation.isVertical.set(!horizontal);
 	$: value = $globalValue;
 </script>
@@ -34,7 +34,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-describedby={$descriptions}
 	aria-labelledby={$labels}
 	role="radiogroup"

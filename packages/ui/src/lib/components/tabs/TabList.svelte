@@ -15,7 +15,7 @@
 	const { createTabList } = Context.getContext();
 	const { action, binder, context: isVertical } = createTabList(id, new ElementBinder());
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -25,7 +25,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-orientation={$isVertical ? "vertical" : "horizontal"}
 	role="tablist"
 	on:blur

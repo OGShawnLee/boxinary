@@ -17,11 +17,11 @@
 	const { isPressed, createButton } = createButtonState(pressed);
 	const { action, binder } = createButton(id);
 
-	$: actions = use ? [action, ...use] : [action];
 	$: isPressed.set(pressed);
 	$: pressed = $isPressed;
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isDisabled, isPressed: $isPressed });
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -31,7 +31,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-pressed={$isPressed}
 	role="button"
 	type="button"

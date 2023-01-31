@@ -21,7 +21,7 @@
 	const { binder, action, context: isPassive } = createSwitchLabel(id, new ElementBinder());
 
 	$: isPassive.set(passive);
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -31,7 +31,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	for={$finalName}
 	on:blur
 	on:change

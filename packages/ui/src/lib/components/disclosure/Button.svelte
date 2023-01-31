@@ -16,7 +16,7 @@
 	const { isOpen, createDisclosureButton } = Context.getContext();
 	const { action, binder, context: panelName } = createDisclosureButton(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: finalClassName = useClassNameResolver(className)({
 		isOpen: $isOpen,
 		isDisabled: disabled ?? false
@@ -30,7 +30,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-expanded={$isOpen}
 	aria-controls={$panelName}
 	{disabled}

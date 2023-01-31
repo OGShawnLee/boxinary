@@ -23,11 +23,11 @@
 	});
 	const { action, binder } = createAccordion(id);
 
-	$: actions = use ? [action, ...use] : [action];
 	$: navigation.isDisabled.value = disabled;
 	$: navigation.isFinite.value = finite;
 	$: isUnique.value = unique;
 	$: finalClassName = useClassNameResolver(className)({ isOpen: $isOpen });
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -37,7 +37,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	on:blur
 	on:change
 	on:click

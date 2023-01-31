@@ -14,7 +14,7 @@
 	const { createPanels } = Context.getContext();
 	const { action, binder } = createPanels(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -24,7 +24,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	on:blur
 	on:change
 	on:click

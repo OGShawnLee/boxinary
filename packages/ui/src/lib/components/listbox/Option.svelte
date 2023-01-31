@@ -20,7 +20,7 @@
 	const { action, binder } = createListboxOption(id, new ElementBinder());
 	const { isActive, isSelected } = binder;
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({
 		isActive: $isActive,
@@ -36,7 +36,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-selected={$isSelected}
 	{disabled}
 	role="option"

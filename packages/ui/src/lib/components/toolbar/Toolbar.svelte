@@ -17,7 +17,7 @@
 	});
 	const { action, binder, context: labels } = createToolbar(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: navigation.isVertical.value = vertical;
 </script>
 
@@ -29,7 +29,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-labelledby={$labels}
 	role="toolbar"
 	tabIndex={-1}

@@ -16,7 +16,7 @@
 	const { isOpen, createListboxPanel } = Context.getContext();
 	const { action, binder } = createListboxPanel(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 {#if $isOpen || isLocked}
@@ -27,7 +27,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		{actions}
+		use={finalUse}
 		role="listbox"
 		tabIndex={0}
 		on:blur

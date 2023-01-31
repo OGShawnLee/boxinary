@@ -24,7 +24,7 @@
 
 	const { action, binder } = createNavigable(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: navigation.isFinite.value = finite;
 	$: navigation.isGlobal.value = global;
 	$: navigation.isVertical.value = vertical;
@@ -37,7 +37,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	on:blur
 	on:change
 	on:click

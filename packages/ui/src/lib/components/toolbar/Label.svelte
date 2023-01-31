@@ -15,7 +15,7 @@
 	const { createToolbarLabel } = Context.getContext();
 	const { binder, action, context: toolbarName } = createToolbarLabel(id, new ElementBinder());
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -25,7 +25,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	for={$toolbarName}
 	on:blur
 	on:change

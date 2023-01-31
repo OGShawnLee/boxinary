@@ -16,7 +16,7 @@
 	const { createRadioGroupLabel, parentName } = GroupContext.getContext();
 	const { binder, action } = createRadioGroupLabel(id, new ElementBinder());
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 <Render
@@ -26,7 +26,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	for={$parentName}
 	on:blur
 	on:change

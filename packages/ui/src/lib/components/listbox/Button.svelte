@@ -16,7 +16,7 @@
 	const { isOpen, createListboxButton } = Context.getContext();
 	const { action, binder } = createListboxButton(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isDisabled, isOpen: $isOpen });
 </script>
@@ -28,7 +28,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	aria-haspopup="true"
 	on:blur
 	on:change

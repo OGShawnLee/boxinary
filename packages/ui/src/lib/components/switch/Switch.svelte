@@ -17,7 +17,7 @@
 	const { isChecked, createSwitch, descriptions, labels } = createSwitchState(checked);
 	const { binder, action } = createSwitch(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isChecked.set(checked);
 	$: checked = $isChecked;
 	$: isDisabled = disabled ?? false;
@@ -31,7 +31,7 @@
 	{...$$restProps}
 	bind:element
 	{binder}
-	{actions}
+	use={finalUse}
 	{disabled}
 	aria-checked={$isChecked}
 	aria-describedby={$descriptions}

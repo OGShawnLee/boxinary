@@ -14,7 +14,7 @@
 	const { isOpen, createPopoverOverlay } = Context.getContext();
 	const { action, binder } = createPopoverOverlay(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 </script>
 
 {#if $isOpen}
@@ -25,7 +25,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		{actions}
+		use={finalUse}
 		on:blur
 		on:change
 		on:click

@@ -23,7 +23,7 @@
 	);
 	const { action, binder } = createDialogRoot(id);
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isOpen.set(open);
 	$: open = $isOpen;
 	$: initialFocusRef.set(initialFocus);
@@ -38,7 +38,7 @@
 		{...$$restProps}
 		bind:element
 		{binder}
-		{actions}
+		use={finalUse}
 		on:blur
 		on:change
 		on:click

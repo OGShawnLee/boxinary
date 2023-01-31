@@ -20,7 +20,7 @@
 	{id}
 	{...$$restProps}
 	bind:element
-	actions={use}
+	finalUse={use}
 	on:blur
 	on:change
 	on:click

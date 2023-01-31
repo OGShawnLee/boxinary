@@ -16,7 +16,7 @@
 
 	const { action, binder } = Context.getContext().createToolbarItem(id, new ElementBinder());
 
-	$: actions = use ? [action, ...use] : [action];
+	$: finalUse = use ? [action, ...use] : [action];
 	$: isDisabled = disabled ?? false;
 	$: finalClassName = useClassNameResolver(className)({ isDisabled });
 </script>
@@ -29,7 +29,7 @@
 	bind:element
 	{binder}
 	{disabled}
-	{actions}
+	use={finalUse}
 	on:blur
 	on:change
 	on:click
