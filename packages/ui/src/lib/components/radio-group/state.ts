@@ -58,7 +58,7 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 		return defineActionComponent({
 			id: id,
 			binder: binder,
-			name: nameChild("label"),
+			name: nameChild("description"),
 			onInit({ name }) {
 				descriptions.onInitLabel(name, id);
 			},
