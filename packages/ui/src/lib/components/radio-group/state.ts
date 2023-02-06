@@ -106,11 +106,13 @@ export function createRadioGroupState<T>(settings: Settings<T>) {
 					}
 				},
 				onMount({ element, name }) {
-					element.tabIndex = 0;
 					return [
 						toolbar?.item(element),
 						navigation.initItem(element, name),
 						descriptions.handleAriaDescribedby(element),
+						option.disabled.subscribe((isDisabled) => {
+							element.tabIndex = isDisabled ? -1 : 0;
+						}),
 						labels.handleAriaLabelledby(element),
 						option.isSelected.subscribe((isSelected) => {
 							if (isSelected) {

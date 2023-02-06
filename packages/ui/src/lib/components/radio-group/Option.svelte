@@ -43,8 +43,9 @@
 	aria-checked={$isSelected}
 	aria-describedby={$descriptions}
 	aria-labelledby={$labels}
+	{disabled}
 	role="radio"
-	tabIndex={0}
+	tabIndex={isDisabled ? -1 : 0}
 	on:blur
 	on:change
 	on:click
