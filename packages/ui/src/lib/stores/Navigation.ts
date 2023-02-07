@@ -101,7 +101,7 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 			isSelected: false
 		};
 		this.items.set(name, finalItem as T);
-		binder.isSelected.value = this.isSelected(name);
+		binder.isSelected.value = this.isSelectedSSR(name);
 		this.handleItemActiveState(index, binder, name);
 		this.handleItemSelectedState(index, binder, name);
 		onDestroy(() => {
@@ -197,9 +197,8 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 					this.set(index, false);
 				}),
 				useListener(element, "focus", () => {
-					if (this.targetIndex.value !== index && isFocusable(element)) {
-						this.interact(index, false);
-					}
+					if (this.isSelectedRuntime(element, index)) return;
+					this.interact(index, false);
 				})
 			]
 		});
@@ -340,10 +339,15 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		return this.targetIndex.value + 1 === this.elements.length;
 	}
 
-	isSelected(this: Navigation, name: string) {
+	isSelectedSSR(this: Navigation, name: string) {
 		if (this.isWaiting.value) return false;
 		const { index, binder } = this.items.getSafe(name);
-		return !binder.disabled.value && index === this.index.value;
+		return !binder.disabled && index === this.index.value;
+	}
+
+	isSelectedRuntime(this: Navigation, element: HTMLElement, index: number) {
+		if (this.isWaiting.value || isDisabled(element)) return false;
+		return index === this.index.value;
 	}
 
 	isValidIndex(this: Navigation, index: number) {
