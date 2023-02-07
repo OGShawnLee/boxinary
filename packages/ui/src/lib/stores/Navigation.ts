@@ -50,16 +50,20 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 		});
 	}
 
+	get isAutomatic() {
+		return !this.isManual.value;
+	}
+
 	get isHorizontal() {
 		return !this.isVertical.value;
 	}
 
-	get targetIndex() {
-		return this.targetIndexRef.value;
-	}
-
 	get size() {
 		return this.items.size;
+	}
+
+	get targetIndex() {
+		return this.targetIndexRef.value;
 	}
 
 	initNavigation(this: Navigation, element: HTMLElement, settings: Navigable.RootSettings = {}) {
@@ -175,21 +179,30 @@ export default class Navigation<T extends Navigable.Item = Navigable.Item> {
 
 	protected addItemEventListeners(this: Navigation, element: HTMLElement, index: number) {
 		const isButton = hasTagName(element, "button");
-		return useCleanup([
-			useListener(element, "click", () => {
-				this.set(index, false);
-			}),
-			useListener(element, "focus", () => {
-				if (this.targetIndex.value !== index && isFocusable(element)) {
-					this.interact(index, false);
-				}
-			}),
-			!isButton &&
-				useListener(element, "keydown", (event) => {
-					if (isDisabled(element) || !this.isManual.value) return;
-					if (event.code === "Enter" || event.code === "Space") element.click();
+		return useGarbageCollector({
+			beforeInit: () => {
+				if (isButton) return;
+				return [
+					useListener(element, "mousedown", (event) => {
+						if (isDisabled(element)) event.preventDefault(); // prevent focusing element
+					}),
+					useListener(element, "keydown", (event) => {
+						if (isDisabled(element) || this.isAutomatic) return;
+						if (event.code === "Enter" || event.code === "Space") element.click();
+					})
+				];
+			},
+			init: () => [
+				useListener(element, "click", () => {
+					this.set(index, false);
+				}),
+				useListener(element, "focus", () => {
+					if (this.targetIndex.value !== index && isFocusable(element)) {
+						this.interact(index, false);
+					}
 				})
-		]);
+			]
+		});
 	}
 
 	at(this: Navigation, index: number) {
