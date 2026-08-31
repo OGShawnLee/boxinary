@@ -5,7 +5,7 @@
 
 	export let data: LayoutData;
 
-	currentUser.set(data.user);
+	$: currentUser.set(data.user);
 </script>
 
 <slot />

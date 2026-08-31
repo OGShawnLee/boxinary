@@ -1,23 +1,20 @@
-import dts from "vite-plugin-dts";
-import { defineConfig } from "vitest/config";
+import { defineConfig } from "vite";
 import { resolve } from "path";
 
 export default defineConfig({
   build: {
+    outDir: "dist",
+    emptyOutDir: false,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "predicate",
-      fileName: "index",
-      formats: ["cjs", "es", "iife", "umd"],
+      fileName: (format) => (format === "umd" ? "index.umd.cjs" : "index.js"),
+      formats: ["es", "umd"],
     },
   },
-  plugins: [dts({ insertTypesEntry: true })],
   resolve: {
     alias: {
-      $lib: resolve("src"),
+      $lib: resolve(__dirname, "src"),
     },
-  },
-  test: {
-    globals: true,
   },
 });

@@ -7,5 +7,5 @@
 </script>
 
 <li>
-	<a class={className} {href} data-sveltekit-preload-data>{text}</a>
+	<a class={className} {href} data-sveltekit-preload-data="hover">{text}</a>
 </li>

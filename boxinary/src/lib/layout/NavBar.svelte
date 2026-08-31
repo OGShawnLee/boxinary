@@ -3,6 +3,7 @@
 	import type { Nullable } from "malachite-ui/types";
 	import { ListItemLink } from "$lib/components";
 	import { getDefinitionCreatePath, getProfilePath } from "$lib/utils";
+	import { enhance } from "$app/forms";
 
 	export let currentUser: Nullable<ClientUser> = undefined;
 </script>
@@ -40,7 +41,7 @@
 						>
 							New
 						</a>
-						<form method="post" action="/auth/sign-out">
+						<form method="post" action="/auth/sign-out" use:enhance>
 							<button class="button button--raisin"> Sign Out </button>
 						</form>
 					</div>

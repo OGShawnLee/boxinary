@@ -1,6 +1,6 @@
 import type { ServerLoad } from "@sveltejs/kit";
 import { AUTH_COOKIE } from "$env/static/private";
-import { error, redirect } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
 import { useAwait } from "$lib/hooks";
 import { isJWTPayloadState } from "@server/predicate";
 import { isNullish, isWhitespace } from "@boxinary/predicate-core";
@@ -21,5 +21,5 @@ export const load: ServerLoad = async ({ cookies, locals }) => {
 	}
 
 	deleteAuthCookie(cookies);
-	throw redirect(303, "/auth/sign-in");
+	return { user: null };
 };
